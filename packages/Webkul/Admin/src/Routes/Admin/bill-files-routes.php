@@ -14,6 +14,9 @@ Route::group(['prefix' => 'bill-files'], function () {
         Route::put('edit/{id}', 'update')->name('admin.bill-files.update');
         Route::delete('{id}', 'destroy')->name('admin.bill-files.delete');
         Route::post('mass-destroy', 'massDestroy')->name('admin.bill-files.mass_delete');
+        
+        // New route for toggling is_tracked status
+        Route::post('{id}/toggle-tracked', 'toggleTracked')->name('admin.bill-files.toggle-tracked');
     });
 
     Route::controller(BillFileActivityController::class)->prefix('{id}/activities')->group(function () {

@@ -130,4 +130,13 @@ class BillFileController extends Controller
     {
         return $activities->sortByDesc('id')->sortByDesc('created_at');
     }
+
+    public function toggleTracked($id): JsonResponse
+    {
+        $billFile = $this->billFileRepository->findOrFail($id);
+        $billFile->is_tracked = !$billFile->is_tracked;
+        $billFile->save();
+
+        return response()->json(['success' => true]);
+    }
 }

@@ -11,6 +11,37 @@
 
     {!! view_render_event('admin.bill-files.index.before') !!}
 
-    <x-admin::datagrid src="{{ route('admin.bill-files.index') }}"></x-admin::datagrid>
+    <x-admin::datagrid src="{{ route('admin.bill-files.index') }}" />
+
     {!! view_render_event('admin.bill-files.index.after') !!}
+
+    @push('scripts')
+        <script>
+            function toggleTracked(id, isChecked) {
+                // Send an AJAX request to update the is_tracked status
+                fetch("{{ route('admin.bill-files.toggle-tracked', ':id') }}".replace(':id', id), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ is_tracked: isChecked })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Optionally, show a success message or update the UI
+                    } else {
+                        // Handle error, maybe revert the checkbox state
+                        document.getElementById('is_tracked_' + id).checked = !isChecked;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Revert the checkbox state on error
+                    document.getElementById('is_tracked_' + id).checked = !isChecked;
+                });
+            }
+        </script>
+    @endpush
 </x-admin::layouts>

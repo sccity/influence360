@@ -41,6 +41,8 @@ return [
         'mass-delete'     => 'Mass Delete',
     ],
     'bill-files' => [
+        'toggle-tracked-success' => 'Bill file tracking status updated successfully.',
+
     'index' => [
         'title'          => 'Bill Files',
         'create-btn'     => 'Create Bill File',
