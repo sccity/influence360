@@ -42,9 +42,14 @@ return [
     ],
     'bill-files' => [
         'toggle-tracked-success' => 'Bill file tracking status updated successfully.',
+        'notifications' => [
+        'tracked' => 'Bill file is now being tracked.',
+        'untracked' => 'Bill file is no longer being tracked.',
+        'error' => 'An error occurred while updating the tracking status.',
+    ],
 
     'index' => [
-        'title'          => 'Bill Files',
+        'title'          => 'Influence360 - Bill Files',
         'create-btn'     => 'Create Bill File',
         'create-success' => 'Bill file created successfully.',
         'update-success' => 'Bill file updated successfully.',

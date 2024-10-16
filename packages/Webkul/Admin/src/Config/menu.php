@@ -17,22 +17,12 @@ return [
      */
     [
         'key'        => 'leads',
-        'name'       => 'admin::app.layouts.leads',
+        'name'       => 'Initiatives',
         'route'      => 'admin.leads.index',
         'sort'       => 2,
         'icon-class' => 'icon-leads',
     ],
 
-    /**
-     * Quotes.
-     */
-    [
-        'key'        => 'quotes',
-        'name'       => 'admin::app.layouts.quotes',
-        'route'      => 'admin.quotes.index',
-        'sort'       => 3,
-        'icon-class' => 'icon-quote',
-    ],
 
     /**
      * Emails.
@@ -122,16 +112,6 @@ return [
         'icon-class' => '',
     ],
 
-    /**
-     * Products.
-     */
-    [
-        'key'        => 'products',
-        'name'       => 'admin::app.layouts.products',
-        'route'      => 'admin.products.index',
-        'sort'       => 7,
-        'icon-class' => 'icon-product',
-    ],
 
     /**
      * Settings.
@@ -263,16 +243,6 @@ return [
         'icon-class' => 'icon-settings-tag',
     ],
 
-    /**
-     * Configuration.
-     */
-    [
-        'key'        => 'configuration',
-        'name'       => 'admin::app.layouts.configuration',
-        'route'      => 'admin.configuration.index',
-        'sort'       => 9,
-        'icon-class' => 'icon-configuration',
-    ],
 
     /**
      * Bill Files.
@@ -282,6 +252,6 @@ return [
         'name'       => 'admin::app.layouts.bill-files',
         'route'      => 'admin.bill-files.index',
         'sort'       => 3,
-        'icon-class' => 'icon-bill-files',
+        'icon-class' => 'icon-activity',
     ],
 ];

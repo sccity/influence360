@@ -40,6 +40,8 @@
                 @endforeach
 
                 this.registerGlobalEvents();
+
+                window.addFlash = this.add;
             },
 
             methods: {

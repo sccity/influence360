@@ -18,7 +18,6 @@
     @push('scripts')
         <script>
             function toggleTracked(id, isChecked) {
-                // Send an AJAX request to update the is_tracked status
                 fetch("{{ route('admin.bill-files.toggle-tracked', ':id') }}".replace(':id', id), {
                     method: 'POST',
                     headers: {
@@ -30,15 +29,27 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Optionally, show a success message or update the UI
+                        // Emit a custom event for success notification
+                        window.addFlash({
+                            type: 'success',
+                            message: data.message
+                        });
                     } else {
-                        // Handle error, maybe revert the checkbox state
+                        // Emit a custom event for error notification
+                        window.eventBus.emit('add-flash', {
+                            type: 'error',
+                            message: data.message || "@lang('admin::app.bill-files.notifications.error')"
+                        });
                         document.getElementById('is_tracked_' + id).checked = !isChecked;
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // Revert the checkbox state on error
+                    // Emit a custom event for error notification
+                    window.eventBus.emit('add-flash', {
+                        type: 'error',
+                        message: "@lang('admin::app.bill-files.notifications.error')"
+                    });
                     document.getElementById('is_tracked_' + id).checked = !isChecked;
                 });
             }

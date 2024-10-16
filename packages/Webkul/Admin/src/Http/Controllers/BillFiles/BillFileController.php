@@ -133,10 +133,22 @@ class BillFileController extends Controller
 
     public function toggleTracked($id): JsonResponse
     {
-        $billFile = $this->billFileRepository->findOrFail($id);
-        $billFile->is_tracked = !$billFile->is_tracked;
-        $billFile->save();
+        try {
+            $billFile = $this->billFileRepository->findOrFail($id);
+            $billFile->is_tracked = !$billFile->is_tracked;
+            $billFile->save();
 
-        return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => $billFile->is_tracked 
+                    ? trans('admin::app.bill-files.notifications.tracked')
+                    : trans('admin::app.bill-files.notifications.untracked'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => trans('admin::app.bill-files.notifications.error'),
+            ], 500);
+        }
     }
 }

@@ -91,7 +91,7 @@
         class="h-full"
     >
         <!-- Flash Message Blade Component -->
-        <x-admin::flash-group />
+        <x-admin::flash-group ref="flashes" />
 
         <!-- Confirm Modal Blade Component -->
         <x-admin::modal.confirm />
