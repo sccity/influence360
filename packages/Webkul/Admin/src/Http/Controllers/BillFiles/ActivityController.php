@@ -45,5 +45,40 @@ class ActivityController extends Controller
     {
         return $activities->sortByDesc('id')->sortByDesc('created_at');
     }
-}
 
+    public function store()
+    {
+        $this->validate(request(), [
+            'type'          => 'required',
+            'title'         => 'required_if:type,email',
+            'comment'       => 'required_if:type,email',
+            'schedule_from' => 'required_if:type,email',
+        ]);
+
+        Event::dispatch('activity.create.before');
+
+        $activity = $this->activityRepository->create(array_merge(request()->all(), [
+            'schedule_to' => request('schedule_from'), // For email activities, set schedule_to same as schedule_from
+            'is_done'     => 1, // Emails are always marked as done
+            'user_id'     => auth()->guard('user')->user()->id,
+        ]));
+
+        if (request()->has('participants')) {
+            foreach (request('participants')['users'] ?? [] as $userId) {
+                $activity->participants()->create([
+                    'user_id' => $userId,
+                ]);
+            }
+
+            foreach (request('participants')['persons'] ?? [] as $personId) {
+                $activity->participants()->create([
+                    'person_id' => $personId,
+                ]);
+            }
+        }
+
+        Event::dispatch('activity.create.after', $activity);
+
+        return new ActivityResource($activity);
+    }
+}

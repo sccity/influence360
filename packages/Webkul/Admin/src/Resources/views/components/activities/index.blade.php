@@ -300,6 +300,7 @@
                                                     @if (bouncer()->hasPermission('mail.view'))
                                                         <x-admin::dropdown.menu.item>
                                                             <a
+                                                                v-if="activity.additional && activity.additional.folders && activity.additional.folders.length > 0"
                                                                 :href="'{{ route('admin.mail.view', ['route' => 'replaceFolder', 'id' => 'replaceMailId']) }}'.replace('replaceFolder', activity.additional.folders[0]).replace('replaceMailId', activity.id)"
                                                                 class="flex items-center gap-2"
                                                                 target="_blank"
