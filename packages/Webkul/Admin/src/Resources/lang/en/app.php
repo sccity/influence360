@@ -190,6 +190,12 @@ return [
                     'subject'      => 'Subject',
                     'send-btn'     => 'Send',
                     'message'      => 'Message',
+                    'content'      => 'Content',
+                    'participants' => 'Participants',
+                    'date-sent'    => 'Date Sent',
+                    'add-email-record' => 'Add Email Record',
+                    'save-btn' => 'Save'
+
                 ],
 
                 'file' => [
@@ -1719,6 +1725,7 @@ return [
     ],
 
     'common' => [
+        'yes' => 'Yes',
         'custom-attributes' => [
             'select-country' => 'Select Country',
             'select-state'   => 'Select State',

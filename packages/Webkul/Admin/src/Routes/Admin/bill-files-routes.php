@@ -21,5 +21,6 @@ Route::group(['prefix' => 'bill-files'], function () {
 
     Route::controller(BillFileActivityController::class)->prefix('{id}/activities')->group(function () {
         Route::get('', 'index')->name('admin.bill-files.activities.index');
+        Route::post('store', 'store')->name('admin.bill-files.activities.store');
     });
 });
