@@ -4,7 +4,7 @@ namespace Webkul\Admin\Listeners;
 
 use Webkul\Activity\Contracts\Activity as ActivityContract;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
 use Webkul\BillFiles\Repositories\BillFileRepository;
@@ -17,7 +17,7 @@ class Activity
      * @return void
      */
     public function __construct(
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected PersonRepository $personRepository,
         protected ProductRepository $productRepository,
         protected WarehouseRepository $warehouseRepository,
@@ -25,15 +25,15 @@ class Activity
     ) {}
 
     /**
-     * Link activity to lead or person.
+     * Link activity to initiative or person.
      */
     public function afterUpdateOrCreate(ActivityContract $activity): void
     {
-        if (request()->input('lead_id')) {
-            $lead = $this->leadRepository->find(request()->input('lead_id'));
+        if (request()->input('initiative_id')) {
+            $initiative = $this->initiativeRepository->find(request()->input('initiative_id'));
 
-            if (! $lead->activities->contains($activity->id)) {
-                $lead->activities()->attach($activity->id);
+            if (! $initiative->activities->contains($activity->id)) {
+                $initiative->activities()->attach($activity->id);
             }
         } elseif (request()->input('person_id')) {
             $person = $this->personRepository->find(request()->input('person_id'));

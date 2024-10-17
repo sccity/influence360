@@ -40,14 +40,14 @@
 
                     <span
                         v-if="field['channel_based'] && channelCount"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold initiativeing-normal text-gray-600"
                         v-text="JSON.parse(currentChannel).name"
                     >
                     </span>
         
                     <span
                         v-if="field['locale_based']"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold initiativeing-normal text-gray-600"
                         v-text="JSON.parse(currentLocale).name"
                     >
                     </span>
@@ -373,7 +373,7 @@
         
             <p
                 v-if="field.info && field.is_visible"
-                class="mt-1 block text-xs italic leading-5 text-gray-600 dark:text-gray-300"
+                class="mt-1 block text-xs italic initiativeing-5 text-gray-600 dark:text-gray-300"
                 v-text="info"
             >
             </p>

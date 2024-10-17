@@ -52,7 +52,7 @@
 
         <!-- Email List Vue Component -->
         <v-email-list>
-           <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
+           <x-admin::shimmer.initiatives.view.mail :count="$email->count()"/>
         </v-email-list>
 
         {!! view_render_event('admin.mail.view.email-list.before', ['email' => $email]) !!}
@@ -98,8 +98,8 @@
             
                 @if (
                     bouncer()->hasPermission('contacts.persons.create')
-                    || bouncer()->hasPermission('leads.create')
-                    || bouncer()->hasPermission('leads.view')
+                    || bouncer()->hasPermission('initiatives.create')
+                    || bouncer()->hasPermission('initiatives.view')
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Email Actions -->
@@ -670,29 +670,29 @@
 
         <script
             type="text/x-template"
-            id="v-lead-lookup-template"
+            id="v-initiative-lookup-template"
         >
             <div>
-                {!! view_render_event('admin.mail.view.lead_lookup.before', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.initiative_lookup.before', ['email' => $email]) !!}
 
-                <template v-if="email?.lead_id">
+                <template v-if="email?.initiative_id">
                     <div class="flex">
-                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
+                        <div class="initiative-item flex flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
-                                v-if="email.lead?.person"
+                                v-if="email.initiative?.person"
                             >
                                 <div class="flex items-center gap-1">
-                                    <x-admin::avatar ::name="email.lead.person?.name" />
+                                    <x-admin::avatar ::name="email.initiative.person?.name" />
 
                                     <div class="flex flex-col gap-1">
                                         <span class="text-xs font-medium">
-                                            @{{ email.lead.person?.name }}
+                                            @{{ email.initiative.person?.name }}
                                         </span>
 
-                                        <span class="text-[10px] leading-normal">
-                                            @{{ email.lead.person?.organization?.name }}
+                                        <span class="text-[10px] initiativeing-normal">
+                                            @{{ email.initiative.person?.organization?.name }}
                                         </span>
                                     </div>
                                 </div>
@@ -700,24 +700,24 @@
                                 <div class="flex items-center justify-center gap-2">
                                     <div
                                         class="group relative"
-                                        v-if="email.lead.rotten_days > 0"
+                                        v-if="email.initiative.rotten_days > 0"
                                     >
                                         <span class="icon-rotten flex cursor-default items-center justify-center text-2xl text-rose-600"></span>
 
                                         <div class="absolute bottom-0 right-0 mb-7 hidden w-max flex-col items-center group-hover:flex">
-                                            <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
-                                                @{{ "@lang('admin::app.mail.view.rotten-days', ['days' => 'replaceDays'])".replace('replaceDays', email.lead.rotten_days) }}
+                                            <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs initiativeing-none text-white shadow-lg">
+                                                @{{ "@lang('admin::app.mail.view.rotten-days', ['days' => 'replaceDays'])".replace('replaceDays', email.initiative.rotten_days) }}
                                             </span>
 
                                             <div class="absolute -bottom-0.5 right-1 h-3 w-3 rotate-45 bg-black"></div>
                                         </div>
                                     </div>
 
-                                    <template v-if="! unlinking.lead">
+                                    <template v-if="! unlinking.initiative">
                                         <button
                                             type="button"
                                             class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
-                                            @click="unlinkLead"
+                                            @click="unlinkInitiative"
                                         ></button>
                                     </template>
 
@@ -726,25 +726,25 @@
                                     </template>
 
                                     <a
-                                        :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
+                                        :href="'{{ route('admin.initiatives.view', ':id') }}'.replace(':id', email.initiative_id)"
                                         target="_blank"
                                         class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     ></a>
                                 </div>
                             </div>
                             
-                            <!-- Lead Title -->
+                            <!-- Initiative Title -->
                             <p class="text-xs font-medium">
-                                @{{ email.lead.title }}
+                                @{{ email.initiative.title }}
                             </p>
 
-                            <!-- Lead Additional Information -->
+                            <!-- Initiative Additional Information -->
                             <div
                                 class="flex flex-wrap gap-1"
-                                v-if="email.lead"
+                                v-if="email.initiative"
                             >
                                 <!-- Tags -->
-                                <template v-for="tag in email.lead.tags">
+                                <template v-for="tag in email.initiative.tags">
                                     <div
                                         class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
                                         :style="{
@@ -756,26 +756,26 @@
                                     </div>
                                 </template>
 
-                                <!-- Lead Value -->
+                                <!-- Initiative Value -->
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
-                                    @{{ $admin.formatPrice(email.lead.lead_value) }}
+                                    @{{ $admin.formatPrice(email.initiative.initiative_value) }}
                                 </div>
                                 
                                 <!-- Source Name -->
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
-                                    @{{ email.lead.source?.name }}
+                                    @{{ email.initiative.source?.name }}
                                 </div>
                                 
-                                <!-- Lead Type Name -->
+                                <!-- Initiative Type Name -->
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
-                                    @{{ email.lead.type?.name }}
+                                    @{{ email.initiative.type?.name }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </template>
 
-                @if (bouncer()->hasPermission('leads.view'))
+                @if (bouncer()->hasPermission('initiatives.view'))
                     <template v-else>
                         <div
                             class="relative"
@@ -788,7 +788,7 @@
                             >
                                 <!-- Input-like div -->
                                 <div class="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-800 dark:text-gray-300">
-                                    @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-lead')'}}
+                                    @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-initiative')'}}
                                 </div>
                                 
                                 <!-- Arrow down icon -->
@@ -845,37 +845,37 @@
                                 <!-- Results List -->
                                 <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto dark:divide-gray-700">
                                     <li 
-                                        v-for="lead in leads" 
-                                        :key="lead.id"
+                                        v-for="initiative in initiatives" 
+                                        :key="initiative.id"
                                         class="flex cursor-pointer gap-2 px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
-                                        @click="linkLead(lead)"
+                                        @click="linkInitiative(initiative)"
                                     >
-                                        <x-admin::avatar ::name="lead.title" />
+                                        <x-admin::avatar ::name="initiative.title" />
                                 
-                                        <!-- Lead Title -->
+                                        <!-- Initiative Title -->
                                         <div class="flex flex-col gap-1">
-                                            <span>@{{ lead.title }}</span>
+                                            <span>@{{ initiative.title }}</span>
                                         </div>
                                     </li>                       
                                 
                                     <li 
-                                        v-if="leads.length === 0"
+                                        v-if="initiatives.length === 0"
                                         class="px-4 py-2 text-gray-800 dark:text-gray-300"
                                     >
                                         @lang('admin::app.mail.view.no-result-found')
                                     </li>
                                 </ul>
 
-                                <!-- Add New Lead Button -->
-                                @if (bouncer()->hasPermission('leads.create'))
+                                <!-- Add New Initiative Button -->
+                                @if (bouncer()->hasPermission('initiatives.create'))
                                     <button
                                         type="button"
                                         class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-brandColor transition-colors dark:border-gray-700"
-                                        @click="toggleLeadModal"
+                                        @click="toggleInitiativeModal"
                                     >
                                         <i class="icon-add text-md !text-brandColor"></i>
                     
-                                        @lang('admin::app.mail.view.add-new-lead')
+                                        @lang('admin::app.mail.view.add-new-initiative')
                                     </button>
                                 @endif
                             </div>
@@ -883,7 +883,7 @@
                     </template>
                 @endif
 
-                {!! view_render_event('admin.mail.view.lead_lookup.after', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.initiative_lookup.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -942,9 +942,9 @@
 
         <script
             type="text/x-template"
-            id="v-create-lead-template"
+            id="v-create-initiative-template"
         >
-            {!! view_render_event('admin.mail.view.lead_form.before', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.initiative_form.before', ['email' => $email]) !!}
 
             <Teleport to="body">
                 <x-admin::form
@@ -953,18 +953,18 @@
                 >
                     <form
                         @submit="handleSubmit($event, create)"
-                        ref="leadForm"
+                        ref="initiativeForm"
                     >
                         <!-- Add Contact Modal -->
                         <x-admin::modal
-                            ref="leadModal"
+                            ref="initiativeModal"
                             @toggle="toggleModal"
                             size="large"
                         >
                             <x-slot:header>
                                 <div class="flex items-center justify-between">
                                     <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.mail.view.create-lead')
+                                        @lang('admin::app.mail.view.create-initiative')
                                     </p>
                                 </div>
                             </x-slot>
@@ -993,14 +993,14 @@
 
                                     <!-- Container -->
                                     <div>
-                                        <div v-show="selectedType == 'lead'">
+                                        <div v-show="selectedType == 'initiative'">
                                             <div class="w-full">
                                                 <div class="flex gap-4 max-sm:flex-wrap">
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['title']],
-                                                                'entity_type' => 'leads',
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1009,8 +1009,8 @@
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_value']],
-                                                                'entity_type' => 'leads',
+                                                                ['code', 'IN', ['initiative_value']],
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1022,7 +1022,7 @@
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['description']],
-                                                            'entity_type' => 'leads',
+                                                            'entity_type' => 'initiatives',
                                                             'quick_add'   => 1
                                                         ])"
                                                     />
@@ -1033,8 +1033,8 @@
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_pipeline_id']],
-                                                                'entity_type' => 'leads',
+                                                                ['code', 'IN', ['initiative_pipeline_id']],
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1043,8 +1043,8 @@
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_pipeline_stage_id']],
-                                                                'entity_type' => 'leads',
+                                                                ['code', 'IN', ['initiative_pipeline_stage_id']],
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1055,8 +1055,8 @@
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_type_id']],
-                                                                'entity_type' => 'leads',
+                                                                ['code', 'IN', ['initiative_type_id']],
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1065,8 +1065,8 @@
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_source_id']],
-                                                                'entity_type' => 'leads',
+                                                                ['code', 'IN', ['initiative_source_id']],
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1078,7 +1078,7 @@
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['user_id']],
-                                                                'entity_type' => 'leads',
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                         />
@@ -1088,7 +1088,7 @@
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['expected_close_date']],
-                                                                'entity_type' => 'leads',
+                                                                'entity_type' => 'initiatives',
                                                                 'quick_add'   => 1
                                                             ])"
                                                             :custom-validations="[
@@ -1104,14 +1104,14 @@
                                         </div>
                                             
                                         <div v-show="selectedType == 'person'">
-                                            @include('admin::leads.common.contact')
+                                            @include('admin::initiatives.common.contact')
                                         </div>
 
                                         <div 
                                             class="overflow-y-auto"
                                             v-show="selectedType == 'product'"
                                         >
-                                            @include('admin::leads.common.products')
+                                            @include('admin::initiatives.common.products')
                                         </div>
                                     </div>
                                 </div>
@@ -1120,7 +1120,7 @@
                             <x-slot:footer>
                                 <x-admin::button
                                     class="primary-button"
-                                    :title="trans('Save Lead')"
+                                    :title="trans('Save Initiative')"
                                     ::loading="isStoring"
                                     ::disabled="isStoring"
                                 />
@@ -1130,7 +1130,7 @@
                 </x-admin::form>
             </Teleport>
 
-            {!! view_render_event('admin.mail.view.lead_form.after', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.initiative_form.after', ['email' => $email]) !!}
         </script>
 
         <script
@@ -1161,32 +1161,32 @@
                 @endif
 
             
-                <!-- Lead Lookup -->
+                <!-- Initiative Lookup -->
                 @if (
-                    bouncer()->hasPermission('leads.view') 
-                    || bouncer()->hasPermission('leads.create')
+                    bouncer()->hasPermission('initiatives.view') 
+                    || bouncer()->hasPermission('initiatives.create')
                 )
-                    <!-- Link to Lead -->
+                    <!-- Link to Initiative -->
                     <label class="font-semibold text-gray-800 dark:text-gray-300">
-                        @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
+                        @{{ email?.initiative ? "@lang('admin::app.mail.view.linked-initiative')" : "@lang('admin::app.mail.view.link-to-initiative')" }}
                     </label>
                 
-                    <v-lead-lookup
-                        @link-lead="linkLead"
-                        @unlink-lead="unlinkLead"
-                        @open-lead-modal="openLeadModal"
+                    <v-initiative-lookup
+                        @link-initiative="linkInitiative"
+                        @unlink-initiative="unlinkInitiative"
+                        @open-initiative-modal="openInitiativeModal"
                         :unlinking="unlinking"
                         :email="email"
                         :tag-text-color="tagTextColor"
-                    ></v-lead-lookup>
+                    ></v-initiative-lookup>
                 @endif
             </div>
 
             <!-- Create Contact Modal -->
             <v-create-contact ref="createContact"></v-create-contact>
 
-            <!-- Create Lead Modal -->
-            <v-create-lead ref="createLead"></v-create-lead>
+            <!-- Create Initiative Modal -->
+            <v-create-initiative ref="createInitiative"></v-create-initiative>
 
             {!! view_render_event('admin.mail.view.action_mail.after', ['email' => $email]) !!}
         </script>
@@ -1560,12 +1560,12 @@
 
         <!-- Contact Lookup Component -->
         <script type="module">
-            app.component('v-lead-lookup', {
-                template: '#v-lead-lookup-template',
+            app.component('v-initiative-lookup', {
+                template: '#v-initiative-lookup-template',
 
                 props: ['email', 'unlinking', 'tagTextColor'],
 
-                emits: ['link-lead', 'unlink-lead', 'open-lead-modal'],
+                emits: ['link-initiative', 'unlink-initiative', 'open-initiative-modal'],
 
                 data() {
                     return {
@@ -1609,7 +1609,7 @@
                      * 
                      * @return {Array}
                      */
-                    leads() {
+                    initiatives() {
                         return this.searchedResults.filter(item => 
                             item.title.toLowerCase().includes(this.searchTerm.toLowerCase())
                         );
@@ -1637,20 +1637,20 @@
                      * 
                      * @return {void}
                      */
-                    linkLead(lead) {
+                    linkInitiative(initiative) {
                         this.showPopup = false;
 
                         this.searchTerm = '';
 
-                        this.selectedItem = lead;
+                        this.selectedItem = initiative;
 
-                        this.$emit('link-lead', lead);
+                        this.$emit('link-initiative', initiative);
                     },
 
-                    unlinkLead() {
+                    unlinkInitiative() {
                         this.selectedItem = {};
 
-                        this.$emit('unlink-lead');
+                        this.$emit('unlink-initiative');
                     },
 
                     /**
@@ -1675,7 +1675,7 @@
 
                         this.cancelToken = this.$axios.CancelToken.source();
 
-                        this.$axios.get('{{ route('admin.leads.search') }}', {
+                        this.$axios.get('{{ route('admin.initiatives.search') }}', {
                                 params: { 
                                     ...this.params,
                                     query: this.searchTerm
@@ -1713,10 +1713,10 @@
                         }
                     },
 
-                    toggleLeadModal() {
+                    toggleInitiativeModal() {
                         this.showPopup = false;
 
-                        this.$emit('open-lead-modal');
+                        this.$emit('open-initiative-modal');
                     },
                 },
             });
@@ -1768,22 +1768,22 @@
             });
         </script>
 
-        <!-- Create Lead Modal Component -->
+        <!-- Create Initiative Modal Component -->
         <script type="module">
-            app.component('v-create-lead', {
-                template: '#v-create-lead-template',
+            app.component('v-create-initiative', {
+                template: '#v-create-initiative-template',
 
                 data() {
                     return {
                         isStoring: false,
 
                         
-                        selectedType: "lead",
+                        selectedType: "initiative",
 
                         types: [
                             {
-                                name: 'lead',
-                                label: "{{ trans('admin::app.mail.view.lead-details') }}",
+                                name: 'initiative',
+                                label: "{{ trans('admin::app.mail.view.initiative-details') }}",
                             }, {
                                 name: 'person',
                                 label: "{{ trans('admin::app.mail.view.contact-person') }}",
@@ -1805,15 +1805,15 @@
                     create(params, { setErrors }) {
                         this.isStoring = true;
 
-                        const formData = new FormData(this.$refs.leadForm);
+                        const formData = new FormData(this.$refs.initiativeForm);
 
-                        formData.append('lead_pipeline_stage_id', 1)
+                        formData.append('initiative_pipeline_stage_id', 1)
 
-                        this.$axios.post('{{ route('admin.leads.store') }}', formData)
+                        this.$axios.post('{{ route('admin.initiatives.store') }}', formData)
                             .then(response => {
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                                this.$refs.leadModal.close();
+                                this.$refs.initiativeModal.close();
                             })
                             .catch(error => {
                                 if (error.response.status == 422) {
@@ -1844,7 +1844,7 @@
                         email: @json($email->getAttributes()),
 
                         unlinking: {
-                            lead: false,
+                            initiative: false,
                             contact: false,
                         },
 
@@ -1864,8 +1864,8 @@
                         this.email.person = @json($email->person);
                     @endif
 
-                    @if ($email->lead)
-                        this.email.lead = @json($email->lead);
+                    @if ($email->initiative)
+                        this.email.initiative = @json($email->initiative);
                     @endif
                 },
 
@@ -1905,14 +1905,14 @@
                             .finally(() => this.unlinking.contact = false);
                     },
 
-                    linkLead(lead) {
-                        this.email['lead'] = lead;
+                    linkInitiative(initiative) {
+                        this.email['initiative'] = initiative;
 
-                        this.email['lead_id'] = lead.id;
+                        this.email['initiative_id'] = initiative.id;
 
                         this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
                             _method: 'PUT',
-                            lead_id: lead.id,
+                            initiative_id: initiative.id,
                         })
                             .then (response => {
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
@@ -1920,28 +1920,28 @@
                             .catch (error => {});
                     },
 
-                    unlinkLead() {
-                        this.unlinking.lead = true;
+                    unlinkInitiative() {
+                        this.unlinking.initiative = true;
 
                         this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
                             _method: 'PUT',
-                            lead_id: null,
+                            initiative_id: null,
                         })
                             .then (response => {
-                                this.email['lead'] = this.email['lead_id'] = null;
+                                this.email['initiative'] = this.email['initiative_id'] = null;
 
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch (error => {})
-                            .finally(() => this.unlinking.lead = false);
+                            .finally(() => this.unlinking.initiative = false);
                     },
 
                     openContactModal() {
                         this.$refs.createContact.$refs.contactModal.open();
                     },
 
-                    openLeadModal() {
-                        this.$refs.createLead.$refs.leadModal.open();
+                    openInitiativeModal() {
+                        this.$refs.createInitiative.$refs.initiativeModal.open();
                     },
                 },
             });

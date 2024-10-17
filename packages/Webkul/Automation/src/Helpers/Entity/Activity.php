@@ -12,7 +12,7 @@ use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 
 class Activity extends AbstractEntity
 {
@@ -31,7 +31,7 @@ class Activity extends AbstractEntity
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository,
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected PersonRepository $personRepository,
         protected ActivityRepository $activityRepository,
         protected WebhookRepository $webhookRepository,
@@ -168,9 +168,9 @@ class Activity extends AbstractEntity
 
         return [
             [
-                'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
-                'attributes' => $this->getAttributes('leads'),
+                'id'         => 'update_related_initiatives',
+                'name'       => trans('admin::app.settings.workflows.helpers.update-related-initiatives'),
+                'attributes' => $this->getAttributes('initiatives'),
             ], [
                 'id'      => 'send_email_to_sales_owner',
                 'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-sales-owner'),
@@ -194,19 +194,19 @@ class Activity extends AbstractEntity
     {
         foreach ($workflow->actions as $action) {
             switch ($action['id']) {
-                case 'update_related_leads':
-                    $leadIds = $this->activityRepository->getModel()
-                        ->leftJoin('lead_activities', 'activities.id', 'lead_activities.activity_id')
-                        ->leftJoin('leads', 'lead_activities.lead_id', 'leads.id')
-                        ->addSelect('leads.id')
+                case 'update_related_initiatives':
+                    $initiativeIds = $this->activityRepository->getModel()
+                        ->leftJoin('initiative_activities', 'activities.id', 'initiative_activities.activity_id')
+                        ->leftJoin('initiatives', 'initiative_activities.initiative_id', 'initiatives.id')
+                        ->addSelect('initiatives.id')
                         ->where('activities.id', $activity->id)
                         ->pluck('id');
 
-                    foreach ($leadIds as $leadId) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
+                    foreach ($initiativeIds as $initiativeId) {
+                        $this->initiativeRepository->update([
+                            'entity_type'        => 'initiatives',
                             $action['attribute'] => $action['value'],
-                        ], $leadId);
+                        ], $initiativeId);
                     }
 
                     break;

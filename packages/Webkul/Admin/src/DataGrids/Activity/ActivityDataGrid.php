@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\DataGrid\DataGrid;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
@@ -22,15 +22,15 @@ class ActivityDataGrid extends DataGrid
             ->distinct()
             ->select(
                 'activities.*',
-                'leads.id as lead_id',
-                'leads.title as lead_title',
-                'leads.lead_pipeline_id',
+                'initiatives.id as initiative_id',
+                'initiatives.title as initiative_title',
+                'initiatives.initiative_pipeline_id',
                 'users.id as created_by_id',
                 'users.name as created_by',
             )
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
-            ->leftJoin('lead_activities', 'activities.id', '=', 'lead_activities.activity_id')
-            ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
+            ->leftJoin('initiative_activities', 'activities.id', '=', 'initiative_activities.activity_id')
+            ->leftJoin('initiatives', 'initiative_activities.initiative_id', '=', 'initiatives.id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
             ->whereIn('type', ['call', 'meeting', 'lunch'])
             ->where(function ($query) {
@@ -46,7 +46,7 @@ class ActivityDataGrid extends DataGrid
         $this->addFilter('created_by', 'users.name');
         $this->addFilter('created_by_id', 'users.name');
         $this->addFilter('created_at', 'activities.created_at');
-        $this->addFilter('lead_title', 'leads.title');
+        $this->addFilter('initiative_title', 'initiatives.title');
 
         return $queryBuilder;
     }
@@ -112,28 +112,28 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'lead_title',
-            'label'              => trans('admin::app.activities.index.datagrid.lead'),
+            'index'              => 'initiative_title',
+            'label'              => trans('admin::app.activities.index.datagrid.initiative'),
             'type'               => 'string',
             'searchable'         => true,
             'sortable'           => true,
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
-                'repository' => LeadRepository::class,
+                'repository' => InitiativeRepository::class,
                 'column'     => [
                     'label' => 'title',
                     'value' => 'title',
                 ],
             ],
             'closure'    => function ($row) {
-                if ($row->lead_title == null) {
+                if ($row->initiative_title == null) {
                     return "<span class='text-gray-800 dark:text-gray-300'>N/A</span>";
                 }
 
-                $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));
+                $route = urldecode(route('admin.initiatives.index', ['pipeline_id' => $row->initiative_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->initiative_id]));
 
-                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->lead_title.'</a>';
+                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->initiative_title.'</a>';
             },
         ]);
 

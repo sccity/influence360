@@ -5,7 +5,7 @@ namespace Webkul\Admin\Helpers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Webkul\Admin\Helpers\Reporting\Activity;
-use Webkul\Admin\Helpers\Reporting\Lead;
+use Webkul\Admin\Helpers\Reporting\Initiative;
 use Webkul\Admin\Helpers\Reporting\Organization;
 use Webkul\Admin\Helpers\Reporting\Person;
 use Webkul\Admin\Helpers\Reporting\Product;
@@ -19,7 +19,7 @@ class Dashboard
      * @return void
      */
     public function __construct(
-        protected Lead $leadReporting,
+        protected Initiative $initiativeReporting,
         protected Activity $activityReporting,
         protected Product $productReporting,
         protected Person $personReporting,
@@ -33,8 +33,8 @@ class Dashboard
     public function getRevenueStats(): array
     {
         return [
-            'total_won_revenue'  => $this->leadReporting->getTotalWonLeadValueProgress(),
-            'total_lost_revenue' => $this->leadReporting->getTotalLostLeadValueProgress(),
+            'total_won_revenue'  => $this->initiativeReporting->getTotalWonInitiativeValueProgress(),
+            'total_lost_revenue' => $this->initiativeReporting->getTotalLostInitiativeValueProgress(),
         ];
     }
 
@@ -44,9 +44,9 @@ class Dashboard
     public function getOverAllStats(): array
     {
         return [
-            'total_leads'           => $this->leadReporting->getTotalLeadsProgress(),
-            'average_lead_value'    => $this->leadReporting->getAverageLeadValueProgress(),
-            'average_leads_per_day' => $this->leadReporting->getAverageLeadsPerDayProgress(),
+            'total_initiatives'           => $this->initiativeReporting->getTotalInitiativesProgress(),
+            'average_initiative_value'    => $this->initiativeReporting->getAverageInitiativeValueProgress(),
+            'average_initiatives_per_day' => $this->initiativeReporting->getAverageInitiativesPerDayProgress(),
             'total_quotations'      => $this->quoteReporting->getTotalQuotesProgress(),
             'total_persons'         => $this->personReporting->getTotalPersonsProgress(),
             'total_organizations'   => $this->organizationReporting->getTotalOrganizationsProgress(),
@@ -54,46 +54,46 @@ class Dashboard
     }
 
     /**
-     * Returns leads statistics.
+     * Returns initiatives statistics.
      */
-    public function getTotalLeadsStats(): array
+    public function getTotalInitiativesStats(): array
     {
         return [
             'all'  => [
-                'over_time' => $this->leadReporting->getTotalLeadsOverTime(),
+                'over_time' => $this->initiativeReporting->getTotalInitiativesOverTime(),
             ],
 
             'won'  => [
-                'over_time' => $this->leadReporting->getTotalWonLeadsOverTime(),
+                'over_time' => $this->initiativeReporting->getTotalWonInitiativesOverTime(),
             ],
             'lost' => [
-                'over_time' => $this->leadReporting->getTotalLostLeadsOverTime(),
+                'over_time' => $this->initiativeReporting->getTotalLostInitiativesOverTime(),
             ],
         ];
     }
 
     /**
-     * Returns leads revenue statistics by sources.
+     * Returns initiatives revenue statistics by sources.
      */
-    public function getLeadsStatsBySources(): mixed
+    public function getInitiativesStatsBySources(): mixed
     {
-        return $this->leadReporting->getTotalWonLeadValueBySources();
+        return $this->initiativeReporting->getTotalWonInitiativeValueBySources();
     }
 
     /**
-     * Returns leads revenue statistics by types.
+     * Returns initiatives revenue statistics by types.
      */
-    public function getLeadsStatsByTypes(): mixed
+    public function getInitiativesStatsByTypes(): mixed
     {
-        return $this->leadReporting->getTotalWonLeadValueByTypes();
+        return $this->initiativeReporting->getTotalWonInitiativeValueByTypes();
     }
 
     /**
-     * Returns open leads statistics by states.
+     * Returns open initiatives statistics by states.
      */
-    public function getOpenLeadsByStates(): mixed
+    public function getOpenInitiativesByStates(): mixed
     {
-        return $this->leadReporting->getOpenLeadsByStates();
+        return $this->initiativeReporting->getOpenInitiativesByStates();
     }
 
     /**
@@ -119,7 +119,7 @@ class Dashboard
      */
     public function getStartDate(): Carbon
     {
-        return $this->leadReporting->getStartDate();
+        return $this->initiativeReporting->getStartDate();
     }
 
     /**
@@ -129,7 +129,7 @@ class Dashboard
      */
     public function getEndDate(): Carbon
     {
-        return $this->leadReporting->getEndDate();
+        return $this->initiativeReporting->getEndDate();
     }
 
     /**

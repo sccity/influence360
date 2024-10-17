@@ -5,7 +5,7 @@ namespace Webkul\Activity\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Contracts\Activity as ActivityContract;
 use Webkul\Contact\Models\PersonProxy;
-use Webkul\Lead\Models\LeadProxy;
+use Webkul\Initiative\Models\InitiativeProxy;
 use Webkul\Product\Models\ProductProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
@@ -79,11 +79,11 @@ class Activity extends Model implements ActivityContract
     }
 
     /**
-     * The leads that belong to the activity.
+     * The initiatives that belong to the activity.
      */
-    public function leads()
+    public function initiatives()
     {
-        return $this->belongsToMany(LeadProxy::modelClass(), 'lead_activities');
+        return $this->belongsToMany(InitiativeProxy::modelClass(), 'initiative_activities');
     }
 
     /**
@@ -95,7 +95,7 @@ class Activity extends Model implements ActivityContract
     }
 
     /**
-     * The leads that belong to the activity.
+     * The initiatives that belong to the activity.
      */
     public function products()
     {

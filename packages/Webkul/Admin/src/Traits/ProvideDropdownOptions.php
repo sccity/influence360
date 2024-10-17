@@ -120,11 +120,11 @@ trait ProvideDropdownOptions
     }
 
     /**
-     * Get lead source options.
+     * Get initiative source options.
      */
-    public function getLeadSourcesOptions(): array
+    public function getInitiativeSourcesOptions(): array
     {
-        $options = app(\Webkul\Lead\Repositories\SourceRepository::class)
+        $options = app(\Webkul\Initiative\Repositories\SourceRepository::class)
             ->get(['id as value', 'name as label'])
             ->map(function ($item, $key) {
                 $item->disabled = false;

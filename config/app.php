@@ -208,7 +208,7 @@ return [
         Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
         Webkul\Installer\Providers\InstallerServiceProvider::class,
-        Webkul\Lead\Providers\LeadServiceProvider::class,
+        Webkul\Initiative\Providers\InitiativeServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,
         Webkul\Quote\Providers\QuoteServiceProvider::class,
         Webkul\Tag\Providers\TagServiceProvider::class,

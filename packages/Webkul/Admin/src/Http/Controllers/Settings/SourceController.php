@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\SourceDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Lead\Repositories\SourceRepository;
+use Webkul\Initiative\Repositories\SourceRepository;
 
 class SourceController extends Controller
 {
@@ -36,7 +36,7 @@ class SourceController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'name' => ['required', 'unique:lead_sources,name'],
+            'name' => ['required', 'unique:initiative_sources,name'],
         ]);
 
         Event::dispatch('settings.source.create.before');
@@ -69,7 +69,7 @@ class SourceController extends Controller
     public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
-            'name' => 'required|unique:lead_sources,name,'.$id,
+            'name' => 'required|unique:initiative_sources,name,'.$id,
         ]);
 
         Event::dispatch('settings.source.update.before', $id);

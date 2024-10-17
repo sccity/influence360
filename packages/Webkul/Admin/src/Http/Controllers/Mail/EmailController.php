@@ -17,7 +17,7 @@ use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 
 class EmailController extends Controller
 {
@@ -27,7 +27,7 @@ class EmailController extends Controller
      * @return void
      */
     public function __construct(
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected EmailRepository $emailRepository,
         protected AttachmentRepository $attachmentRepository
     ) {}
@@ -66,22 +66,22 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.person', 'lead.tags', 'lead.source', 'lead.type', 'person'])
+            ->with(['emails', 'attachments', 'emails.attachments', 'initiative', 'initiative.person', 'initiative.tags', 'initiative.source', 'initiative.type', 'person'])
             ->findOrFail(request('id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
+            $results = $this->initiativeRepository->findWhere([
+                ['id', '=', $email->initiative_id],
                 ['user_id', 'IN', $userIds],
             ]);
         } else {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
+            $results = $this->initiativeRepository->findWhere([
+                ['id', '=', $email->initiative_id],
             ]);
         }
 
         if (empty($results->toArray())) {
-            unset($email->lead_id);
+            unset($email->initiative_id);
         }
 
         if (request('route') == 'draft') {
@@ -231,17 +231,17 @@ class EmailController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $initiatives = $this->initiativeRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
         try {
-            foreach ($leads as $lead) {
-                Event::dispatch('email.update.before', $lead->id);
+            foreach ($initiatives as $initiative) {
+                Event::dispatch('email.update.before', $initiative->id);
 
                 $this->emailRepository->update([
                     'folders' => request('folders'),
-                ], $lead->id);
+                ], $initiative->id);
 
-                Event::dispatch('email.update.after', $lead->id);
+                Event::dispatch('email.update.after', $initiative->id);
             }
 
             return response()->json([

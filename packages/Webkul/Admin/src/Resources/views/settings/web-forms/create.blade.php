@@ -105,20 +105,20 @@
                             <x-admin::form.control-group.error control-name="submit_success_content"/>
                         </x-admin::form.control-group>
 
-                        <!-- Create Leads -->
+                        <!-- Create Initiatives -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.webforms.create.create-lead')
+                                @lang('admin::app.settings.webforms.create.create-initiative')
                             </x-admin::form.control-group.label>
 
                             <label class="relative inline-flex cursor-pointer items-center">
                                 <input
                                     type="checkbox"
-                                    name="create_lead"
+                                    name="create_initiative"
                                     :value="1"
-                                    id="create_lead"
+                                    id="create_initiative"
                                     class="peer sr-only"
-                                    v-model="createLead"
+                                    v-model="createInitiative"
                                 >
 
                                 <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
@@ -282,11 +282,11 @@
                                 </x-slot>
 
                                 <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
-                                    <template v-if="createLead">
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.leads')</div>
+                                    <template v-if="createInitiative">
+                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.initiatives')</div>
 
                                         <span
-                                            v-for="attribute in groupedAttributes.leads"
+                                            v-for="attribute in groupedAttributes.initiatives"
                                             class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             @click="addAttribute(attribute)"
                                         >
@@ -536,7 +536,7 @@
                             ],
                         },
 
-                        createLead: false,
+                        createInitiative: false,
 
                         attributes: @json($attributes['other']),
 
@@ -548,19 +548,19 @@
 
                 watch: {
                     /**
-                     * Watch for the createLead value and remove the added attributes if the value is true.
+                     * Watch for the createInitiative value and remove the added attributes if the value is true.
                      *
                      * @param {Boolean} newValue
                      * @param {Boolean} oldValue
                      *
                      * @return {void}
                      */
-                    createLead(newValue, oldValue) {
+                    createInitiative(newValue, oldValue) {
                         if (newValue) {
                             return;
                         }
 
-                        this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'leads');
+                        this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'initiatives');
                     },
                 },
 

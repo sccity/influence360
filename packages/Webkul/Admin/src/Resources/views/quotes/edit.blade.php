@@ -160,18 +160,18 @@
                                 <x-admin::attributes.edit.lookup />
 
                                 @php
-                                    $leadId = old('lead-id') ?? optional($quote->leads->first())->id;
+                                    $initiativeId = old('initiative-id') ?? optional($quote->initiatives->first())->id;
 
-                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', $leadId);
+                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('initiatives', $initiativeId);
                                 @endphp
 
                                 <x-admin::form.control-group class="w-full">
                                     <x-admin::form.control-group.label>
-                                        @lang('admin::app.quotes.create.link-to-lead')
+                                        @lang('admin::app.quotes.create.link-to-initiative')
                                     </x-admin::form.control-group.label>
             
                                     <v-lookup-component
-                                        :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                        :attribute="{'code': 'initiative_id', 'name': 'Initiative', 'lookup_type': 'initiatives'}"
                                         :value='@json($lookUpEntityData)'
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>

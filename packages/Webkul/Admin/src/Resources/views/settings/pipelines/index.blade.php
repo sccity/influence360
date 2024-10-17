@@ -26,7 +26,7 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.pipelines.index.create_button.before') !!}
                     
-                    @if (bouncer()->hasPermission('settings.lead.pipelines.create'))
+                    @if (bouncer()->hasPermission('settings.initiative.pipelines.create'))
                         <!-- Create button Pipelines -->
                         <a
                             href="{{ route('admin.settings.pipelines.create') }}"

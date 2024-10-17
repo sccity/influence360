@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\PipelineDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\PipelineForm;
-use Webkul\Lead\Repositories\PipelineRepository;
+use Webkul\Initiative\Repositories\PipelineRepository;
 
 class PipelineController extends Controller
 {
@@ -108,9 +108,9 @@ class PipelineController extends Controller
         } else {
             $defaultPipeline = $this->pipelineRepository->getDefaultPipeline();
 
-            $pipeline->leads()->update([
-                'lead_pipeline_id'       => $defaultPipeline->id,
-                'lead_pipeline_stage_id' => $defaultPipeline->stages()->first()->id,
+            $pipeline->initiatives()->update([
+                'initiative_pipeline_id'       => $defaultPipeline->id,
+                'initiative_pipeline_stage_id' => $defaultPipeline->stages()->first()->id,
             ]);
         }
 

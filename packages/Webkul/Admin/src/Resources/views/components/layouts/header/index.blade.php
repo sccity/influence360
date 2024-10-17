@@ -21,7 +21,7 @@
 
                 <input
                     type="text"
-                    class="block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    class="block w-full rounded-3xl border bg-white px-10 py-1.5 initiativeing-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
                     placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
                 >
             </div>
@@ -29,7 +29,7 @@
 
         <!-- Quick create section -->
         <div>
-            @if (bouncer()->hasPermission('leads.create')
+            @if (bouncer()->hasPermission('initiatives.create')
                 || bouncer()->hasPermission('quotes.create')
                 || bouncer()->hasPermission('mail.create')
                 || bouncer()->hasPermission('contacts.persons.create')
@@ -51,14 +51,14 @@
                     <x-slot:content class="mt-2 !p-0">
                         <div class="relative px-2 py-4">
                             <div class="grid grid-cols-3 gap-2 text-center">
-                                <!-- Link to create new Lead -->
-                                @if (bouncer()->hasPermission('leads.create'))
+                                <!-- Link to create new Initiative -->
+                                @if (bouncer()->hasPermission('initiatives.create'))
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
-                                        <a href="{{ route('admin.leads.create') }}">
+                                        <a href="{{ route('admin.initiatives.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-leads text-2xl text-gray-600"></i>
+                                                <i class="icon-initiatives text-2xl text-gray-600"></i>
 
-                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.lead')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.initiative')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -196,7 +196,7 @@
                         />
                     </button>
                 @else
-                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-pink-400 font-semibold leading-6 text-white">
+                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-pink-400 font-semibold initiativeing-6 text-white">
                         {{ substr(auth()->guard('user')->user()->name, 0, 1) }}
                     </button>
                 @endif
@@ -256,7 +256,7 @@
 
             <input
                 type="text"
-                class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 initiativeing-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 :class="{'border-gray-400': isDropdownOpen}"
                 placeholder="@lang('Search')"
                 v-model.lazy="searchTerm"
@@ -342,16 +342,16 @@
                     </template>
                 </template>
 
-                <template v-if="activeTab == 'leads'">
+                <template v-if="activeTab == 'initiatives'">
                     <template v-if="isLoading">
-                        <x-admin::shimmer.header.mega-search.leads />
+                        <x-admin::shimmer.header.mega-search.initiatives />
                     </template>
 
                     <template v-else>
                         <div class="grid max-h-[400px] overflow-y-auto">
-                            <template v-for="lead in searchedResults.leads">
+                            <template v-for="initiative in searchedResults.initiatives">
                                 <a
-                                    :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', lead.id)"
+                                    :href="'{{ route('admin.initiatives.view', ':id') }}'.replace(':id', initiative.id)"
                                     class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
                                 >
                                     <!-- Left Information -->
@@ -359,11 +359,11 @@
                                         <!-- Details -->
                                         <div class="grid place-content-start gap-1.5">
                                             <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
-                                                @{{ lead.title }}
+                                                @{{ initiative.title }}
                                             </p>
 
                                             <p class="text-gray-500">
-                                                @{{ lead.description }}
+                                                @{{ initiative.description }}
                                             </p>
                                         </div>
                                     </div>
@@ -372,7 +372,7 @@
                                     <div class="grid place-content-center gap-1 text-right">
                                         <!-- Formatted Price -->
                                         <p class="font-semibold text-gray-600 dark:text-gray-300">
-                                            @{{ $admin.formatPrice(lead.lead_value) }}
+                                            @{{ $admin.formatPrice(initiative.initiative_value) }}
                                         </p>
                                     </div>
                                 </a>
@@ -380,21 +380,21 @@
                         </div>
 
                         <div class="flex border-t p-3 dark:border-gray-800">
-                            <template v-if="searchedResults.leads.length">
+                            <template v-if="searchedResults.initiatives.length">
                                 <a
-                                    :href="'{{ route('admin.leads.index') }}?search=:query'.replace(':query', searchTerm)"
+                                    :href="'{{ route('admin.initiatives.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
-                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-leads')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-initiatives')`.replace(':query', searchTerm).replace(':count', searchedResults.initiatives.length) }}
                                 </a>
                             </template>
 
                             <template v-else>
                                 <a
-                                    href="{{ route('admin.leads.index') }}"
+                                    href="{{ route('admin.initiatives.index') }}"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
-                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-leads')
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-initiatives')
                                 </a>
                             </template>
                         </div>
@@ -512,16 +512,16 @@
 
             data() {
                 return  {
-                    activeTab: 'leads',
+                    activeTab: 'initiatives',
 
                     isDropdownOpen: false,
 
                     tabs: {
-                        leads: {
-                            key: 'leads',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
+                        initiatives: {
+                            key: 'initiatives',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.initiatives')",
                             is_active: true,
-                            endpoint: "{{ route('admin.leads.search') }}",
+                            endpoint: "{{ route('admin.initiatives.search') }}",
                             query_params: [
                                 {
                                     search: 'title',
@@ -615,7 +615,7 @@
                     searchTerm: '',
 
                     searchedResults: {
-                        leads: [],
+                        initiatives: [],
                         quotes: [],
                         products: [],
                         persons: []

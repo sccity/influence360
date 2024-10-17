@@ -47,8 +47,8 @@
             <!-- Over All Stats -->
             @include('admin::dashboard.index.over-all')
 
-            <!-- Total Leads Stats -->
-            @include('admin::dashboard.index.total-leads')
+            <!-- Total Initiatives Stats -->
+            @include('admin::dashboard.index.total-initiatives')
 
             <div class="flex gap-4 [&>*]:flex-1">
                 <!-- Total Products -->
@@ -66,7 +66,7 @@
 
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
             <!-- Revenue by Types -->
-            @include('admin::dashboard.index.open-leads-by-states')
+            @include('admin::dashboard.index.open-initiatives-by-states')
 
             <!-- Revenue by Sources -->
             @include('admin::dashboard.index.revenue-by-sources')

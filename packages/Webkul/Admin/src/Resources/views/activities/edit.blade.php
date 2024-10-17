@@ -130,17 +130,17 @@
                             </v-multi-lookup-component>
                         </x-admin::form.control-group>
 
-                        <!-- Lead -->
+                        <!-- Initiative -->
                         <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.lead')
+                                @lang('admin::app.activities.edit.initiative')
                             </x-admin::form.control-group.label>
 
                             <x-admin::attributes.edit.lookup/>
 
-                            <!-- Lead Lookup Vue Component -->
+                            <!-- Initiative Lookup Vue Component -->
                             <v-lookup-component
-                                :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                :attribute="{'code': 'initiative_id', 'name': 'Initiative', 'lookup_type': 'initiatives'}"
                                 :value='@json($lookUpEntityData)'
                             >
                                 <x-admin::form.control-group.control

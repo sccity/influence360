@@ -8,7 +8,7 @@
 
 {!! view_render_event('admin.components.activities.before') !!}
 
-<!-- Lead Activities Vue Component -->
+<!-- Initiative Activities Vue Component -->
 <v-activities
     endpoint="{{ $endpoint }}"
     email-detach-endpoint="{{ $emailDetachEndpoint }}"

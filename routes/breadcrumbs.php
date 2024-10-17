@@ -8,28 +8,28 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.dashboard'), route('admin.dashboard.index'));
 });
 
-// Dashboard > Leads
-Breadcrumbs::for('leads', function (BreadcrumbTrail $trail) {
+// Dashboard > Initiatives
+Breadcrumbs::for('initiatives', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push(trans('admin::app.layouts.leads'), route('admin.leads.index'));
+    $trail->push(trans('admin::app.layouts.initiatives'), route('admin.initiatives.index'));
 });
 
-// Dashboard > Leads > Create
-Breadcrumbs::for('leads.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('leads');
-    $trail->push(trans('admin::app.leads.create.title'), route('admin.leads.create'));
+// Dashboard > Initiatives > Create
+Breadcrumbs::for('initiatives.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('initiatives');
+    $trail->push(trans('admin::app.initiatives.create.title'), route('admin.initiatives.create'));
 });
 
-// Leads Edit
-Breadcrumbs::for('leads.edit', function (BreadcrumbTrail $trail, $lead) {
-    $trail->parent('leads');
-    $trail->push(trans('admin::app.leads.edit.title'), route('admin.leads.edit', $lead->id));
+// Initiatives Edit
+Breadcrumbs::for('initiatives.edit', function (BreadcrumbTrail $trail, $initiative) {
+    $trail->parent('initiatives');
+    $trail->push(trans('admin::app.initiatives.edit.title'), route('admin.initiatives.edit', $initiative->id));
 });
 
-// Dashboard > Leads > Title
-Breadcrumbs::for('leads.view', function (BreadcrumbTrail $trail, $lead) {
-    $trail->parent('leads');
-    $trail->push('#'.$lead->id, route('admin.leads.view', $lead->id));
+// Dashboard > Initiatives > Title
+Breadcrumbs::for('initiatives.view', function (BreadcrumbTrail $trail, $initiative) {
+    $trail->parent('initiatives');
+    $trail->push('#'.$initiative->id, route('admin.initiatives.view', $initiative->id));
 });
 
 // Dashboard > Quotes

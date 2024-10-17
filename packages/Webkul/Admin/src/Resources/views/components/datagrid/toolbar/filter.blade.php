@@ -60,7 +60,7 @@
 
                             <div
                                 v-if="hasAnyAppliedColumn() || isFilterDirty"
-                                class="cursor-pointer text-xs font-medium leading-8 text-brandColor hover:underline ltr:ml-11 ltr:mr-11 rtl:mr-11"
+                                class="cursor-pointer text-xs font-medium initiativeing-8 text-brandColor hover:underline ltr:ml-11 ltr:mr-11 rtl:mr-11"
                                 @click="removeAllAppliedFilters()"
                             >
                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -144,7 +144,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -157,7 +157,7 @@
                                                             <x-slot:toggle>
                                                                 <button
                                                                     type="button"
-                                                                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center initiativeing-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                                                 >
                                                                     <!-- If Allow Multiple Values -->
                                                                     <span
@@ -230,7 +230,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -240,7 +240,7 @@
 
                                                     <div class="mt-1.5 grid grid-cols-2 gap-1.5">
                                                         <p
-                                                            class="cursor-pointer rounded-md border px-3 py-2 text-center text-sm font-medium leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-gray-300 dark:hover:border-gray-400"
+                                                            class="cursor-pointer rounded-md border px-3 py-2 text-center text-sm font-medium initiativeing-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-gray-300 dark:hover:border-gray-400"
                                                             v-for="option in column.filterable_options"
                                                             v-text="option.label"
                                                             @click="addFilter(
@@ -318,7 +318,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -375,7 +375,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -385,7 +385,7 @@
 
                                                     <div class="my-4 grid grid-cols-2 gap-1.5">
                                                         <p
-                                                            class="cursor-pointer rounded-md border px-3 py-2 text-center text-sm font-medium leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-gray-300 dark:hover:border-gray-400"
+                                                            class="cursor-pointer rounded-md border px-3 py-2 text-center text-sm font-medium initiativeing-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-gray-300 dark:hover:border-gray-400"
                                                             v-for="option in column.filterable_options"
                                                             v-text="option.label"
                                                             @click="addFilter(
@@ -461,7 +461,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -518,7 +518,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -531,7 +531,7 @@
                                                             <x-slot:toggle>
                                                                 <button
                                                                     type="button"
-                                                                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center initiativeing-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                                                 >
                                                                     <!-- If Allow Multiple Values -->
                                                                     <span
@@ -597,7 +597,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-blue-600"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -644,7 +644,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
+                                                                class="cursor-pointer text-xs font-medium initiativeing-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -655,7 +655,7 @@
                                                     <div class="mb-2 mt-1.5 grid">
                                                         <input
                                                             type="text"
-                                                            class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                            class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm initiativeing-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                                             :name="column.index"
                                                             :placeholder="column.label"
                                                             @keyup.enter="addFilter($event, column)"
@@ -1420,7 +1420,7 @@
             <x-slot:toggle>
                 <button
                     type="button"
-                    class="inline-flex h-[38px] w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                    class="inline-flex h-[38px] w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center initiativeing-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 >
                     <span
                         class="text-sm text-gray-400 dark:text-gray-400" 
@@ -1439,7 +1439,7 @@
                         <ul class="list-reset">
                             <li class="p-2">
                                 <input
-                                    class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                    class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm initiativeing-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     @keyup="lookUp($event)"
                                 >
                             </li>

@@ -47,7 +47,7 @@ class Warehouse extends Model implements WarehouseContract
     }
 
     /**
-     * The tags that belong to the lead.
+     * The tags that belong to the initiative.
      */
     public function tags()
     {

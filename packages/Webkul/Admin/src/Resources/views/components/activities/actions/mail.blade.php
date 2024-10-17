@@ -259,7 +259,7 @@
                 save(params, { resetForm, setErrors  }) {
                     let formData = new FormData(this.$refs.mailActionForm);
 
-                    this.$axios.post("{{ route('admin.leads.emails.store', 'replaceLeadId') }}".replace('replaceLeadId', this.entity.id), formData, {
+                    this.$axios.post("{{ route('admin.initiatives.emails.store', 'replaceInitiativeId') }}".replace('replaceInitiativeId', this.entity.id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }

@@ -13,13 +13,13 @@ class TypeDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('lead_types')
+        $queryBuilder = DB::table('initiative_types')
             ->addSelect(
-                'lead_types.id',
-                'lead_types.name'
+                'initiative_types.id',
+                'initiative_types.name'
             );
 
-        $this->addFilter('id', 'lead_types.id');
+        $this->addFilter('id', 'initiative_types.id');
 
         return $queryBuilder;
     }
@@ -51,7 +51,7 @@ class TypeDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        if (bouncer()->hasPermission('settings.lead.types.edit')) {
+        if (bouncer()->hasPermission('settings.initiative.types.edit')) {
             $this->addAction([
                 'index'  => 'edit',
                 'icon'   => 'icon-edit',
@@ -61,7 +61,7 @@ class TypeDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('settings.lead.types.delete')) {
+        if (bouncer()->hasPermission('settings.initiative.types.delete')) {
             $this->addAction([
                 'index'  => 'delete',
                 'icon'   => 'icon-delete',

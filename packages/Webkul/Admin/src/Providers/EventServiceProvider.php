@@ -16,8 +16,8 @@ class EventServiceProvider extends ServiceProvider
             'Webkul\Admin\Listeners\Person@linkToEmail',
         ],
 
-        'lead.create.after' => [
-            'Webkul\Admin\Listeners\Lead@linkToEmail',
+        'initiative.create.after' => [
+            'Webkul\Admin\Listeners\Initiative@linkToEmail',
         ],
 
         'activity.create.after' => [
