@@ -115,35 +115,34 @@
                                             </p>
 
                                             <template v-if="activity.type == 'email'">
-                                                <p class="dark:text-white">
+                                                <p v-if="activity.additional && activity.additional.from" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.from'):
-
+                                                
                                                     @{{ activity.additional.from }}
                                                 </p>
 
-                                                <p class="dark:text-white">
-                                                    @lang('admin::app.components.activities.index.to'):
+                                          <!-- 'To' Field with Null and Array Check -->
+                                            <p v-if="activity.additional && Array.isArray(activity.additional.to) && activity.additional.to.length" class="dark:text-white">
+                                                @lang('admin::app.components.activities.index.to'):
 
-                                                    @{{ activity.additional.to.join(', ') }}
-                                                </p>
+                                                @{{ activity.additional.to.join(', ') }}
+                                            </p>
 
-                                                <p
-                                                    v-if="activity.additional.cc"
-                                                    class="dark:text-white"
-                                                >
-                                                    @lang('admin::app.components.activities.index.cc'):
 
-                                                    @{{ activity.additional.cc.join(', ') }}
-                                                </p>
+                                              <!-- 'CC' Field -->
+                                            <p v-if="activity.additional && Array.isArray(activity.additional.cc) && activity.additional.cc.length" class="dark:text-white">
+                                                @lang('admin::app.components.activities.index.cc'):
 
-                                                <p
-                                                    v-if="activity.additional.bcc"
-                                                    class="dark:text-white"
-                                                >
-                                                    @lang('admin::app.components.activities.index.bcc'):
+                                                @{{ activity.additional.cc.join(', ') }}
+                                            </p>
 
-                                                    @{{ activity.additional.bcc.join(', ') }}
-                                                </p>
+                                            <!-- 'BCC' Field -->
+                                            <p v-if="activity.additional && Array.isArray(activity.additional.bcc) && activity.additional.bcc.length" class="dark:text-white">
+                                                @lang('admin::app.components.activities.index.bcc'):
+
+                                                @{{ activity.additional.bcc.join(', ') }}
+                                            </p>
+
                                             </template>
 
                                             <template v-else>
@@ -158,16 +157,15 @@
                                                 </p>
 
                                                 <!-- Activity Participants -->
-                                                <p
-                                                    v-if="activity.participants?.length"
-                                                    class="dark:text-white"
-                                                >
-                                                    @lang('admin::app.components.activities.index.participants'):
+                                             <!-- Participants with Array Check -->
+                                            <p v-if="Array.isArray(activity.participants) && activity.participants.length" class="dark:text-white">
+                                                @lang('admin::app.components.activities.index.participants'):
 
-                                                    <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
-                                                        @{{ participant.user?.name ?? participant.person.name }}
-                                                    </span>
-                                                </p>
+                                                <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
+                                                    @{{ participant.user?.name ?? participant.person.name }}
+                                                </span>
+                                            </p>
+
 
                                                 <!-- Activity Location -->
                                                 <p
@@ -197,10 +195,8 @@
                                         {!! view_render_event('admin.components.activities.content.activity.item.attachments.before') !!}
 
                                         <!-- Attachments -->
-                                        <div
-                                            class="flex flex-wrap gap-2"
-                                            v-if="activity.files.length"
-                                        >
+                                        <div class="flex flex-wrap gap-2" v-if="Array.isArray(activity.files) && activity.files.length">
+
                                             <a
                                                 :href="
                                                     activity.type == 'email'
