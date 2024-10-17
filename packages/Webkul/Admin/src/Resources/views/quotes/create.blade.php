@@ -1,11 +1,11 @@
 @php
     $quote = app('\Webkul\Quote\Repositories\QuoteRepository')->getModel();
 
-    if (isset($lead)) {
+    if (isset($initiative)) {
         $quote->fill([
-            'person_id'       => $lead->person_id,
-            'user_id'         => $lead->user_id,
-            'billing_address' => $lead->person->organization ? $lead->person->organization->address : null
+            'person_id'       => $initiative->person_id,
+            'user_id'         => $initiative->user_id,
+            'billing_address' => $initiative->person->organization ? $initiative->person->organization->address : null
         ]);
     }
 @endphp
@@ -170,16 +170,16 @@
                                 <x-admin::attributes.edit.lookup />
                                 
                                 @php
-                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
+                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('initiatives', request('id'));
                                 @endphp
 
                                 <x-admin::form.control-group class="w-full">
                                     <x-admin::form.control-group.label>
-                                        @lang('admin::app.quotes.create.link-to-lead')
+                                        @lang('admin::app.quotes.create.link-to-initiative')
                                     </x-admin::form.control-group.label>
             
                                     <v-lookup-component
-                                        :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                        :attribute="{'code': 'initiative_id', 'name': 'Initiative', 'lookup_type': 'initiatives'}"
                                         :value='@json($lookUpEntityData)'
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>

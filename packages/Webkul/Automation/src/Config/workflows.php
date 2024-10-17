@@ -3,18 +3,18 @@
 return [
     'trigger_entities' => [
 
-        'leads' => [
-            'name'   => 'Leads',
-            'class'  => 'Webkul\Automation\Helpers\Entity\Lead',
+        'initiatives' => [
+            'name'   => 'Initiatives',
+            'class'  => 'Webkul\Automation\Helpers\Entity\Initiative',
             'events' => [
                 [
-                    'event' => 'lead.create.after',
+                    'event' => 'initiative.create.after',
                     'name'  => 'Created',
                 ], [
-                    'event' => 'lead.update.after',
+                    'event' => 'initiative.update.after',
                     'name'  => 'Updated',
                 ], [
-                    'event' => 'lead.delete.before',
+                    'event' => 'initiative.delete.before',
                     'name'  => 'Deleted',
                 ],
             ],

@@ -102,7 +102,7 @@
                     <div class="flex items-center justify-between p-4">
                         <!-- Back Button-->
                         <a
-                            class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
+                            class="cursor-pointer text-xs font-semibold initiativeing-6 text-brandColor"
                             href="{{ route('admin.session.create') }}"
                         >
                             @lang('admin::app.users.reset-password.back-link-title')

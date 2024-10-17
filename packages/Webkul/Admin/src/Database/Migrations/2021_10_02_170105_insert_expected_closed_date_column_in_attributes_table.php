@@ -19,7 +19,7 @@ return new class extends Migration
                 'code'            => 'expected_close_date',
                 'name'            => 'Expected Close Date',
                 'type'            => 'date',
-                'entity_type'     => 'leads',
+                'entity_type'     => 'initiatives',
                 'lookup_type'     => null,
                 'validation'      => null,
                 'sort_order'      => '8',

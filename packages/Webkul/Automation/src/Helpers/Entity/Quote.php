@@ -9,7 +9,7 @@ use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 use Webkul\Quote\Contracts\Quote as ContractsQuote;
 use Webkul\Quote\Repositories\QuoteRepository;
 
@@ -29,7 +29,7 @@ class Quote extends AbstractEntity
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository,
         protected QuoteRepository $quoteRepository,
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected PersonRepository $personRepository,
         protected WebhookRepository $webhookRepository,
         protected WebhookService $webhookService
@@ -66,9 +66,9 @@ class Quote extends AbstractEntity
                 'name'       => trans('admin::app.settings.workflows.helpers.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
-                'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
-                'attributes' => $this->getAttributes('leads'),
+                'id'         => 'update_related_initiatives',
+                'name'       => trans('admin::app.settings.workflows.helpers.update-related-initiatives'),
+                'attributes' => $this->getAttributes('initiatives'),
             ], [
                 'id'      => 'send_email_to_person',
                 'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-person'),
@@ -108,12 +108,12 @@ class Quote extends AbstractEntity
 
                     break;
 
-                case 'update_related_leads':
-                    foreach ($quote->leads as $lead) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
+                case 'update_related_initiatives':
+                    foreach ($quote->initiatives as $initiative) {
+                        $this->initiativeRepository->update([
+                            'entity_type'        => 'initiatives',
                             $action['attribute'] => $action['value'],
-                        ], $lead->id);
+                        ], $initiative->id);
                     }
 
                     break;

@@ -13,13 +13,13 @@ class SourceDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('lead_sources')
+        $queryBuilder = DB::table('initiative_sources')
             ->addSelect(
-                'lead_sources.id',
-                'lead_sources.name'
+                'initiative_sources.id',
+                'initiative_sources.name'
             );
 
-        $this->addFilter('id', 'lead_sources.id');
+        $this->addFilter('id', 'initiative_sources.id');
 
         return $queryBuilder;
     }
@@ -51,7 +51,7 @@ class SourceDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        if (bouncer()->hasPermission('settings.lead.sources.edit')) {
+        if (bouncer()->hasPermission('settings.initiative.sources.edit')) {
             $this->addAction([
                 'index'  => 'edit',
                 'icon'   => 'icon-edit',
@@ -61,7 +61,7 @@ class SourceDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('settings.lead.sources.delete')) {
+        if (bouncer()->hasPermission('settings.initiative.sources.delete')) {
             $this->addAction([
                 'index'  => 'delete',
                 'icon'   => 'icon-delete',

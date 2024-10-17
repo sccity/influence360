@@ -5,7 +5,7 @@ namespace Webkul\Quote\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Models\PersonProxy;
-use Webkul\Lead\Models\LeadProxy;
+use Webkul\Initiative\Models\InitiativeProxy;
 use Webkul\Quote\Contracts\Quote as QuoteContract;
 use Webkul\User\Models\UserProxy;
 
@@ -67,10 +67,10 @@ class Quote extends Model implements QuoteContract
     }
 
     /**
-     * The leads that belong to the quote.
+     * The initiatives that belong to the quote.
      */
-    public function leads()
+    public function initiatives()
     {
-        return $this->belongsToMany(LeadProxy::modelClass(), 'lead_quotes');
+        return $this->belongsToMany(InitiativeProxy::modelClass(), 'initiative_quotes');
     }
 }

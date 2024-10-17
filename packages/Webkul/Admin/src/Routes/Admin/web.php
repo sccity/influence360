@@ -6,9 +6,9 @@
 require 'auth-routes.php';
 
 /**
- * Leads routes.
+ * Initiatives routes.
  */
-require 'leads-routes.php';
+require 'initiatives-routes.php';
 
 /**
  * Email routes.

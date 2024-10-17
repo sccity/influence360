@@ -14,12 +14,12 @@ class DashboardController extends Controller
     protected $typeFunctions = [
         'over-all'             => 'getOverAllStats',
         'revenue-stats'        => 'getRevenueStats',
-        'total-leads'          => 'getTotalLeadsStats',
-        'revenue-by-sources'   => 'getLeadsStatsBySources',
-        'revenue-by-types'     => 'getLeadsStatsByTypes',
+        'total-initiatives'          => 'getTotalInitiativesStats',
+        'revenue-by-sources'   => 'getInitiativesStatsBySources',
+        'revenue-by-types'     => 'getInitiativesStatsByTypes',
         'top-selling-products' => 'getTopSellingProducts',
         'top-persons'          => 'getTopPersons',
-        'open-leads-by-states' => 'getOpenLeadsByStates',
+        'open-initiatives-by-states' => 'getOpenInitiativesByStates',
     ];
 
     /**

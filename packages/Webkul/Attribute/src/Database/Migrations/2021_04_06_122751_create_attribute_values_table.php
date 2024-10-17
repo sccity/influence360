@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('entity_type')->default('leads');
+            $table->string('entity_type')->default('initiatives');
             $table->text('text_value')->nullable();
             $table->boolean('boolean_value')->nullable();
             $table->integer('integer_value')->nullable();

@@ -32,7 +32,7 @@ class EmailResource extends JsonResource
             'message_id'    => $this->message_id,
             'reference_ids' => $this->reference_ids,
             'person'        => new PersonResource($this->person),
-            'lead'          => new LeadResource($this->lead),
+            'initiative'          => new InitiativeResource($this->initiative),
             'parent_id'     => $this->parent_id,
             'parent'        => new EmailResource($this->parent),
             'attachments'   => EmailAttachmentResource::collection($this->attachments),

@@ -1,30 +1,30 @@
 <?php
 
 return [
-    'leads' => [
-        'name'         => 'Leads',
-        'repository'   => 'Webkul\Lead\Repositories\LeadRepository',
+    'initiatives' => [
+        'name'         => 'Initiatives',
+        'repository'   => 'Webkul\Initiative\Repositories\InitiativeRepository',
         'label_column' => 'title',
     ],
 
-    'lead_sources' => [
-        'name'         => 'Lead Sources',
-        'repository'   => 'Webkul\Lead\Repositories\SourceRepository',
+    'initiative_sources' => [
+        'name'         => 'Initiative Sources',
+        'repository'   => 'Webkul\Initiative\Repositories\SourceRepository',
     ],
 
-    'lead_types' => [
-        'name'         => 'Lead Types',
-        'repository'   => 'Webkul\Lead\Repositories\TypeRepository',
+    'initiative_types' => [
+        'name'         => 'Initiative Types',
+        'repository'   => 'Webkul\Initiative\Repositories\TypeRepository',
     ],
 
-    'lead_pipelines' => [
-        'name'         => 'Lead Pipelines',
-        'repository'   => 'Webkul\Lead\Repositories\PipelineRepository',
+    'initiative_pipelines' => [
+        'name'         => 'Initiative Pipelines',
+        'repository'   => 'Webkul\Initiative\Repositories\PipelineRepository',
     ],
 
-    'lead_pipeline_stages' => [
-        'name'         => 'Lead Pipeline Stages',
-        'repository'   => 'Webkul\Lead\Repositories\StageRepository',
+    'initiative_pipeline_stages' => [
+        'name'         => 'Initiative Pipeline Stages',
+        'repository'   => 'Webkul\Initiative\Repositories\StageRepository',
     ],
 
     'users' => [

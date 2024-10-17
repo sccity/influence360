@@ -34,7 +34,7 @@ class TagController extends Controller
         Event::dispatch('products.tag.create.after', $product);
 
         return response()->json([
-            'message' => trans('admin::app.leads.view.tags.create-success'),
+            'message' => trans('admin::app.initiatives.view.tags.create-success'),
         ]);
     }
 
@@ -55,7 +55,7 @@ class TagController extends Controller
         Event::dispatch('products.tag.delete.after', $product);
 
         return response()->json([
-            'message' => trans('admin::app.leads.view.tags.destroy-success'),
+            'message' => trans('admin::app.initiatives.view.tags.destroy-success'),
         ]);
     }
 }

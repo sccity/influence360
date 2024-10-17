@@ -11,7 +11,7 @@ use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
-use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 
 class Person extends AbstractEntity
 {
@@ -28,7 +28,7 @@ class Person extends AbstractEntity
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository,
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected PersonRepository $personRepository,
         protected WebhookRepository $webhookRepository,
         protected WebhookService $webhookService
@@ -61,9 +61,9 @@ class Person extends AbstractEntity
                 'name'       => trans('admin::app.settings.workflows.helpers.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
-                'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
-                'attributes' => $this->getAttributes('leads'),
+                'id'         => 'update_related_initiatives',
+                'name'       => trans('admin::app.settings.workflows.helpers.update-related-initiatives'),
+                'attributes' => $this->getAttributes('initiatives'),
             ], [
                 'id'      => 'send_email_to_person',
                 'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-person'),
@@ -91,14 +91,14 @@ class Person extends AbstractEntity
 
                     break;
 
-                case 'update_related_leads':
-                    $leads = $this->leadRepository->findByField('person_id', $person->id);
+                case 'update_related_initiatives':
+                    $initiatives = $this->initiativeRepository->findByField('person_id', $person->id);
 
-                    foreach ($leads as $lead) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
+                    foreach ($initiatives as $initiative) {
+                        $this->initiativeRepository->update([
+                            'entity_type'        => 'initiatives',
                             $action['attribute'] => $action['value'],
-                        ], $lead->id);
+                        ], $initiative->id);
                     }
 
                     break;

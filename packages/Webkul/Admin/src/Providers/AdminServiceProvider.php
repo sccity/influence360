@@ -44,7 +44,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(ExceptionHandler::class, Handler::class);
 
         Relation::morphMap([
-            'leads'         => \Webkul\Lead\Models\Lead::class,
+            'initiatives'         => \Webkul\Initiative\Models\Initiative::class,
             'organizations' => \Webkul\Contact\Models\Organization::class,
             'persons'       => \Webkul\Contact\Models\Person::class,
             'products'      => \Webkul\Product\Models\Product::class,

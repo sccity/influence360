@@ -13,15 +13,15 @@ class PipelineDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('lead_pipelines')
+        $queryBuilder = DB::table('initiative_pipelines')
             ->addSelect(
-                'lead_pipelines.id',
-                'lead_pipelines.name',
-                'lead_pipelines.rotten_days',
-                'lead_pipelines.is_default',
+                'initiative_pipelines.id',
+                'initiative_pipelines.name',
+                'initiative_pipelines.rotten_days',
+                'initiative_pipelines.is_default',
             );
 
-        $this->addFilter('id', 'lead_pipelines.id');
+        $this->addFilter('id', 'initiative_pipelines.id');
 
         return $queryBuilder;
     }
@@ -70,7 +70,7 @@ class PipelineDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        if (bouncer()->hasPermission('settings.lead.pipelines.edit')) {
+        if (bouncer()->hasPermission('settings.initiative.pipelines.edit')) {
             $this->addAction([
                 'index'  => 'edit',
                 'icon'   => 'icon-edit',
@@ -80,7 +80,7 @@ class PipelineDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('settings.lead.pipelines.delete')) {
+        if (bouncer()->hasPermission('settings.initiative.pipelines.delete')) {
             $this->addAction([
                 'index'  => 'delete',
                 'icon'   => 'icon-delete',

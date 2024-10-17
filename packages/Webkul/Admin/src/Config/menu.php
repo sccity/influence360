@@ -13,14 +13,14 @@ return [
     ],
 
     /**
-     * Leads.
+     * Initiatives.
      */
     [
-        'key'        => 'leads',
+        'key'        => 'initiatives',
         'name'       => 'Initiatives',
-        'route'      => 'admin.leads.index',
+        'route'      => 'admin.initiatives.index',
         'sort'       => 2,
-        'icon-class' => 'icon-leads',
+        'icon-class' => 'icon-initiatives',
     ],
 
 
@@ -151,28 +151,28 @@ return [
         'sort'       => 3,
         'icon-class' => 'icon-user',
     ], [
-        'key'        => 'settings.lead',
-        'name'       => 'admin::app.layouts.lead',
-        'info'       => 'admin::app.layouts.lead-info',
+        'key'        => 'settings.initiative',
+        'name'       => 'admin::app.layouts.initiative',
+        'info'       => 'admin::app.layouts.initiative-info',
         'route'      => 'admin.settings.pipelines.index',
         'sort'       => 2,
         'icon-class' => '',
     ], [
-        'key'        => 'settings.lead.pipelines',
+        'key'        => 'settings.initiative.pipelines',
         'name'       => 'admin::app.layouts.pipelines',
         'info'       => 'admin::app.layouts.pipelines-info',
         'route'      => 'admin.settings.pipelines.index',
         'sort'       => 1,
         'icon-class' => 'icon-settings-pipeline',
     ], [
-        'key'        => 'settings.lead.sources',
+        'key'        => 'settings.initiative.sources',
         'name'       => 'admin::app.layouts.sources',
         'info'       => 'admin::app.layouts.sources-info',
         'route'      => 'admin.settings.sources.index',
         'sort'       => 2,
         'icon-class' => 'icon-settings-sources',
     ], [
-        'key'        => 'settings.lead.types',
+        'key'        => 'settings.initiative.types',
         'name'       => 'admin::app.layouts.types',
         'info'       => 'admin::app.layouts.types-info',
         'route'      => 'admin.settings.types.index',

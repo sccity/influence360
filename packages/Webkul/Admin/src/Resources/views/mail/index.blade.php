@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
                                 
-                                    <p class="overflow-hidden text-ellipsis whitespace-nowrap leading-none">@{{ record.name }}</p>
+                                    <p class="overflow-hidden text-ellipsis whitespace-nowrap initiativeing-none">@{{ record.name }}</p>
                                 </div>
 
                                 <div class="flex w-full items-center justify-between gap-4">
@@ -162,7 +162,7 @@
                                 
                                     <!-- Time -->
                                     <div class="min-w-[80px] flex-shrink-0 text-right">
-                                        <p class="leading-none">@{{ record.created_at }}</p>
+                                        <p class="initiativeing-none">@{{ record.created_at }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -54,7 +54,7 @@
                         {{ $child->getName() }}
                     </p>
 
-                    <p class="leading-[140%] text-gray-600 dark:text-gray-300">
+                    <p class="initiativeing-[140%] text-gray-600 dark:text-gray-300">
                         {!! $child->getInfo() !!}
                     </p>
                 </div>

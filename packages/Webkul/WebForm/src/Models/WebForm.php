@@ -14,7 +14,7 @@ class WebForm extends Model implements WebFormContract
         'submit_button_label',
         'submit_success_action',
         'submit_success_content',
-        'create_lead',
+        'create_initiative',
         'background_color',
         'form_background_color',
         'form_title_color',
