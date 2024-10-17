@@ -14,9 +14,10 @@ use Webkul\Activity\Repositories\ActivityRepository;
 
 class BillFileController extends Controller
 {
-    public function __construct(protected BillFileRepository $billFileRepository)
-    {
-    }
+    public function __construct(
+        protected BillFileRepository $billFileRepository,
+        protected ActivityRepository $activityRepository 
+    ) {}
 
     public function index(): View|JsonResponse
     {
@@ -117,14 +118,15 @@ class BillFileController extends Controller
     public function activities($id)
     {
         $billFile = $this->billFileRepository->findOrFail($id);
-
-        $activities = $this->activityRepository
-            ->leftJoin('bill_file_activities', 'activities.id', '=', 'bill_file_activities.activity_id')
-            ->where('bill_file_activities.bill_file_id', $id)
+        
+        $activities = $billFile->activities()
+            ->with(['user', 'participants', 'files'])
+            ->orderByDesc('created_at')
             ->get();
-
-        return ActivityResource::collection($this->concatEmail($activities));
+        
+        return ActivityResource::collection($activities);
     }
+    
 
     protected function concatEmail($activities)
     {
@@ -151,4 +153,5 @@ class BillFileController extends Controller
             ], 500);
         }
     }
+
 }

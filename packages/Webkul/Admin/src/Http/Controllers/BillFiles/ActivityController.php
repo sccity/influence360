@@ -8,6 +8,7 @@ use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Email\Repositories\EmailRepository;
+use Webkul\BillFiles\Repositories\BillFileRepository;
 
 class ActivityController extends Controller
 {
@@ -17,6 +18,7 @@ class ActivityController extends Controller
      * @return void
      */
     public function __construct(
+        protected BillFileRepository $billFileRepository,
         protected ActivityRepository $activityRepository,
         protected EmailRepository $emailRepository
     ) {}
@@ -29,13 +31,17 @@ class ActivityController extends Controller
      */
     public function index($id)
     {
-        $activities = $this->activityRepository
-            ->leftJoin('bill_file_activities', 'activities.id', '=', 'bill_file_activities.activity_id')
-            ->where('bill_file_activities.bill_file_id', $id)
+        $billFile = $this->billFileRepository->findOrFail($id);
+    
+        $activities = $billFile->activities()
+            ->with(['user', 'participants', 'files'])
+            ->orderByDesc('created_at')
             ->get();
-
-        return ActivityResource::collection($this->concatEmail($activities));
+    
+        return ActivityResource::collection($activities);
     }
+    
+    
 
     /**
      * Concatenate email and sort activities.
@@ -108,6 +114,8 @@ class ActivityController extends Controller
         $data['type'] = 'email';
         $data['schedule_to'] = $data['schedule_from'];
         $data['is_done'] = 1;
+        $data['user_id'] = auth()->id();
+
 
         $activity = $this->activityRepository->create($data);
 

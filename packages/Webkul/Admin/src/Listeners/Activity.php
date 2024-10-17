@@ -55,7 +55,7 @@ class Activity
             }
         } elseif (request()->input('bill_file_id')) {
             $billFile = $this->billFileRepository->find(request()->input('bill_file_id'));
-
+        
             if (! $billFile->activities->contains($activity->id)) {
                 $billFile->activities()->attach($activity->id);
             }
