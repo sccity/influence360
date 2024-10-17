@@ -15,12 +15,15 @@ Route::group(['prefix' => 'bill-files'], function () {
         Route::delete('{id}', 'destroy')->name('admin.bill-files.delete');
         Route::post('mass-destroy', 'massDestroy')->name('admin.bill-files.mass_delete');
         
-        // New route for toggling is_tracked status
+        // Route for toggling is_tracked status
         Route::post('{id}/toggle-tracked', 'toggleTracked')->name('admin.bill-files.toggle-tracked');
     });
 
-    Route::controller(BillFileActivityController::class)->prefix('{id}/activities')->group(function () {
-        Route::get('', 'index')->name('admin.bill-files.activities.index');
-        Route::post('store', 'store')->name('admin.bill-files.activities.store');
+    Route::controller(BillFileActivityController::class)->group(function () {
+        // Existing route for activities index
+        Route::get('{id}/activities', 'index')->name('admin.bill-files.activities.index');
+
+        // New route for storing bill file mail activity
+        Route::post('mail-activity', 'storeBillFileMailActivity')->name('admin.bill-files.mail-activity.store');
     });
 });

@@ -2,6 +2,8 @@
 
 namespace Webkul\Admin\Http\Controllers\BillFiles;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Event;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
@@ -46,39 +48,87 @@ class ActivityController extends Controller
         return $activities->sortByDesc('id')->sortByDesc('created_at');
     }
 
-    public function store()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(): JsonResponse
     {
         $this->validate(request(), [
             'type'          => 'required',
             'title'         => 'required_if:type,email',
-            'comment'       => 'required_if:type,email',
-            'schedule_from' => 'required_if:type,email',
+            'comment'       => 'required_if:type,email,note',
+            'schedule_from' => 'required_unless:type,note,file',
+            'schedule_to'   => 'required_unless:type,note,file,email',
         ]);
 
         Event::dispatch('activity.create.before');
 
-        $activity = $this->activityRepository->create(array_merge(request()->all(), [
-            'schedule_to' => request('schedule_from'), // For email activities, set schedule_to same as schedule_from
-            'is_done'     => 1, // Emails are always marked as done
-            'user_id'     => auth()->guard('user')->user()->id,
-        ]));
+        $data = request()->all();
+
+        if ($data['type'] === 'email') {
+            $data['schedule_to'] = $data['schedule_from'];
+            $data['is_done'] = 1;
+        }
+
+        $activity = $this->activityRepository->create($data);
 
         if (request()->has('participants')) {
-            foreach (request('participants')['users'] ?? [] as $userId) {
-                $activity->participants()->create([
-                    'user_id' => $userId,
-                ]);
-            }
-
-            foreach (request('participants')['persons'] ?? [] as $personId) {
-                $activity->participants()->create([
-                    'person_id' => $personId,
-                ]);
+            foreach (request('participants') as $participantType => $participantIds) {
+                foreach ($participantIds as $participantId) {
+                    $activity->participants()->create([
+                        $participantType === 'users' ? 'user_id' : 'person_id' => $participantId,
+                    ]);
+                }
             }
         }
 
         Event::dispatch('activity.create.after', $activity);
 
-        return new ActivityResource($activity);
+        return new JsonResponse([
+            'message' => trans('admin::app.activities.create-success'),
+            'data'    => new ActivityResource($activity),
+        ]);
+    }
+
+    public function storeBillFileMailActivity(): JsonResponse
+    {
+        $this->validate(request(), [
+            'title'         => 'required',
+            'comment'       => 'required',
+            'schedule_from' => 'required|date',
+            'bill_file_id'  => 'required|exists:bill_files,id',
+            'participants'  => 'sometimes|array',
+        ]);
+
+        Event::dispatch('activity.create.before');
+
+        $data = request()->all();
+        $data['type'] = 'email';
+        $data['schedule_to'] = $data['schedule_from'];
+        $data['is_done'] = 1;
+
+        $activity = $this->activityRepository->create($data);
+
+        if (request()->has('participants')) {
+            foreach (request('participants') as $participantType => $participantIds) {
+                foreach ($participantIds as $participantId) {
+                    $activity->participants()->create([
+                        $participantType === 'users' ? 'user_id' : 'person_id' => $participantId,
+                    ]);
+                }
+            }
+        }
+
+        // Create the bill file activity relationship
+        $activity->billFiles()->attach($data['bill_file_id']);
+
+        Event::dispatch('activity.create.after', $activity);
+
+        return new JsonResponse([
+            'message' => trans('admin::app.activities.create-success'),
+            'data'    => new ActivityResource($activity),
+        ]);
     }
 }
