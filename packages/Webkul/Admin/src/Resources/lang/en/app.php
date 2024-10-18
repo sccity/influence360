@@ -2132,7 +2132,7 @@ return [
 
    'layouts' => [
     'app-version'          => 'Version : :version',
-    'dashboard'            => 'Dashboard',
+    'dashboard'            => 'Influence360',
     'initiatives'                => 'Initiatives',
     'bill-files'           => 'Bill Files',
     'quotes'               => 'Quotes',
