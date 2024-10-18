@@ -127,9 +127,9 @@ class ActivityController extends Controller
     {
         $activity = $this->activityRepository->findOrFail($id);
 
-        $initiativeId = old('initiative_id') ?? optional($activity->initiatives()->first())->id;
+        $leadId = old('lead_id') ?? optional($activity->leads()->first())->id;
 
-        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('initiatives', $initiativeId);
+        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
 
         return view('admin::activities.edit', compact('activity', 'lookUpEntityData'));
     }
