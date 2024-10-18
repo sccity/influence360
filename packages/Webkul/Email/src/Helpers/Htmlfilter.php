@@ -895,7 +895,7 @@ class Htmlfilter
                 }
             }
 
-            // Outlook defines a white bgcolor and no text color. This can lead to
+            // Outlook defines a white bgcolor and no text color. This can initiative to
             // white text on a white bg with certain themes.
             if ($has_bgc_stl && ! $has_txt_stl) {
                 $styledef .= "color: $text; ";

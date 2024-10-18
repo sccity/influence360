@@ -25,7 +25,7 @@
                 {!! view_render_event('admin.settings.sources.index.create_button.before') !!}
                 
                 <!-- Create button for Sources -->
-                @if (bouncer()->hasPermission('settings.lead.sources.create'))
+                @if (bouncer()->hasPermission('settings.initiative.sources.create'))
                     <div class="flex items-center gap-x-2.5">
                         <button
                             type="button"

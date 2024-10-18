@@ -3,10 +3,10 @@
 return [
     'seeders' => [
         'attributes' => [
-            'leads' => [
+            'initiatives' => [
                 'description'         => 'الوصف',
                 'expected-close-date' => 'تاريخ الإغلاق المتوقع',
-                'lead-value'          => 'قيمة العميل المحتمل',
+                'initiative-value'          => 'قيمة العميل المحتمل',
                 'sales-owner'         => 'مالك المبيعات',
                 'source'              => 'المصدر',
                 'title'               => 'العنوان',
@@ -73,7 +73,7 @@ return [
             'type'                  => 'النوع',
         ],
 
-        'lead' => [
+        'initiative' => [
             'pipeline' => [
                 'default' => 'مجرى العمل الافتراضي',
 

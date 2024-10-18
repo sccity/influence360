@@ -42,11 +42,11 @@ class WebForm extends FormRequest
      */
     public function rules()
     {
-        foreach (['leads', 'persons'] as $key => $entityType) {
+        foreach (['initiatives', 'persons'] as $key => $entityType) {
             $attributes = $this->attributeRepository->scopeQuery(function ($query) use ($entityType) {
                 $attributeCodes = $entityType == 'persons'
                     ? array_keys(request('persons') ?? [])
-                    : array_keys(request('leads') ?? []);
+                    : array_keys(request('initiatives') ?? []);
 
                 $query = $query->whereIn('code', $attributeCodes)
                     ->where('entity_type', $entityType);

@@ -2,8 +2,8 @@
 
 return [
     'acl' => [
-        'leads'           => 'Potansiyeller',
-        'lead'            => 'Potansiyel',
+        'initiatives'           => 'Potansiyeller',
+        'initiative'            => 'Potansiyel',
         'quotes'          => 'Teklifler',
         'mail'            => 'Posta',
         'inbox'           => 'Gelen Kutusu',
@@ -364,18 +364,18 @@ return [
                     'title'   => 'Arama',
 
                     'tabs' => [
-                        'leads'    => 'Müşteriler',
+                        'initiatives'    => 'Müşteriler',
                         'quotes'   => 'Teklifler',
                         'persons'  => 'Kişiler',
                         'products' => 'Ürünler',
                     ],
 
                     'explore-all-products'          => 'Tüm Ürünleri Keşfet',
-                    'explore-all-leads'             => 'Tüm Müşterileri Keşfet',
+                    'explore-all-initiatives'             => 'Tüm Müşterileri Keşfet',
                     'explore-all-contacts'          => 'Tüm İletişimleri Keşfet',
                     'explore-all-quotes'            => 'Tüm Teklifleri Keşfet',
                     'explore-all-matching-products' => '":query" (:count) ile eşleşen tüm ürünleri keşfet',
-                    'explore-all-matching-leads'    => '":query" (:count) ile eşleşen tüm müşterileri keşfet',
+                    'explore-all-matching-initiatives'    => '":query" (:count) ile eşleşen tüm müşterileri keşfet',
                     'explore-all-matching-contacts' => '":query" (:count) ile eşleşen tüm iletişimleri keşfet',
                     'explore-all-matching-quotes'   => '":query" (:count) ile eşleşen tüm teklifleri keşfet',
                 ],
@@ -466,7 +466,7 @@ return [
             'address-info-info' => 'Teklif ile ilgili adres bilgileri.',
             'quote-items'       => 'Teklif Kalemleri',
             'search-products'   => 'Ürünleri Ara',
-            'link-to-lead'      => 'Potansiyele Bağla',
+            'link-to-initiative'      => 'Potansiyele Bağla',
             'quote-item-info'   => 'Bu teklif için ürün talebi ekleyin.',
             'quote-name'        => 'Teklif Adı',
             'quantity'          => 'Miktar',
@@ -496,7 +496,7 @@ return [
             'address-info'      => 'Adres Bilgileri',
             'address-info-info' => 'Teklif ile ilgili adres bilgileri.',
             'quote-items'       => 'Teklif Kalemleri',
-            'link-to-lead'      => 'Potansiyele Bağla',
+            'link-to-initiative'      => 'Potansiyele Bağla',
             'quote-item-info'   => 'Bu teklif için ürün talebi ekleyin.',
             'quote-name'        => 'Teklif Adı',
             'quantity'          => 'Miktar',
@@ -878,11 +878,11 @@ return [
             ],
 
             'helpers' => [
-                'update-related-leads'       => 'İlgili fırsatları güncelle',
+                'update-related-initiatives'       => 'İlgili fırsatları güncelle',
                 'send-email-to-sales-owner'  => 'Satış sahibiyle e-posta gönder',
                 'send-email-to-participants' => 'Katılımcılara e-posta gönder',
                 'add-webhook'                => 'Webhook Ekle',
-                'update-lead'                => 'Fırsatı Güncelle',
+                'update-initiative'                => 'Fırsatı Güncelle',
                 'update-person'              => 'Kişiyi Güncelle',
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
@@ -984,7 +984,7 @@ return [
                 'attributes'               => 'Öznitelikler',
                 'attributes-info'          => 'Forma özel öznitelikler ekleyin.',
                 'background-color'         => 'Arka Plan Rengi',
-                'create-lead'              => 'Fırsat Oluştur',
+                'create-initiative'              => 'Fırsat Oluştur',
                 'customize-webform'        => 'Web Formunu Özelleştir',
                 'customize-webform-info'   => 'Web formunuzu seçtiğiniz eleman renkleri ile özelleştirin.',
                 'description'              => 'Açıklama',
@@ -994,7 +994,7 @@ return [
                 'form-submit-button-color' => 'Form Gönderim Düğmesi Rengi',
                 'form-title-color'         => 'Form Başlık Rengi',
                 'general'                  => 'Genel',
-                'leads'                    => 'Fırsatlar',
+                'initiatives'                    => 'Fırsatlar',
                 'person'                   => 'Kişi',
                 'save-btn'                 => 'Web Formunu Kaydet',
                 'submit-button-label'      => 'Gönderim Düğmesi Etiketi',
@@ -1016,7 +1016,7 @@ return [
                 'code-snippet'              => 'Kod Parçası',
                 'copied'                    => 'Kopyalandı',
                 'copy'                      => 'Kopyala',
-                'create-lead'               => 'Fırsat Oluştur',
+                'create-initiative'               => 'Fırsat Oluştur',
                 'customize-webform'         => 'Web Formunu Özelleştir',
                 'customize-webform-info'    => 'Web formunuzu seçtiğiniz eleman renkleri ile özelleştirin.',
                 'description'               => 'Açıklama',
@@ -1501,7 +1501,7 @@ return [
                 'id'            => 'ID',
                 'done'          => 'Tamamlandı mı',
                 'not-done'      => 'Tamamlanmadı',
-                'lead'          => 'Müşteri',
+                'initiative'          => 'Müşteri',
                 'mass-delete'   => 'Toplu Sil',
                 'mass-update'   => 'Toplu Güncelle',
                 'schedule-from' => 'Başlangıç Tarihi',
@@ -1530,7 +1530,7 @@ return [
             'schedule_from'   => 'Başlangıç Tarihi',
             'location'        => 'Konum',
             'comment'         => 'Yorum',
-            'lead'            => 'Müşteri',
+            'initiative'            => 'Müşteri',
             'participants'    => 'Katılımcılar',
             'general'         => 'Genel',
             'persons'         => 'Kişiler',
@@ -1604,7 +1604,7 @@ return [
             'delete'                     => 'Sil',
             'enter-mails'                => 'E-posta ID girin',
             'rotten-days'                => ':days gün boyunca geçersiz',
-            'search-an-existing-lead'    => 'Mevcut bir müşteri arayın',
+            'search-an-existing-initiative'    => 'Mevcut bir müşteri arayın',
             'search-an-existing-contact' => 'Mevcut bir kişi arayın',
             'message'                    => 'Mesaj',
             'add-attachments'            => 'Ek Ekle',
@@ -1614,15 +1614,15 @@ return [
             'add-new-contact'            => 'Yeni İletişim Ekle',
             'description'                => 'Açıklama',
             'search'                     => 'Ara...',
-            'add-new-lead'               => 'Yeni Müşteri Ekle',
+            'add-new-initiative'               => 'Yeni Müşteri Ekle',
             'create-new-contact'         => 'Yeni İletişim Oluştur',
             'save-contact'               => 'İletişimi Kaydet',
-            'create-lead'                => 'Müşteri Oluştur',
+            'create-initiative'                => 'Müşteri Oluştur',
             'linked-contact'             => 'Bağlı Kişi',
             'link-to-contact'            => 'Kişiye Bağla',
-            'link-to-lead'               => 'Müşteriye Bağla',
-            'linked-lead'                => 'Bağlı Müşteri',
-            'lead-details'               => 'Müşteri Detayları',
+            'link-to-initiative'               => 'Müşteriye Bağla',
+            'linked-initiative'                => 'Bağlı Müşteri',
+            'initiative-details'               => 'Müşteri Detayları',
             'contact-person'             => 'İletişim Kişisi',
             'product'                    => 'Ürün',
 
@@ -1649,27 +1649,27 @@ return [
         ],
     ],
 
-    'leads' => [
-        'create-success'    => 'Lead başarıyla oluşturuldu.',
-        'update-success'    => 'Lead başarıyla güncellendi.',
-        'destroy-success'   => 'Lead başarıyla silindi.',
-        'destroy-failed'    => 'Lead silinemedi.',
+    'initiatives' => [
+        'create-success'    => 'Initiative başarıyla oluşturuldu.',
+        'update-success'    => 'Initiative başarıyla güncellendi.',
+        'destroy-success'   => 'Initiative başarıyla silindi.',
+        'destroy-failed'    => 'Initiative silinemedi.',
 
         'index' => [
-            'title'      => 'Leads',
-            'create-btn' => 'Lead Oluştur',
+            'title'      => 'Initiatives',
+            'create-btn' => 'Initiative Oluştur',
 
             'datagrid' => [
                 'id'                  => 'ID',
                 'sales-person'        => 'Satış Temsilcisi',
                 'subject'             => 'Konu',
                 'source'              => 'Kaynak',
-                'lead-value'          => 'Lead Değeri',
-                'lead-type'           => 'Potansiyel Müşteri Türü',
+                'initiative-value'          => 'Initiative Değeri',
+                'initiative-type'           => 'Potansiyel Müşteri Türü',
                 'tag-name'            => 'Etiket Adı',
                 'contact-person'      => 'İletişim Kişisi',
                 'stage'               => 'Aşama',
-                'rotten-lead'         => 'Çürümüş Lead',
+                'rotten-initiative'         => 'Çürümüş Initiative',
                 'expected-close-date' => 'Beklenen Kapanış Tarihi',
                 'created-at'          => 'Oluşturulma Tarihi',
                 'no'                  => 'Hayır',
@@ -1683,13 +1683,13 @@ return [
                 'rotten-days'            => 'Bu müşteri adayı :days gündür çürük',
                 'empty-list'             => 'Müşteri Adayı Listeniz Boş',
                 'empty-list-description' => 'Hedeflerinizi düzenlemek için bir müşteri adayı oluşturun.',
-                'create-lead-btn'        => 'Müşteri Adayı Oluştur',
+                'create-initiative-btn'        => 'Müşteri Adayı Oluştur',
 
                 'columns' => [
                     'contact-person'      => 'İletişim Kişisi',
                     'id'                  => 'ID',
-                    'lead-type'           => 'Lead Türü',
-                    'lead-value'          => 'Lead Değeri',
+                    'initiative-type'           => 'Initiative Türü',
+                    'initiative-value'          => 'Initiative Değeri',
                     'sales-person'        => 'Satış Temsilcisi',
                     'source'              => 'Kaynak',
                     'title'               => 'Başlık',
@@ -1720,10 +1720,10 @@ return [
         ],
 
         'create' => [
-            'title'          => 'Lead Oluştur',
+            'title'          => 'Initiative Oluştur',
             'save-btn'       => 'Kaydet',
             'details'        => 'Detaylar',
-            'details-info'   => 'Lead\'in Temel Bilgilerini Girin',
+            'details-info'   => 'Initiative\'in Temel Bilgilerini Girin',
             'contact-person' => 'İletişim Kişisi',
             'contact-info'   => 'İletişim Kişisi Hakkında Bilgiler',
             'products'       => 'Ürünler',
@@ -1731,10 +1731,10 @@ return [
         ],
 
         'edit' => [
-            'title'          => 'Lead\'i Düzenle',
+            'title'          => 'Initiative\'i Düzenle',
             'save-btn'       => 'Kaydet',
             'details'        => 'Detaylar',
-            'details-info'   => 'Lead\'in Temel Bilgilerini Girin',
+            'details-info'   => 'Initiative\'in Temel Bilgilerini Girin',
             'contact-person' => 'İletişim Kişisi',
             'contact-info'   => 'İletişim Kişisi Hakkında Bilgiler',
             'products'       => 'Ürünler',
@@ -1761,7 +1761,7 @@ return [
         ],
 
         'view' => [
-            'title'       => 'Lead: :title',
+            'title'       => 'Initiative: :title',
             'rotten-days' => ':days Gün',
 
             'tabs' => [
@@ -1771,7 +1771,7 @@ return [
             ],
 
             'attributes' => [
-                'title' => 'Lead Hakkında',
+                'title' => 'Initiative Hakkında',
             ],
 
             'quotes' => [
@@ -1787,7 +1787,7 @@ return [
                 'download'        => 'İndir',
                 'destroy-success' => 'Teklif başarıyla silindi.',
                 'empty-title'     => 'Teklif Bulunamadı',
-                'empty-info'      => 'Bu Lead için Teklif Bulunamadı',
+                'empty-info'      => 'Bu Initiative için Teklif Bulunamadı',
                 'add-btn'         => 'Teklif Ekle',
             ],
 
@@ -1800,7 +1800,7 @@ return [
                 'add-more'     => 'Daha Fazla Ekle',
                 'total'        => 'Toplam',
                 'empty-title'  => 'Ürün Bulunamadı',
-                'empty-info'   => 'Bu Lead için Ürün Bulunamadı',
+                'empty-info'   => 'Bu Initiative için Ürün Bulunamadı',
                 'add-product'  => 'Ürün Ekle',
             ],
 
@@ -1861,19 +1861,19 @@ return [
             ],
 
             'over-all' => [
-                'average-lead-value'    => 'Ortalama Lead Değeri',
-                'total-leads'           => 'Toplam Lead',
-                'average-leads-per-day' => 'Günlük Ortalama Lead',
+                'average-initiative-value'    => 'Ortalama Initiative Değeri',
+                'total-initiatives'           => 'Toplam Initiative',
+                'average-initiatives-per-day' => 'Günlük Ortalama Initiative',
                 'total-quotations'      => 'Toplam Teklif',
                 'total-persons'         => 'Toplam Kişi',
                 'total-organizations'   => 'Toplam Organizasyon',
             ],
 
-            'total-leads' => [
-                'title' => 'Leadler',
-                'total' => 'Toplam Lead',
-                'won'   => 'Kazanan Leadler',
-                'lost'  => 'Kayıp Leadler',
+            'total-initiatives' => [
+                'title' => 'Initiativeler',
+                'total' => 'Toplam Initiative',
+                'won'   => 'Kazanan Initiativeler',
+                'lost'  => 'Kayıp Initiativeler',
             ],
 
             'revenue-by-sources' => [
@@ -1900,8 +1900,8 @@ return [
                 'empty-info'  => 'Seçilen aralık için kişi bulunamadı',
             ],
 
-            'open-leads-by-states' => [
-                'title'       => 'Durumlara Göre Açık Leadler',
+            'open-initiatives-by-states' => [
+                'title'       => 'Durumlara Göre Açık Initiativeler',
                 'empty-title' => 'Veri Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için veri bulunamadı',
             ],
@@ -1911,7 +1911,7 @@ return [
     'layouts' => [
         'app-version'          => 'Sürüm : :version',
         'dashboard'            => 'Gösterge Paneli',
-        'leads'                => 'Leadler',
+        'initiatives'                => 'Initiativeler',
         'quotes'               => 'Teklifler',
         'quote'                => 'Teklif',
         'mail'                 => [
@@ -1942,8 +1942,8 @@ return [
         'roles-info'           => 'CRM’den rolleri ekleyin, düzenleyin veya silin',
         'users'                => 'Kullanıcılar',
         'users-info'           => 'CRM’den kullanıcıları ekleyin, düzenleyin veya silin',
-        'lead'                 => 'Lead',
-        'lead-info'            => 'CRM’de tüm lead ayarlarınızı yönetin',
+        'initiative'                 => 'Initiative',
+        'initiative-info'            => 'CRM’de tüm initiative ayarlarınızı yönetin',
         'pipelines'            => 'Pipeline’lar',
         'pipelines-info'       => 'CRM’den pipeline’ları ekleyin, düzenleyin veya silin',
         'sources'              => 'Kaynaklar',

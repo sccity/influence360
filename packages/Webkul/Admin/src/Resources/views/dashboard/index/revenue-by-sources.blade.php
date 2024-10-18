@@ -1,6 +1,6 @@
 {!! view_render_event('admin.dashboard.index.revenue_by_sources.before') !!}
 
-<!-- Total Leads Vue Component -->
+<!-- Total Initiatives Vue Component -->
 <v-dashboard-revenue-by-sources>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.revenue-by-sources />

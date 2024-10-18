@@ -3,10 +3,10 @@
 return [
     'seeders' => [
         'attributes' => [
-            'leads' => [
+            'initiatives' => [
                 'description'         => 'Description',
                 'expected-close-date' => 'Expected Close Date',
-                'lead-value'          => 'Lead Value',
+                'initiative-value'          => 'Initiative Value',
                 'sales-owner'         => 'Sales Owner',
                 'source'              => 'Source',
                 'title'               => 'Title',
@@ -75,7 +75,7 @@ return [
             'type'                  => 'Type',
         ],
 
-        'lead' => [
+        'initiative' => [
             'pipeline' => [
                 'default' => 'Default Pipeline',
 

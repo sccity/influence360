@@ -37,7 +37,7 @@ class Organization extends Model implements OrganizationContract
     }
 
     /**
-     * Get the user that owns the lead.
+     * Get the user that owns the initiative.
      */
     public function user()
     {

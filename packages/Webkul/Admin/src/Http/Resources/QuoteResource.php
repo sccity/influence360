@@ -27,7 +27,7 @@ class QuoteResource extends JsonResource
             'expired_at'        => $this->expired_at,
             'user'              => new UserResource($this->user),
             'person'            => new PersonResource($this->person),
-            'leads'             => LeadResource::collection($this->leads),
+            'initiatives'             => InitiativeResource::collection($this->initiatives),
         ];
     }
 }

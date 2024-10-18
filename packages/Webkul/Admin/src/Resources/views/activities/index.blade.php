@@ -100,7 +100,7 @@
                                     <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800">
                                         <div
                                             class="flex select-none items-center gap-2.5"
-                                            v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
+                                            v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'initiative_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
                                         >
                                             <label
                                                 class="flex w-max cursor-pointer select-none items-center gap-1"
@@ -217,14 +217,14 @@
                                             </div>
                                         </div>
 
-                                        <!-- Comment, Lead Title and Type -->
+                                        <!-- Comment, Initiative Title and Type -->
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.comment }}
                                                 </p>
 
-                                                <p v-html="record.lead_title"></p>
+                                                <p v-html="record.initiative_title"></p>
 
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.type ?? 'N/A'}}

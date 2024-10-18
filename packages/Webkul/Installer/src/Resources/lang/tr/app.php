@@ -3,10 +3,10 @@
 return [
     'seeders' => [
         'attributes' => [
-            'leads' => [
+            'initiatives' => [
                 'description'         => 'Açıklama',
                 'expected-close-date' => 'Beklenen Kapanış Tarihi',
-                'lead-value'          => 'Müşteri Adayı Değeri',
+                'initiative-value'          => 'Müşteri Adayı Değeri',
                 'sales-owner'         => 'Satış Sahibi',
                 'source'              => 'Kaynak',
                 'title'               => 'Başlık',
@@ -73,7 +73,7 @@ return [
             'type'                  => 'Tür',
         ],
 
-        'lead' => [
+        'initiative' => [
             'pipeline' => [
                 'default' => 'Varsayılan Boru Hattı',
 

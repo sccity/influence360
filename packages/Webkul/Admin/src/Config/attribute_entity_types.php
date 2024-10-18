@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'leads'         => [
-        'name'       => 'admin::app.leads.index.title',
-        'repository' => 'Webkul\Lead\Repositories\LeadRepository',
+    'initiatives'         => [
+        'name'       => 'admin::app.initiatives.index.title',
+        'repository' => 'Webkul\Initiative\Repositories\InitiativeRepository',
     ],
 
     'persons'       => [

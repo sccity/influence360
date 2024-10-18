@@ -2,8 +2,8 @@
 
 return [
     'acl' => [
-        'leads'           => 'Clientes potenciales',
-        'lead'            => 'Cliente potencial',
+        'initiatives'           => 'Clientes potenciales',
+        'initiative'            => 'Cliente potencial',
         'quotes'          => 'Cotizaciones',
         'mail'            => 'Correo',
         'inbox'           => 'Bandeja de entrada',
@@ -364,18 +364,18 @@ return [
                     'title'   => 'Buscar',
 
                     'tabs' => [
-                        'leads'    => 'Oportunidades',
+                        'initiatives'    => 'Oportunidades',
                         'quotes'   => 'Cotizaciones',
                         'persons'  => 'Personas',
                         'products' => 'Productos',
                     ],
 
                     'explore-all-products'          => 'Explorar todos los Productos',
-                    'explore-all-leads'             => 'Explorar todas las Oportunidades',
+                    'explore-all-initiatives'             => 'Explorar todas las Oportunidades',
                     'explore-all-contacts'          => 'Explorar todos los Contactos',
                     'explore-all-quotes'            => 'Explorar todas las Cotizaciones',
                     'explore-all-matching-products' => 'Explorar todos los productos que coinciden con ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Explorar todas las oportunidades que coinciden con ":query" (:count)',
+                    'explore-all-matching-initiatives'    => 'Explorar todas las oportunidades que coinciden con ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos los contactos que coinciden con ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas las cotizaciones que coinciden con ":query" (:count)',
                 ],
@@ -466,7 +466,7 @@ return [
             'address-info-info' => 'Información sobre la dirección relacionada con la cotización.',
             'quote-items'       => 'Artículos de la Cotización',
             'search-products'   => 'Buscar Productos',
-            'link-to-lead'      => 'Vincular a cliente potencial',
+            'link-to-initiative'      => 'Vincular a cliente potencial',
             'quote-item-info'   => 'Agregar Solicitud de Producto para esta cotización.',
             'quote-name'        => 'Nombre de la Cotización',
             'quantity'          => 'Cantidad',
@@ -496,7 +496,7 @@ return [
             'address-info'      => 'Información de la Dirección',
             'address-info-info' => 'Información sobre la dirección relacionada con la cotización.',
             'quote-items'       => 'Artículos de la Cotización',
-            'link-to-lead'      => 'Vincular a cliente potencial',
+            'link-to-initiative'      => 'Vincular a cliente potencial',
             'quote-item-info'   => 'Agregar Solicitud de Producto para esta cotización.',
             'quote-name'        => 'Nombre de la Cotización',
             'quantity'          => 'Cantidad',
@@ -878,11 +878,11 @@ return [
             ],
 
             'helpers' => [
-                'update-related-leads'       => 'Actualizar leads relacionados',
+                'update-related-initiatives'       => 'Actualizar initiatives relacionados',
                 'send-email-to-sales-owner'  => 'Enviar correo al propietario de ventas',
                 'send-email-to-participants' => 'Enviar correo a los participantes',
                 'add-webhook'                => 'Agregar Webhook',
-                'update-lead'                => 'Actualizar Lead',
+                'update-initiative'                => 'Actualizar Initiative',
                 'update-person'              => 'Actualizar Persona',
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
@@ -984,7 +984,7 @@ return [
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Agregue atributos personalizados al formulario.',
                 'background-color'         => 'Color de Fondo',
-                'create-lead'              => 'Crear Lead',
+                'create-initiative'              => 'Crear Initiative',
                 'customize-webform'        => 'Personalizar Webform',
                 'customize-webform-info'   => 'Personalice su formulario web con los colores de los elementos de su elección.',
                 'description'              => 'Descripción',
@@ -994,7 +994,7 @@ return [
                 'form-submit-button-color' => 'Color del Botón de Enviar del Formulario',
                 'form-title-color'         => 'Color del Título del Formulario',
                 'general'                  => 'General',
-                'leads'                    => 'Leads',
+                'initiatives'                    => 'Initiatives',
                 'person'                   => 'Persona',
                 'save-btn'                 => 'Guardar Webform',
                 'submit-button-label'      => 'Etiqueta del Botón de Enviar',
@@ -1016,7 +1016,7 @@ return [
                 'code-snippet'              => 'Fragmento de Código',
                 'copied'                    => 'Copiado',
                 'copy'                      => 'Copiar',
-                'create-lead'               => 'Crear Lead',
+                'create-initiative'               => 'Crear Initiative',
                 'customize-webform'         => 'Personalizar Webform',
                 'customize-webform-info'    => 'Personalice su formulario web con los colores de los elementos de su elección.',
                 'description'               => 'Descripción',
@@ -1501,7 +1501,7 @@ return [
                 'id'            => 'ID',
                 'done'          => 'Completado',
                 'not-done'      => 'No Completado',
-                'lead'          => 'Oportunidad',
+                'initiative'          => 'Oportunidad',
                 'mass-delete'   => 'Eliminación Masiva',
                 'mass-update'   => 'Actualización Masiva',
                 'schedule-from' => 'Programar Desde',
@@ -1530,7 +1530,7 @@ return [
             'schedule_from'   => 'Programar Desde',
             'location'        => 'Ubicación',
             'comment'         => 'Comentario',
-            'lead'            => 'Oportunidad',
+            'initiative'            => 'Oportunidad',
             'participants'    => 'Participantes',
             'general'         => 'General',
             'persons'         => 'Personas',
@@ -1603,8 +1603,8 @@ return [
             'forward'                    => 'Reenviar',
             'delete'                     => 'Eliminar',
             'enter-mails'                => 'Ingresar id de correo',
-            'rotten-days'                => 'El lead está en estado crítico por :days días',
-            'search-an-existing-lead'    => 'Buscar un lead existente',
+            'rotten-days'                => 'El initiative está en estado crítico por :days días',
+            'search-an-existing-initiative'    => 'Buscar un initiative existente',
             'search-an-existing-contact' => 'Buscar un contacto existente',
             'message'                    => 'Mensaje',
             'add-attachments'            => 'Añadir Archivos Adjuntos',
@@ -1614,15 +1614,15 @@ return [
             'add-new-contact'            => 'Añadir Nuevo Contacto',
             'description'                => 'Descripción',
             'search'                     => 'Buscar...',
-            'add-new-lead'               => 'Añadir Nuevo Lead',
+            'add-new-initiative'               => 'Añadir Nuevo Initiative',
             'create-new-contact'         => 'Crear Nuevo Contacto',
             'save-contact'               => 'Guardar Contacto',
-            'create-lead'                => 'Crear Lead',
+            'create-initiative'                => 'Crear Initiative',
             'linked-contact'             => 'Contacto Vinculado',
             'link-to-contact'            => 'Vincular a Contacto',
-            'link-to-lead'               => 'Vincular a Lead',
-            'linked-lead'                => 'Lead Vinculado',
-            'lead-details'               => 'Detalles del Lead',
+            'link-to-initiative'               => 'Vincular a Initiative',
+            'linked-initiative'                => 'Initiative Vinculado',
+            'initiative-details'               => 'Detalles del Initiative',
             'contact-person'             => 'Persona de Contacto',
             'product'                    => 'Producto',
 
@@ -1649,27 +1649,27 @@ return [
         ],
     ],
 
-    'leads' => [
-        'create-success'    => 'Lead creado exitosamente.',
-        'update-success'    => 'Lead actualizado exitosamente.',
-        'destroy-success'   => 'Lead eliminado exitosamente.',
-        'destroy-failed'    => 'No se puede eliminar el lead.',
+    'initiatives' => [
+        'create-success'    => 'Initiative creado exitosamente.',
+        'update-success'    => 'Initiative actualizado exitosamente.',
+        'destroy-success'   => 'Initiative eliminado exitosamente.',
+        'destroy-failed'    => 'No se puede eliminar el initiative.',
 
         'index' => [
-            'title'      => 'Leads',
-            'create-btn' => 'Crear Lead',
+            'title'      => 'Initiatives',
+            'create-btn' => 'Crear Initiative',
 
             'datagrid' => [
                 'id'                  => 'ID',
                 'sales-person'        => 'Persona de Ventas',
                 'subject'             => 'Asunto',
                 'source'              => 'Fuente',
-                'lead-value'          => 'Valor del Lead',
-                'lead-type'           => 'Tipo de cliente potencial',
+                'initiative-value'          => 'Valor del Initiative',
+                'initiative-type'           => 'Tipo de cliente potencial',
                 'tag-name'            => 'Nombre de la etiqueta',
                 'contact-person'      => 'Persona de Contacto',
                 'stage'               => 'Etapa',
-                'rotten-lead'         => 'Lead Podrido',
+                'rotten-initiative'         => 'Initiative Podrido',
                 'expected-close-date' => 'Fecha de Cierre Esperada',
                 'created-at'          => 'Creado En',
                 'no'                  => 'No',
@@ -1680,16 +1680,16 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days'            => 'El lead está podrido desde hace :days días',
-                'empty-list'             => 'Tu lista de leads está vacía',
-                'empty-list-description' => 'Crea un lead para organizar tus objetivos.',
-                'create-lead-btn'        => 'Crear Lead',
+                'rotten-days'            => 'El initiative está podrido desde hace :days días',
+                'empty-list'             => 'Tu lista de initiatives está vacía',
+                'empty-list-description' => 'Crea un initiative para organizar tus objetivos.',
+                'create-initiative-btn'        => 'Crear Initiative',
 
                 'columns' => [
                     'contact-person'      => 'Persona de Contacto',
                     'id'                  => 'ID',
-                    'lead-type'           => 'Tipo de Lead',
-                    'lead-value'          => 'Valor del Lead',
+                    'initiative-type'           => 'Tipo de Initiative',
+                    'initiative-value'          => 'Valor del Initiative',
                     'sales-person'        => 'Persona de Ventas',
                     'source'              => 'Fuente',
                     'title'               => 'Título',
@@ -1720,10 +1720,10 @@ return [
         ],
 
         'create' => [
-            'title'          => 'Crear Lead',
+            'title'          => 'Crear Initiative',
             'save-btn'       => 'Guardar',
             'details'        => 'Detalles',
-            'details-info'   => 'Introduce la Información Básica del Lead',
+            'details-info'   => 'Introduce la Información Básica del Initiative',
             'contact-person' => 'Persona de Contacto',
             'contact-info'   => 'Información Sobre la Persona de Contacto',
             'products'       => 'Productos',
@@ -1731,10 +1731,10 @@ return [
         ],
 
         'edit' => [
-            'title'          => 'Editar Lead',
+            'title'          => 'Editar Initiative',
             'save-btn'       => 'Guardar',
             'details'        => 'Detalles',
-            'details-info'   => 'Introduce la Información Básica del Lead',
+            'details-info'   => 'Introduce la Información Básica del Initiative',
             'contact-person' => 'Persona de Contacto',
             'contact-info'   => 'Información Sobre la Persona de Contacto',
             'products'       => 'Productos',
@@ -1761,7 +1761,7 @@ return [
         ],
 
         'view' => [
-            'title'       => 'Lead: :title',
+            'title'       => 'Initiative: :title',
             'rotten-days' => ':days Días',
 
             'tabs'        => [
@@ -1771,7 +1771,7 @@ return [
             ],
 
             'attributes' => [
-                'title' => 'Sobre el Lead',
+                'title' => 'Sobre el Initiative',
             ],
 
             'quotes'=> [
@@ -1787,7 +1787,7 @@ return [
                 'download'        => 'Descargar',
                 'destroy-success' => 'Cotización eliminada exitosamente.',
                 'empty-title'     => 'No se Encontraron Cotizaciones',
-                'empty-info'      => 'No se Encontraron Cotizaciones para este Lead',
+                'empty-info'      => 'No se Encontraron Cotizaciones para este Initiative',
                 'add-btn'         => 'Agregar Cotización',
             ],
 
@@ -1800,7 +1800,7 @@ return [
                 'add-more'     => 'Agregar Más',
                 'total'        => 'Total',
                 'empty-title'  => 'No se Encontraron Productos',
-                'empty-info'   => 'No se Encontraron Productos para este Lead',
+                'empty-info'   => 'No se Encontraron Productos para este Initiative',
                 'add-product'  => 'Agregar Producto',
             ],
 
@@ -1861,19 +1861,19 @@ return [
             ],
 
             'over-all' => [
-                'average-lead-value'    => 'Valor Promedio de Lead',
-                'total-leads'           => 'Total de Leads',
-                'average-leads-per-day' => 'Leads Promedio por Día',
+                'average-initiative-value'    => 'Valor Promedio de Initiative',
+                'total-initiatives'           => 'Total de Initiatives',
+                'average-initiatives-per-day' => 'Initiatives Promedio por Día',
                 'total-quotations'      => 'Total de Cotizaciones',
                 'total-persons'         => 'Total de Personas',
                 'total-organizations'   => 'Total de Organizaciones',
             ],
 
-            'total-leads' => [
-                'title' => 'Leads',
-                'total' => 'Total de Leads',
-                'won'   => 'Leads Ganados',
-                'lost'  => 'Leads Perdidos',
+            'total-initiatives' => [
+                'title' => 'Initiatives',
+                'total' => 'Total de Initiatives',
+                'won'   => 'Initiatives Ganados',
+                'lost'  => 'Initiatives Perdidos',
             ],
 
             'revenue-by-sources' => [
@@ -1900,8 +1900,8 @@ return [
                 'empty-info'  => 'No hay personas disponibles para el intervalo seleccionado',
             ],
 
-            'open-leads-by-states' => [
-                'title'       => 'Leads Abiertos por Estados',
+            'open-initiatives-by-states' => [
+                'title'       => 'Initiatives Abiertos por Estados',
                 'empty-title' => 'No Hay Datos Disponibles',
                 'empty-info'  => 'No hay datos disponibles para el intervalo seleccionado',
             ],
@@ -1911,7 +1911,7 @@ return [
     'layouts' => [
         'app-version'          => 'Versión : :version',
         'dashboard'            => 'Tablero',
-        'leads'                => 'Leads',
+        'initiatives'                => 'Initiatives',
         'quotes'               => 'Cotizaciones',
         'quote'                => 'Cotización',
         'mail'                 => [
@@ -1942,8 +1942,8 @@ return [
         'roles-info'           => 'Agregar, editar o eliminar roles del CRM',
         'users'                => 'Usuarios',
         'users-info'           => 'Agregar, editar o eliminar usuarios del CRM',
-        'lead'                 => 'Lead',
-        'lead-info'            => 'Administra todas las configuraciones relacionadas con los leads en el CRM',
+        'initiative'                 => 'Initiative',
+        'initiative-info'            => 'Administra todas las configuraciones relacionadas con los initiatives en el CRM',
         'pipelines'            => 'Pipelines',
         'pipelines-info'       => 'Agregar, editar o eliminar pipelines del CRM',
         'sources'              => 'Fuentes',

@@ -9,10 +9,10 @@ use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Lead\Repositories\PipelineRepository;
-use Webkul\Lead\Repositories\SourceRepository;
-use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
+use Webkul\Initiative\Repositories\PipelineRepository;
+use Webkul\Initiative\Repositories\SourceRepository;
+use Webkul\Initiative\Repositories\TypeRepository;
 use Webkul\WebForm\DataGrids\WebFormDataGrid;
 use Webkul\WebForm\Repositories\WebFormRepository;
 
@@ -27,7 +27,7 @@ class WebFormController extends Controller
         protected AttributeRepository $attributeRepository,
         protected WebFormRepository $webFormRepository,
         protected PersonRepository $personRepository,
-        protected LeadRepository $leadRepository,
+        protected InitiativeRepository $initiativeRepository,
         protected PipelineRepository $pipelineRepository,
         protected SourceRepository $sourceRepository,
         protected TypeRepository $typeRepository
@@ -50,7 +50,7 @@ class WebFormController extends Controller
      */
     public function create(): View
     {
-        $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'leads']);
+        $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'initiatives']);
 
         $attributes = [];
 
@@ -87,7 +87,7 @@ class WebFormController extends Controller
 
         $data = request()->all();
 
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
+        $data['create_initiative'] = isset($data['create_initiative']) ? 1 : 0;
 
         $webForm = $this->webFormRepository->create($data);
 
@@ -106,7 +106,7 @@ class WebFormController extends Controller
         $webForm = $this->webFormRepository->findOrFail($id);
 
         $attributes = $this->attributeRepository->findWhere([
-            ['entity_type', 'IN', ['persons', 'leads']],
+            ['entity_type', 'IN', ['persons', 'initiatives']],
             ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()],
         ]);
 
@@ -129,7 +129,7 @@ class WebFormController extends Controller
 
         $data = request()->all();
 
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
+        $data['create_initiative'] = isset($data['create_initiative']) ? 1 : 0;
 
         $webForm = $this->webFormRepository->update($data, $id);
 

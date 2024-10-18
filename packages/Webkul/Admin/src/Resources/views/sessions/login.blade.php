@@ -82,7 +82,7 @@
                     <div class="flex items-center justify-between p-4">
                         <!-- Forgot Password Link -->
                         <a
-                            class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
+                            class="cursor-pointer text-xs font-semibold initiativeing-6 text-brandColor"
                             href="{{ route('admin.forgot_password.create') }}"
                         >
                             @lang('admin::app.users.login.forget-password-link')

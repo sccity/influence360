@@ -22,7 +22,7 @@
                 
                 <!-- Create button for Types -->
                 <div class="flex items-center gap-x-2.5">
-                    @if (bouncer()->hasPermission('settings.lead.types.create'))
+                    @if (bouncer()->hasPermission('settings.initiative.types.create'))
                         <button
                             type="button"
                             class="primary-button"
