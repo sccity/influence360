@@ -98,8 +98,8 @@ return [
             ],
 
             'type' => [
-                'existing-business' => 'Existing Business',
-                'new-business'      => 'New Business',
+                'existing-issue' => 'Existing Issue',
+                'new-issue'      => 'New Issue',
             ],
         ],
 

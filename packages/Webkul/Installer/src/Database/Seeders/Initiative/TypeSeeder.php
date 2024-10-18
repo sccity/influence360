@@ -25,12 +25,12 @@ class TypeSeeder extends Seeder
         DB::table('initiative_types')->insert([
             [
                 'id'         => 1,
-                'name'       => trans('installer::app.seeders.initiative.type.new-business', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.type.new-issue', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 2,
-                'name'       => trans('installer::app.seeders.initiative.type.existing-business', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.type.existing-issue', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
