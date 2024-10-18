@@ -14,10 +14,6 @@
                 <!-- Breadcrumbs -->
                 <x-admin::breadcrumbs name="bill-files" />
             </div>
-
-            <div class="text-xl font-bold dark:text-white">
-                @lang('admin::app.bill-files.index.title')
-            </div>
         </div>
 
         {!! view_render_event('admin.bill-files.index.header.left.after') !!}

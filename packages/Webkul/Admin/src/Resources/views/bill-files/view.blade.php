@@ -1,87 +1,87 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.bills.view.title', ['name' => $bill->name])
+        @lang('admin::app.bill-files.view.title', ['name' => $billFile->name])
     </x-slot>
 
     <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
-        {!! view_render_event('admin.bills.view.left.before', ['bill' => $bill]) !!}
+        <?php echo view_render_event('admin.bill-files.view.left.before', ['billFile' => $billFile]); ?>
 
         <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-            <!-- Bill Information -->
+            <!-- Bill File Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrumbs -->
                 <div class="flex items-center justify-between">
                     <x-admin::breadcrumbs
-                        name="bills.view"
-                        :entity="$bill"
+                        name="bill-files.view"
+                        :entity="$billFile"
                     />
                 </div>
 
                 <!-- Title -->
                 <div class="mb-4 flex flex-col gap-0.5">
-                    {!! view_render_event('admin.bills.view.title.before', ['bill' => $bill]) !!}
+                    {!! view_render_event('admin.bill-files.view.title.before', ['billFile' => $billFile]) !!}
 
                     <h3 class="text-lg font-bold dark:text-white">
-                        {{ $bill->name }}
+                        {{ $billFile->name }}
                     </h3>
 
                     <p class="dark:text-white">
-                        {{ $bill->billid }}
+                        {{ $billFile->billid }}
                     </p>
 
-                    {!! view_render_event('admin.bills.view.title.after', ['bill' => $bill]) !!}
+                    {!! view_render_event('admin.bill-files.view.title.after', ['billFile' => $billFile]) !!}
                 </div>
                 
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
-                    {!! view_render_event('admin.bills.view.actions.before', ['bill' => $bill]) !!}
+                    {!! view_render_event('admin.bill-files.view.actions.before', ['billFile' => $billFile]) !!}
 
                     <!-- Mail Activity Action -->
-                    @include('admin::bills.components.mail-activity', [
-                        'entity' => $bill,
-                        'entityControlName' => 'bill_id'
+                    @include('admin::bill-files.components.mail-activity', [
+                        'entity' => $billFile,
+                        'entityControlName' => 'bill_file_id'
                     ])
 
                     <!-- File Activity Action -->
                     <x-admin::activities.actions.file
-                        :entity="$bill"
-                        entity-control-name="bill_id"
+                        :entity="$billFile"
+                        entity-control-name="bill_file_id"
                     />
 
                     <!-- Note Activity Action -->
                     <x-admin::activities.actions.note
-                        :entity="$bill"
-                        entity-control-name="bill_id"
+                        :entity="$billFile"
+                        entity-control-name="bill_file_id"
                     />
 
                     <!-- Activity Action -->
                     <x-admin::activities.actions.activity
-                        :entity="$bill"
-                        entity-control-name="bill_id"
+                        :entity="$billFile"
+                        entity-control-name="bill_file_id"
                     />
 
-                    {!! view_render_event('admin.bills.view.actions.after', ['bill' => $bill]) !!}
+                    {!! view_render_event('admin.bill-files.view.actions.after', ['billFile' => $billFile]) !!}
                 </div>
             </div>
 
             <!-- Bill Attributes -->
-            @include('admin::bills.view.attributes')
+            @include('admin::bill-files.view.attributes')
 
             <!-- Additional sections if needed -->
         </div>
 
-        {!! view_render_event('admin.bills.view.left.after', ['bill' => $bill]) !!}
+        {!! view_render_event('admin.bill-files.view.left.after', ['billFile' => $billFile]) !!}
 
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
-            {!! view_render_event('admin.bills.view.right.before', ['bill' => $bill]) !!}
+            {!! view_render_event('admin.bill-files.view.right.before', ['billFile' => $billFile]) !!}
 
             <!-- Activities -->
-            @include('admin::bills.view.activities')
+            @include('admin::bill-files.view.activities')
 
-            {!! view_render_event('admin.bills.view.right.after', ['bill' => $bill]) !!}
+            {!! view_render_event('admin.bill-files.view.right.after', ['billFile' => $billFile]) !!}
         </div>
     </div>
 </x-admin::layouts>
@@ -95,12 +95,12 @@
 
             $.ajax({
                 type: 'DELETE',
-                url: '{{ route('admin.bills.delete', $bill->id) }}',
+                url: '{{ route('admin.bill-files.delete', $billFile->id) }}',
                 data: {
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function (data) {
-                    window.location.href = '{{ route('admin.bills.index') }}';
+                    window.location.href = '{{ route('admin.bill-files.index') }}';
                 }
             });
         }

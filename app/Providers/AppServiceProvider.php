@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(\Webkul\BillFiles\Providers\BillFileServiceProvider::class);
+        $this->app->register(\Webkul\Bills\Providers\BillServiceProvider::class);
+        $this->app->register(\Webkul\Initiative\Providers\InitiativeServiceProvider::class);
 
     }
 

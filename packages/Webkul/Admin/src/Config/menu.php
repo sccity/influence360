@@ -20,7 +20,7 @@ return [
         'name'       => 'Initiatives',
         'route'      => 'admin.initiatives.index',
         'sort'       => 2,
-        'icon-class' => 'icon-leads',
+        'icon-class' => 'icon-dashboard',
     ],
 
     /**
