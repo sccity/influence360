@@ -16,7 +16,7 @@ return [
     |
      */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Influence360'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
      */
 
-    'admin_path' => env('APP_ADMIN_PATH', 'admin'),
+    'admin_path' => env('APP_ADMIN_PATH', ''),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -82,7 +82,7 @@ return [
     |
      */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
+    'timezone' => env('APP_TIMEZONE', 'America/Denver'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,11 +108,7 @@ return [
      */
 
     'available_locales' => [
-        'ar' => 'Arabic',
         'en' => 'English',
-        'es' => 'Español',
-        'fa' => 'Persian',
-        'tr' => 'Türkçe',
     ],
 
     /*
