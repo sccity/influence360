@@ -80,11 +80,11 @@ return [
                 'default' => 'Default Pipeline',
 
                 'pipeline-stages' => [
-                    'follow-up'   => 'Follow Up',
+                    'research-analysis'   => 'Research & Analysis',
                     'lost'        => 'Lost',
-                    'negotiation' => 'Negotiation',
-                    'new'         => 'New',
-                    'prospect'    => 'Prospect',
+                    'advocacy' => 'Advocacy',
+                    'issue-identification'         => 'Issue Identification',
+                    'strategy-development'    => 'Strategy Development',
                     'won'         => 'Won',
                 ],
             ],
