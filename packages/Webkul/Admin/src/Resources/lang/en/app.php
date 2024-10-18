@@ -78,7 +78,7 @@ return [
             'status'            => 'Status',
             'session'           => 'Session',
             'year'              => 'Year',
-            'is_tracked'        => 'Is Tracked',
+            'is_tracked'        => 'Tracking',
             'activities'        => 'Activities',
             'all'               => 'All',
             'notes'             => 'Notes',
@@ -86,6 +86,14 @@ return [
             'change-logs'       => 'Change Logs',
             'details'           => 'Bill Details',
             'about-bill'        => 'About Bill',
+            'bill_number'       => 'Bill Number',
+            'short_title'       => 'Bill Title',
+            'bill_year'         => 'Bill Year',
+            'sponsor'           => 'Sponsor',
+            'floor_sponsor'     => 'Floor Sponsor',
+            'last_action'       => 'Last Action',
+            'last_action_date'  => 'Last Action Date',
+            'ai_impact_rating'  => 'Impact Rating',
         ],
 
         'datagrid' => [
@@ -554,6 +562,16 @@ return [
             ],
             'view' => [
                 'title' => 'View Bill',
+                'bill_number' => 'HB6789',
+                'short_title' => 'Affordable Housing Initiative',
+                'session' => 'GEN',
+                'bill_year' => '2024',
+                'sponsor' => 'Olivia Martinez',
+                'floor_sponsor' => 'William Lee',
+                'last_action' => 'In House Committee',
+                'last_action_date' => '2024-10-14 11:56:35',
+                'ai_impact_rating' => '10',
+                'is_tracked' => 'Yes',
             ],
         ],
         'layouts' => [
@@ -1837,6 +1855,7 @@ return [
 
     'common' => [
         'yes' => 'Yes',
+        'no' => 'No',
         'custom-attributes' => [
             'select-country' => 'Select Country',
             'select-state'   => 'Select State',

@@ -27,10 +27,6 @@
                         {{ $bill->short_title }}
                     </h3>
 
-                    <p class="dark:text-white">
-                        {{ $bill->bill_number }}
-                    </p>
-
                     {!! view_render_event('admin.bills.view.title.after', ['bill' => $bill]) !!}
                 </div>
                 
