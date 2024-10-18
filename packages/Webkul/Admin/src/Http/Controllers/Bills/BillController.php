@@ -7,17 +7,12 @@ use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Bills\Repositories\BillRepository;
 use Webkul\Admin\DataGrids\Bills\BillDataGrid;
-use Webkul\Admin\Http\Requests\MassDestroyRequest;
-use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Http\Resources\ActivityResource;
-use Webkul\Activity\Repositories\ActivityRepository;
 
 class BillController extends Controller
 {
-    public function __construct(
-        protected BillRepository $billRepository,
-        protected ActivityRepository $activityRepository 
-    ) {}
+    public function __construct(protected BillRepository $billRepository)
+    {
+    }
 
     public function index(): View|JsonResponse
     {
@@ -28,28 +23,14 @@ class BillController extends Controller
         return view('admin::bills.index');
     }
 
-    public function create(): View
+    public function create()
     {
         return view('admin::bills.create');
     }
 
     public function store()
     {
-        $this->validate(request(), [
-            'billid' => 'required|unique:bills,billid',
-            'name' => 'required',
-            // Add other validation rules as needed
-        ]);
-
-        Event::dispatch('bill.create.before');
-
-        $bill = $this->billRepository->create(request()->all());
-
-        Event::dispatch('bill.create.after', $bill);
-
-        session()->flash('success', trans('admin::app.bills.create-success'));
-
-        return redirect()->route('admin.bills.index');
+        // Implement store logic
     }
 
     public function view($id)
@@ -59,7 +40,7 @@ class BillController extends Controller
         return view('admin::bills.view', compact('bill'));
     }
 
-    public function edit($id): View
+    public function edit($id)
     {
         $bill = $this->billRepository->findOrFail($id);
 
@@ -68,84 +49,40 @@ class BillController extends Controller
 
     public function update($id)
     {
-        $this->validate(request(), [
-            'billid' => 'required|unique:bills,billid,' . $id,
-            'name' => 'required',
-            // Add other validation rules as needed
-        ]);
-
-        Event::dispatch('bill.update.before', $id);
-
-        $bill = $this->billRepository->update(request()->all(), $id);
-
-        Event::dispatch('bill.update.after', $bill);
-
-        session()->flash('success', trans('admin::app.bills.update-success'));
-
-        return redirect()->route('admin.bills.view', $id);
+        // Implement update logic
     }
 
     public function destroy($id)
     {
-        Event::dispatch('bill.delete.before', $id);
+        try {
+            $this->billRepository->delete($id);
 
-        $this->billRepository->delete($id);
-
-        Event::dispatch('bill.delete.after', $id);
-
-        return response()->json([
-            'message' => trans('admin::app.bills.delete-success'),
-        ]);
+            return response()->json(['message' => trans('admin::app.bills.delete-success')]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
-    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
+    public function massDestroy()
     {
-        $billIds = $massDestroyRequest->input('indices');
+        $billIds = request('ids');
 
         foreach ($billIds as $billId) {
-            Event::dispatch('bill.delete.before', $billId);
-
             $this->billRepository->delete($billId);
-
-            Event::dispatch('bill.delete.after', $billId);
         }
 
-        return response()->json([
-            'message' => trans('admin::app.bills.mass-delete-success'),
-        ]);
+        return response()->json(['message' => trans('admin::app.bills.mass-delete-success')]);
     }
 
-    public function activities($id)
+    public function toggleTracked($id)
     {
         $bill = $this->billRepository->findOrFail($id);
-        
-        $activities = $bill->activities()
-            ->with(['user', 'participants', 'files'])
-            ->orderByDesc('created_at')
-            ->get();
-        
-        return ActivityResource::collection($activities);
-    }
+        $bill->is_tracked = !$bill->is_tracked;
+        $bill->save();
 
-    public function toggleTracked($id): JsonResponse
-    {
-        try {
-            $bill = $this->billRepository->findOrFail($id);
-            $bill->is_tracked = !$bill->is_tracked;
-            $bill->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => $bill->is_tracked 
-                    ? trans('admin::app.bills.notifications.tracked')
-                    : trans('admin::app.bills.notifications.untracked'),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => trans('admin::app.bills.notifications.error'),
-            ], 500);
-        }
+        return response()->json([
+            'message' => trans('admin::app.bills.toggle-tracked-success'),
+            'is_tracked' => $bill->is_tracked,
+        ]);
     }
 }
-

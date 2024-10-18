@@ -6,8 +6,13 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 
+
 class BillDataGrid extends DataGrid
 {
+    protected $index = 'id';
+
+    protected $sortOrder = 'desc';
+
     /**
      * Prepare query builder.
      */
@@ -16,13 +21,27 @@ class BillDataGrid extends DataGrid
         $queryBuilder = DB::table('bills')
             ->addSelect(
                 'bills.id',
-                'bills.billid',
-                'bills.name',
-                'bills.status',
+                'bills.tracking_id',
+                'bills.bill_year',
                 'bills.session',
-                'bills.year',
-                'bills.is_tracked'
+                'bills.short_title',
+                'bills.sponsor',
+                'bills.ai_impact_rating',
+                'bills.is_tracked',
+                'bills.last_action_date'
             );
+
+        $this->addFilter('id', 'bills.id');
+        $this->addFilter('tracking_id', 'bills.tracking_id');
+        $this->addFilter('bill_year', 'bills.bill_year');
+        $this->addFilter('session', 'bills.session');
+        $this->addFilter('short_title', 'bills.short_title');
+        $this->addFilter('sponsor', 'bills.sponsor');
+        $this->addFilter('ai_impact_rating', 'bills.ai_impact_rating');
+        $this->addFilter('is_tracked', 'bills.is_tracked');
+        $this->addFilter('last_action_date', 'bills.last_action_date');
+
+        $this->setQueryBuilder($queryBuilder);
 
         return $queryBuilder;
     }
@@ -33,8 +52,8 @@ class BillDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'billid',
-            'label'      => trans('admin::app.bills.table.billid'),
+            'index'      => 'tracking_id',
+            'label'      => trans('admin::app.bills.datagrid.tracking_id'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -42,18 +61,9 @@ class BillDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.bills.table.name'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'status',
-            'label'      => trans('admin::app.bills.table.status'),
-            'type'       => 'string',
+            'index'      => 'bill_year',
+            'label'      => trans('admin::app.bills.datagrid.year'),
+            'type'       => 'integer',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
@@ -61,7 +71,7 @@ class BillDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'session',
-            'label'      => trans('admin::app.bills.table.session'),
+            'label'      => trans('admin::app.bills.datagrid.session'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -69,9 +79,27 @@ class BillDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'year',
-            'label'      => trans('admin::app.bills.table.year'),
+            'index'      => 'short_title',
+            'label'      => trans('admin::app.bills.datagrid.short_title'),
             'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'sponsor',
+            'label'      => trans('admin::app.bills.datagrid.sponsor'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'ai_impact_rating',
+            'label'      => trans('admin::app.bills.datagrid.ai_impact_rating'),
+            'type'       => 'integer',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
@@ -79,20 +107,20 @@ class BillDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'is_tracked',
-            'label'      => trans('admin::app.bills.table.is_tracked'),
+            'label'      => trans('admin::app.bills.datagrid.is_tracked'),
             'type'       => 'boolean',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                $checked = $row->is_tracked ? 'checked' : '';
-                return <<<HTML
-                    <span class="checkbox">
-                        <input type="checkbox" id="is_tracked_{$row->id}" {$checked} onchange="toggleTracked({$row->id}, this.checked)">
-                        <label for="is_tracked_{$row->id}" class="checkbox-view"></label>
-                    </span>
-                HTML;
-            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'last_action_date',
+            'label'      => trans('admin::app.bills.datagrid.last_action_date'),
+            'type'       => 'datetime',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
         ]);
     }
 
@@ -102,29 +130,12 @@ class BillDataGrid extends DataGrid
     public function prepareActions(): void
     {
         $this->addAction([
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.bills.index.datagrid.view'),
+            'title'  => trans('admin::app.datagrid.view'),
             'method' => 'GET',
+            'route'  => 'admin.bills.view',
+            'icon'   => 'icon-eye',
             'url'    => function ($row) {
                 return route('admin.bills.view', $row->id);
-            },
-        ]);
-
-        $this->addAction([
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.bills.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.bills.edit', $row->id);
-            },
-        ]);
-
-        $this->addAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.bills.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.bills.delete', $row->id);
             },
         ]);
     }
@@ -134,6 +145,12 @@ class BillDataGrid extends DataGrid
      */
     public function prepareMassActions(): void
     {
-        // No mass actions needed
+        $this->addMassAction([
+            'type'   => 'delete',
+            'title'  => trans('admin::app.datagrid.delete'),
+            'action' => route('admin.bills.mass_delete'),
+            'method' => 'POST',
+            'url'    => route('admin.bills.mass_delete'),
+        ]);
     }
 }

@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.bills.view.title', ['name' => $bill->name])
+        @lang('admin::app.bills.view.title', ['bill_number' => $bill->bill_number])
     </x-slot>
 
     <!-- Content -->
@@ -24,11 +24,11 @@
                     {!! view_render_event('admin.bills.view.title.before', ['bill' => $bill]) !!}
 
                     <h3 class="text-lg font-bold dark:text-white">
-                        {{ $bill->name }}
+                        {{ $bill->short_title }}
                     </h3>
 
                     <p class="dark:text-white">
-                        {{ $bill->billid }}
+                        {{ $bill->bill_number }}
                     </p>
 
                     {!! view_render_event('admin.bills.view.title.after', ['bill' => $bill]) !!}

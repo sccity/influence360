@@ -52,7 +52,7 @@
             <x-admin::attributes.view
                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                     'entity_type' => 'bills',
-                    ['code', 'NOTIN', ['billid', 'name', 'status', 'session', 'year', 'is_tracked']]
+                    ['code', 'NOTIN', ['bill_number', 'short_title', 'session', 'bill_year', 'sponsor', 'floor_sponsor', 'last_action', 'last_action_date', 'ai_impact_rating', 'is_tracked']]
                 ])"
                 :entity="$bill"
                 :url="route('admin.bills.update', $bill->id)"

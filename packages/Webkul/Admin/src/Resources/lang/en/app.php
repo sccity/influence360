@@ -97,6 +97,11 @@ return [
             'delete'     => 'Delete',
             'edit'       => 'Edit',
             'view'       => 'View',
+            'tracking_id' => 'Tracking ID',
+            'short_title' => 'Short Title',
+            'sponsor' => 'Sponsor',
+            'ai_impact_rating' => 'AI Impact Rating',
+            'last_action_date' => 'Last Action Date',
         ],
 
         'activities' => [

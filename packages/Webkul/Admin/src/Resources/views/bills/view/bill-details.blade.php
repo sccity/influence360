@@ -6,18 +6,13 @@
 
         <div class="flex flex-col gap-1.5">
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bills.view.billid'):</span> 
-                {{ $bill->billid }}
+                <span class="font-semibold">@lang('admin::app.bills.view.bill_number'):</span> 
+                {{ $bill->bill_number }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bills.view.name'):</span> 
-                {{ $bill->name }}
-            </p>
-
-            <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bills.view.status'):</span> 
-                {{ $bill->status }}
+                <span class="font-semibold">@lang('admin::app.bills.view.short_title'):</span> 
+                {{ $bill->short_title }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
@@ -26,8 +21,33 @@
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bills.view.year'):</span> 
-                {{ $bill->year }}
+                <span class="font-semibold">@lang('admin::app.bills.view.bill_year'):</span> 
+                {{ $bill->bill_year }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">@lang('admin::app.bills.view.sponsor'):</span> 
+                {{ $bill->sponsor }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">@lang('admin::app.bills.view.floor_sponsor'):</span> 
+                {{ $bill->floor_sponsor }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">@lang('admin::app.bills.view.last_action'):</span> 
+                {{ $bill->last_action }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">@lang('admin::app.bills.view.last_action_date'):</span> 
+                {{ $bill->last_action_date ? $bill->last_action_date->format('Y-m-d H:i:s') : '' }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">@lang('admin::app.bills.view.ai_impact_rating'):</span> 
+                {{ $bill->ai_impact_rating }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
