@@ -41,7 +41,10 @@
 
     @push('scripts')
         <script>
-            function toggleTracked(id, isChecked) {
+            function toggleTracked(id) {
+                var checkbox = document.getElementById('is_tracked_' + id);
+                var isChecked = checkbox.checked;
+
                 fetch("{{ route('admin.bills.toggle-tracked', ':id') }}".replace(':id', id), {
                     method: 'POST',
                     headers: {
@@ -60,9 +63,9 @@
                     } else {
                         window.eventBus.emit('add-flash', {
                             type: 'error',
-                            message: data.message || "@lang('admin::app.bills.notifications.error')"
+                            message: "@lang('admin::app.bills.notifications.error')"
                         });
-                        document.getElementById('is_tracked_' + id).checked = !isChecked;
+                        checkbox.checked = !isChecked;
                     }
                 })
                 .catch(error => {
@@ -71,7 +74,7 @@
                         type: 'error',
                         message: "@lang('admin::app.bills.notifications.error')"
                     });
-                    document.getElementById('is_tracked_' + id).checked = !isChecked;
+                    checkbox.checked = !isChecked;
                 });
             }
         </script>

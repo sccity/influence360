@@ -53,17 +53,8 @@ class BillDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'tracking_id',
-            'label'      => trans('admin::app.bills.datagrid.tracking_id'),
+            'label'      => trans('admin::app.bills.datagrid.bill_id'),
             'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'bill_year',
-            'label'      => trans('admin::app.bills.datagrid.year'),
-            'type'       => 'integer',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
@@ -80,7 +71,7 @@ class BillDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'short_title',
-            'label'      => trans('admin::app.bills.datagrid.short_title'),
+            'label'      => trans('admin::app.bills.datagrid.bill_title'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -103,15 +94,22 @@ class BillDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                $color = $this->getColorForRating($row->ai_impact_rating);
+                return '<span style="background-color: ' . $color . '; color: white; padding: 2px 6px; border-radius: 3px;">' . $row->ai_impact_rating . '</span>';
+            },
         ]);
 
         $this->addColumn([
             'index'      => 'is_tracked',
-            'label'      => trans('admin::app.bills.datagrid.is_tracked'),
+            'label'      => trans('admin::app.bills.datagrid.track'),
             'type'       => 'boolean',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return view('admin::bills.datagrid.is-tracked', ['row' => $row])->render();
+            },
         ]);
 
         $this->addColumn([
@@ -152,5 +150,14 @@ class BillDataGrid extends DataGrid
             'method' => 'POST',
             'url'    => route('admin.bills.mass_delete'),
         ]);
+    }
+
+    private function getColorForRating($rating)
+    {
+        if ($rating == 0) return '#000000'; // Black for 0
+        if ($rating <= 3) return '#006400'; // Dark Green for 1-3
+        if ($rating <= 6) return '#FFA500'; // Orange for 4-6
+        if ($rating <= 9) return '#FF4500'; // Red-Orange for 7-9
+        return '#FF0000'; // Bright Red for 10
     }
 }

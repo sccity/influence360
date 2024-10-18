@@ -81,8 +81,11 @@ class BillController extends Controller
         $bill->save();
 
         return response()->json([
-            'message' => trans('admin::app.bills.toggle-tracked-success'),
-            'is_tracked' => $bill->is_tracked,
+            'success' => true,
+            'message' => $bill->is_tracked 
+                ? trans('admin::app.bills.notifications.tracked')
+                : trans('admin::app.bills.notifications.untracked'),
+            'is_tracked' => $bill->is_tracked
         ]);
     }
 }

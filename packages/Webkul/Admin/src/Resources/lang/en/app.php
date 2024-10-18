@@ -46,6 +46,8 @@ return [
             'tracked' => 'Bill is now being tracked.',
             'untracked' => 'Bill is no longer being tracked.',
             'error' => 'An error occurred while updating the tracking status.',
+            'update-success' => 'Bill tracking status updated successfully.',
+
         ],
 
         'index' => [
@@ -93,15 +95,19 @@ return [
             'status'     => 'Status',
             'session'    => 'Session',
             'year'       => 'Year',
-            'is_tracked' => 'Is Tracked',
+            'is_tracked' => 'Track',
             'delete'     => 'Delete',
             'edit'       => 'Edit',
             'view'       => 'View',
             'tracking_id' => 'Tracking ID',
-            'short_title' => 'Short Title',
+            'short_title' => 'Bill Title',
             'sponsor' => 'Sponsor',
-            'ai_impact_rating' => 'AI Impact Rating',
+            'ai_impact_rating' => 'Impact Rating',
             'last_action_date' => 'Last Action Date',
+            'bill_id' => 'Bill ID',
+            'bill_title' => 'Bill Title',
+            'track' => 'Track',
+
         ],
 
         'activities' => [
