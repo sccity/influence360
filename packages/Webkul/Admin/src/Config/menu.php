@@ -23,78 +23,24 @@ return [
         'icon-class' => 'icon-dashboard',
     ],
 
-    /**
-     * Bills.
-     */
     [
-        'key'        => 'bills',
-        'name'       => 'Bills', 
+        'key'        => 'legislation',
+        'name'       => 'Legislation',
         'route'      => 'admin.bills.index',
         'sort'       => 3,
         'icon-class' => 'icon-activity',
-    ],
-
-    /**
-     * Bill Files.
-     */
-    [
-        'key'        => 'bill_files',
-        'name'       => 'admin::app.layouts.bill-files',
-        'route'      => 'admin.bill-files.index',
-        'sort'       => 4,
-        'icon-class' => 'icon-activity',
-    ],
-
-    /**
-     * Emails.
-     */
-    [
-        'key'        => 'mail',
-        'name'       => 'admin::app.layouts.mail.title',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'compose'],
-        'sort'       => 5,
-        'icon-class' => 'icon-mail',
-    ],
-    [
-        'key'        => 'mail.inbox',
-        'name'       => 'admin::app.layouts.mail.inbox',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'inbox'],
+    ], [
+        'key'        => 'legislation.bills',
+        'name'       => 'Bills',
+        'route'      => 'admin.bills.index',
         'sort'       => 1,
-        'icon-class' => '',
-    ],
-    [
-        'key'        => 'mail.draft',
-        'name'       => 'admin::app.layouts.mail.draft',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'draft'],
+        'icon-class' => 'icon-activity',
+    ], [
+        'key'        => 'legislation.bill_files',
+        'name'       => 'Bill Files',
+        'route'      => 'admin.bill-files.index',
         'sort'       => 2,
-        'icon-class' => '',
-    ],
-    [
-        'key'        => 'mail.outbox',
-        'name'       => 'admin::app.layouts.mail.outbox',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'outbox'],
-        'sort'       => 3,
-        'icon-class' => '',
-    ],
-    [
-        'key'        => 'mail.sent',
-        'name'       => 'admin::app.layouts.mail.sent',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'sent'],
-        'sort'       => 4,
-        'icon-class' => '',
-    ],
-    [
-        'key'        => 'mail.trash',
-        'name'       => 'admin::app.layouts.mail.trash',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'trash'],
-        'sort'       => 5,
-        'icon-class' => '',
+        'icon-class' => 'icon-activity',
     ],
 
     /**
@@ -104,7 +50,7 @@ return [
         'key'        => 'activities',
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
-        'sort'       => 5,
+        'sort'       => 3,
         'icon-class' => 'icon-activity',
     ],
 
@@ -115,7 +61,7 @@ return [
         'key'        => 'contacts',
         'name'       => 'admin::app.layouts.contacts',
         'route'      => 'admin.contacts.persons.index',
-        'sort'       => 6,
+        'sort'       => 4,
         'icon-class' => 'icon-contact',
     ], [
         'key'        => 'contacts.persons',
@@ -139,7 +85,7 @@ return [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.index',
-        'sort'       => 8,
+        'sort'       => 5,
         'icon-class' => 'icon-setting',
     ], [
         'key'        => 'settings.user',
@@ -260,29 +206,6 @@ return [
         'route'      => 'admin.settings.tags.index',
         'sort'       => 1,
         'icon-class' => 'icon-settings-tag',
-    ],
-
-
-    /**
-     * Bill Files.
-     */
-    [
-        'key'        => 'bill_files',
-        'name'       => 'admin::app.layouts.bill-files',
-        'route'      => 'admin.bill-files.index',
-        'sort'       => 4,
-        'icon-class' => 'icon-activity',
-    ],
-
-    /**
-     * Bills.
-     */
-    [
-        'key'        => 'bills',
-        'name'       => 'Bills', 
-        'route'      => 'admin.bills.index',
-        'sort'       => 3,
-        'icon-class' => 'icon-activity',
     ],
 ];
 

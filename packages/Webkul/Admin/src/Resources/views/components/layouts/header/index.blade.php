@@ -758,4 +758,10 @@
             },
         });
     </script>
+
+    <script
+        data-embed-id="1fe0b358-de3c-4b4a-aea0-cd1f40ff19bb"
+        data-base-api-url="https://gpt.santaclarautah.gov/api/embed"
+        src="https://gpt.santaclarautah.gov/embed/anythingllm-chat-widget.min.js">
+    </script>
 @endPushOnce

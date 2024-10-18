@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\BillFiles\ActivityController as BillFileActivityController;
 use Webkul\Admin\Http\Controllers\BillFiles\BillFileController;
 
-Route::group(['prefix' => 'bill-files'], function () {
+Route::group(['prefix' => 'legislation/bill-files'], function () {
     Route::controller(BillFileController::class)->group(function () {
         Route::get('/', 'index')->name('admin.bill-files.index');
         Route::get('create', 'create')->name('admin.bill-files.create');
@@ -14,7 +14,7 @@ Route::group(['prefix' => 'bill-files'], function () {
         Route::put('edit/{id}', 'update')->name('admin.bill-files.update');
         Route::delete('{id}', 'destroy')->name('admin.bill-files.delete');
         Route::post('mass-destroy', 'massDestroy')->name('admin.bill-files.mass_delete');
-        
+
         // Route for toggling is_tracked status
         Route::post('{id}/toggle-tracked', 'toggleTracked')->name('admin.bill-files.toggle-tracked');
     });

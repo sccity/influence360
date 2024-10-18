@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Bills\ActivityController as BillActivityController;
 use Webkul\Admin\Http\Controllers\Bills\BillController;
 
-Route::group(['prefix' => 'bills'], function () {
+Route::group(['prefix' => 'legislation/bills'], function () {
     Route::controller(BillController::class)->group(function () {
         Route::get('/', 'index')->name('admin.bills.index');
         Route::get('create', 'create')->name('admin.bills.create');
