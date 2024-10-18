@@ -98,7 +98,7 @@ class AttributeSeeder extends Seeder
                 'updated_at'      => $now,
             ], [
                 'code'            => 'user_id',
-                'name'            => trans('installer::app.seeders.attributes.initiatives.sales-owner', [], $defaultLocale),
+                'name'            => trans('installer::app.seeders.attributes.initiatives.initiative-owner', [], $defaultLocale),
                 'type'            => 'select',
                 'entity_type'     => 'initiatives',
                 'lookup_type'     => 'users',
@@ -215,7 +215,7 @@ class AttributeSeeder extends Seeder
                 'updated_at'      => $now,
             ], [
                 'code'            => 'user_id',
-                'name'            => trans('installer::app.seeders.attributes.persons.sales-owner', [], $defaultLocale),
+                'name'            => trans('installer::app.seeders.attributes.persons.initiative-owner', [], $defaultLocale),
                 'type'            => 'lookup',
                 'entity_type'     => 'persons',
                 'lookup_type'     => 'users',
@@ -276,7 +276,7 @@ class AttributeSeeder extends Seeder
                 'updated_at'      => $now,
             ], [
                 'code'            => 'user_id',
-                'name'            => trans('installer::app.seeders.attributes.organizations.sales-owner', [], $defaultLocale),
+                'name'            => trans('installer::app.seeders.attributes.organizations.initiative-owner', [], $defaultLocale),
                 'type'            => 'lookup',
                 'entity_type'     => 'organizations',
                 'lookup_type'     => 'users',
@@ -370,7 +370,7 @@ class AttributeSeeder extends Seeder
              */
             [
                 'code'            => 'user_id',
-                'name'            => trans('installer::app.seeders.attributes.quotes.sales-owner', [], $defaultLocale),
+                'name'            => trans('installer::app.seeders.attributes.quotes.initiative-owner', [], $defaultLocale),
                 'type'            => 'select',
                 'entity_type'     => 'quotes',
                 'lookup_type'     => 'users',

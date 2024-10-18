@@ -1099,7 +1099,7 @@ return [
 
             'helpers' => [
                 'update-related-initiatives'       => 'Update related initiatives',
-                'send-email-to-sales-owner'  => 'Send email to sales owner',
+                'send-email-to-initiative-owner'  => 'Send email to Initiative Owner',
                 'send-email-to-participants' => 'Send email to participants',
                 'add-webhook'                => 'Add Webhook',
                 'update-initiative'                => 'Update Initiative',

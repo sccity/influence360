@@ -92,7 +92,7 @@ class Initiative extends AbstractEntity
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-initiative-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'   => 'add_tag',

@@ -7,7 +7,7 @@ return [
                 'description'         => 'Description',
                 'expected-close-date' => 'Expected Close Date',
                 'initiative-value'          => 'Initiative Value',
-                'sales-owner'         => 'Sales Owner',
+                'initiative-owner'         => 'Initiative Owner',
                 'source'              => 'Source',
                 'title'               => 'Title',
                 'type'                => 'Type',
@@ -21,13 +21,13 @@ return [
                 'job-title'       => 'Job Title',
                 'name'            => 'Name',
                 'organization'    => 'Organization',
-                'sales-owner'     => 'Sales Owner',
+                'initiative-owner'     => 'Initiative Owner',
             ],
 
             'organizations' => [
                 'address'     => 'Address',
                 'name'        => 'Name',
-                'sales-owner' => 'Sales Owner',
+                'initiative-owner' => 'Initiative Owner',
             ],
 
             'products' => [
@@ -47,7 +47,7 @@ return [
                 'expired-at'        => 'Expired At',
                 'grand-total'       => 'Grand Total',
                 'person'            => 'Person',
-                'sales-owner'       => 'Sales Owner',
+                'initiative-owner'       => 'Initiative Owner',
                 'shipping-address'  => 'Shipping Address',
                 'sub-total'         => 'Sub Total',
                 'subject'           => 'Subject',

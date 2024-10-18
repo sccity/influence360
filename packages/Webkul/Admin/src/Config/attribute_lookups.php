@@ -28,7 +28,7 @@ return [
     ],
 
     'users' => [
-        'name'         => 'Sales Owners',
+        'name'         => 'Initiative Owners',
         'repository'   => 'Webkul\User\Repositories\UserRepository',
     ],
 

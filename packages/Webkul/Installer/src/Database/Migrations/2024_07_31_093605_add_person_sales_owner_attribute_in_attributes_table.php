@@ -17,7 +17,7 @@ return new class extends Migration
             ->insert([
                 [
                     'code'            => 'user_id',
-                    'name'            => trans('installer::app.seeders.attributes.persons.sales-owner'),
+                    'name'            => trans('installer::app.seeders.attributes.persons.initiative-owner'),
                     'type'            => 'lookup',
                     'entity_type'     => 'persons',
                     'lookup_type'     => 'users',
