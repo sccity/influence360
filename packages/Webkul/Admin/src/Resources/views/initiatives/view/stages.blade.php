@@ -107,18 +107,6 @@
 
                             <!-- Won Value -->
                             <template v-if="nextStage.code == 'won'">
-                                <x-admin::form.control-group>
-                                    <x-admin::form.control-group.label>
-                                        @lang('admin::app.initiatives.view.stages.won-value')
-                                    </x-admin::form.control-group.label>
-
-                                    <x-admin::form.control-group.control
-                                        type="price"
-                                        name="initiative_value"
-                                        :value="$initiative->initiative_value"
-                                        v-model="nextStage.initiative_value"
-                                    />
-                                </x-admin::form.control-group>
                             </template>
 
                             <!-- Lost Reason -->
@@ -198,7 +186,7 @@
                     if (this.currentStage.code == stage.code) {
                         return;
                     }
-                    
+
                     this.nextStage = stage;
 
                     this.$refs.stageUpdateModal.open();
