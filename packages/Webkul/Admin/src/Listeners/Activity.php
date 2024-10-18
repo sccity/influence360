@@ -8,6 +8,8 @@ use Webkul\Initiative\Repositories\InitiativeRepository;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
 use Webkul\BillFiles\Repositories\BillFileRepository;
+use Webkul\Bills\Repositories\BillRepository;
+use Illuminate\Support\Facades\Log;
 
 class Activity
 {
@@ -21,14 +23,17 @@ class Activity
         protected PersonRepository $personRepository,
         protected ProductRepository $productRepository,
         protected WarehouseRepository $warehouseRepository,
-        protected BillFileRepository $billFileRepository
+        protected BillFileRepository $billFileRepository,
+        protected BillRepository $billRepository
     ) {}
 
     /**
-     * Link activity to initiative or person.
+     * Link activity to initiative, person, warehouse, product, bill file, or bill.
      */
     public function afterUpdateOrCreate(ActivityContract $activity): void
     {
+        Log::info('Activity listener triggered:', ['activity_id' => $activity->id, 'request_data' => request()->all()]);
+
         if (request()->input('initiative_id')) {
             $initiative = $this->initiativeRepository->find(request()->input('initiative_id'));
 
@@ -58,6 +63,13 @@ class Activity
         
             if (! $billFile->activities->contains($activity->id)) {
                 $billFile->activities()->attach($activity->id);
+            }
+        } elseif (request()->input('bill_id')) {
+            $bill = $this->billRepository->find(request()->input('bill_id'));
+        
+            if ($bill && ! $bill->activities->contains($activity->id)) {
+                $bill->activities()->attach($activity->id);
+                Log::info('Attached activity to bill in listener:', ['bill_id' => $bill->id, 'activity_id' => $activity->id]);
             }
         }
     }

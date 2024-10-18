@@ -10,6 +10,7 @@ use Webkul\Product\Models\ProductProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
 use Webkul\BillFiles\Models\BillFile;
+use Webkul\Bills\Models\Bill;
 
 class Activity extends Model implements ActivityContract
 {
@@ -116,5 +117,10 @@ class Activity extends Model implements ActivityContract
     public function billFiles()
     {
         return $this->belongsToMany(BillFile::class, 'bill_file_activities', 'activity_id', 'bill_file_id');
+    }
+
+    public function bills()
+    {
+        return $this->belongsToMany(Bill::class, 'bill_activities', 'activity_id', 'bill_id');
     }
 }

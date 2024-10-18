@@ -14,7 +14,7 @@
 
 <x-admin::activities 
     :entity-id="$bill->id" 
-    entity-type="Webkul\Bill\Models\Bill"
+    entity-type="Webkul\Bills\Models\Bill"
     :endpoint="route('admin.bills.activities.index', $bill->id)"
 />
 
