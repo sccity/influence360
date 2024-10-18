@@ -90,11 +90,11 @@ return [
             ],
 
             'source' => [
-                'direct'   => 'Direct',
-                'email'    => 'Email',
-                'phone'    => 'Phone',
-                'web'      => 'Web',
-                'web-form' => 'Web Form',
+                'self'   => 'Self',
+                'staff'    => 'Staff',
+                'mayor-council'    => 'Mayor & Council',
+                'ulct'      => 'ULCT',
+                'other' => 'Other',
             ],
 
             'type' => [

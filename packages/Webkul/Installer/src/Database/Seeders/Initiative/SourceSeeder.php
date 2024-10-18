@@ -25,27 +25,27 @@ class SourceSeeder extends Seeder
         DB::table('initiative_sources')->insert([
             [
                 'id'         => 1,
-                'name'       => trans('installer::app.seeders.initiative.source.email', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.source.self', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 2,
-                'name'       => trans('installer::app.seeders.initiative.source.web', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.source.staff', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 3,
-                'name'       => trans('installer::app.seeders.initiative.source.web-form', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.source.mayor-council', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 4,
-                'name'       => trans('installer::app.seeders.initiative.source.phone', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.source.ulct', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 5,
-                'name'       => trans('installer::app.seeders.initiative.source.direct', [], $defaultLocale),
+                'name'       => trans('installer::app.seeders.initiative.source.other', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
