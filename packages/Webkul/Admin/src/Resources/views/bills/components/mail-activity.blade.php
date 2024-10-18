@@ -22,25 +22,106 @@
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-bill-mail-activity-template">
-        <div>
-            <x-admin::modal ref="billMailModal">
-                <x-slot:header>
-                    <p class="text-lg text-gray-800 dark:text-white font-bold">
-                        @lang('admin::app.components.activities.actions.mail.title')
-                    </p>
-                </x-slot:header>
+        <Teleport to="body">
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+                ref="mailActionForm"
+            >
+                <form @submit="handleSubmit($event, save)">
+                    <x-admin::modal ref="billMailModal">
+                        <x-slot:header>
+                            <h3 class="text-lg font-bold">
+                                @lang('admin::app.components.activities.actions.mail.add-email-record')
+                            </h3>
+                        </x-slot>
 
-                <x-slot:content>
-                    <x-admin::form
-                        :action="route('admin.bills.mail-activity.store')"
-                        method="POST"
-                        ref="mailActionForm"
-                    >
-                        <!-- Add your form fields here -->
-                    </x-admin::form>
-                </x-slot:content>
-            </x-admin::modal>
-        </div>
+                        <x-slot:content>
+                            <!-- Activity Type -->
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                name="type"
+                                value="email"
+                            />
+
+                            <!-- Id -->
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                ::name="entityControlName"
+                                ::value="entity.id"
+                            />
+
+                            <!-- Subject -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.components.activities.actions.mail.subject')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    name="title"
+                                    rules="required"
+                                    :label="trans('admin::app.components.activities.actions.mail.subject')"
+                                    :placeholder="trans('admin::app.components.activities.actions.mail.subject')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="title" />
+                            </x-admin::form.control-group>
+
+                            <!-- Content -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.components.activities.actions.mail.content')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="textarea"
+                                    name="comment"
+                                    rules="required"
+                                    :label="trans('admin::app.components.activities.actions.mail.content')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="comment" />
+                            </x-admin::form.control-group>
+
+                            <!-- Participants -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.components.activities.actions.mail.participants')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::activities.actions.activity.participants />
+                            </x-admin::form.control-group>
+
+                            <!-- Date Sent -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.components.activities.actions.mail.date-sent')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="date"
+                                    name="schedule_from"
+                                    rules="required"
+                                    :label="trans('admin::app.components.activities.actions.mail.date-sent')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="schedule_from" />
+                            </x-admin::form.control-group>
+                        </x-slot>
+
+                        <x-slot:footer>
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                @lang('admin::app.components.activities.actions.mail.save-btn')
+                            </button>
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
+        </Teleport>
     </script>
 
     <script type="module">
@@ -52,7 +133,7 @@
             data() {
                 return {
                     isLoading: false,
-                }
+                };
             },
 
             methods: {
@@ -60,11 +141,31 @@
                     this.$refs.billMailModal.open();
                 },
 
-                sendMail() {
-                    this.$refs.mailActionForm.submit();
+                save(params) {
+                    this.isLoading = true;
+
+                    let data = Object.assign({}, params, {
+                        bill_id: this.entity.id
+                    });
+
+                    this.$axios.post("{{ route('admin.bills.mail-activity.store') }}", data)
+                        .then(response => {
+                            this.isLoading = false;
+                            this.$refs.billMailModal.close();
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$emitter.emit('on-activity-added', response.data.data);
+                        })
+                        .catch(error => {
+                            this.isLoading = false;
+                            if (error.response && error.response.status === 422) {
+                                this.$refs.mailActionForm.setErrors(error.response.data.errors);
+                            } else {
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message || 'An error occurred' });
+                                this.$refs.billMailModal.close();
+                            }
+                        });
                 },
             },
         });
     </script>
 @endPushOnce
-

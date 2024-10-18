@@ -26,14 +26,7 @@
 
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for Bills (if needed) -->
-            @if (bouncer()->hasPermission('bills.create'))
-                <a
-                    href="{{ route('admin.bills.create') }}"
-                    class="primary-button"
-                >
-                    @lang('admin::app.bills.index.create-btn')
-                </a>
-            @endif
+            
         </div>
 
         {!! view_render_event('admin.bills.index.header.right.after') !!}
