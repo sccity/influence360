@@ -50,3 +50,4 @@ require 'configuration-routes.php';
  */
 require 'rest-routes.php';
 require 'bill-files-routes.php';
+require 'bills-routes.php';

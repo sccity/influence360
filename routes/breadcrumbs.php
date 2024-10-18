@@ -425,7 +425,7 @@ Breadcrumbs::for('dashboard.account.edit', function (BreadcrumbTrail $trail, $us
 // Dashboard > Bill Files
 Breadcrumbs::for('bill-files', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push(trans('admin::app.layouts.bill-files'), route('admin.bill-files.index'));
+    $trail->push(trans('admin::app.bill-files.index.title'), route('admin.bill-files.index'));
 });
 
 // Dashboard > Bill Files > Create
@@ -444,4 +444,28 @@ Breadcrumbs::for('bill-files.edit', function (BreadcrumbTrail $trail, $billFile)
 Breadcrumbs::for('bill-files.view', function (BreadcrumbTrail $trail, $billFile) {
     $trail->parent('bill-files');
     $trail->push('#' . $billFile->id, route('admin.bill-files.view', $billFile->id));
+});
+
+// Dashboard > Bills
+Breadcrumbs::for('bills', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('admin::app.bills.index.title'), route('admin.bills.index'));
+});
+
+// Dashboard > Bills > Create
+Breadcrumbs::for('bills.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('bills');
+    $trail->push(trans('admin::app.bills.create.title'), route('admin.bills.create'));
+});
+
+// Dashboard > Bills > Edit
+Breadcrumbs::for('bills.edit', function (BreadcrumbTrail $trail, $bill) {
+    $trail->parent('bills');
+    $trail->push(trans('admin::app.bills.edit.title'), route('admin.bills.edit', $bill->id));
+});
+
+// Dashboard > Bills > View
+Breadcrumbs::for('bills.view', function (BreadcrumbTrail $trail, $bill) {
+    $trail->parent('bills');
+    $trail->push('#' . $bill->id, route('admin.bills.view', $bill->id));
 });

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\BillFiles\Database\Seeders\BillFileSeeder;
+use Webkul\Bills\Database\Seeders\BillSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KrayinDatabaseSeeder::class);
 
         $this->call(BillFileSeeder::class);
+        $this->call(BillSeeder::class);
     }
 }

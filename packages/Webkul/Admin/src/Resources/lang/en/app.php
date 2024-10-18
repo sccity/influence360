@@ -40,16 +40,100 @@ return [
         'export'          => 'Export',
         'mass-delete'     => 'Mass Delete',
     ],
+    'bills' => [
+        'toggle-tracked-success' => 'Bill tracking status updated successfully.',
+        'notifications' => [
+            'tracked' => 'Bill is now being tracked.',
+            'untracked' => 'Bill is no longer being tracked.',
+            'error' => 'An error occurred while updating the tracking status.',
+        ],
+
+        'index' => [
+            'title'          => 'Bills',
+            'create-btn'     => 'Create Bill',
+            'create-success' => 'Bill created successfully.',
+            'update-success' => 'Bill updated successfully.',
+            'delete-success' => 'Bill deleted successfully.',
+            'delete-failed'  => 'Bill cannot be deleted.',
+            'mass-delete-success' => 'Selected bills deleted successfully.',
+        ],
+
+        'create' => [
+            'title'    => 'Create Bill',
+            'save-btn' => 'Save Bill',
+        ],
+
+        'edit' => [
+            'title'    => 'Edit Bill',
+            'save-btn' => 'Save Bill',
+        ],
+
+        'view' => [
+            'title'             => 'View Bill',
+            'bill-details'      => 'Bill Details',
+            'billid'            => 'Bill ID',
+            'name'              => 'Name',
+            'status'            => 'Status',
+            'session'           => 'Session',
+            'year'              => 'Year',
+            'is_tracked'        => 'Is Tracked',
+            'activities'        => 'Activities',
+            'all'               => 'All',
+            'notes'             => 'Notes',
+            'files'             => 'Files',
+            'change-logs'       => 'Change Logs',
+            'details'           => 'Bill Details',
+            'about-bill'        => 'About Bill',
+        ],
+
+        'datagrid' => [
+            'id'         => 'ID',
+            'billid'     => 'Bill ID',
+            'name'       => 'Name',
+            'status'     => 'Status',
+            'session'    => 'Session',
+            'year'       => 'Year',
+            'is_tracked' => 'Is Tracked',
+            'delete'     => 'Delete',
+            'edit'       => 'Edit',
+            'view'       => 'View',
+        ],
+
+        'activities' => [
+            'title'         => 'Activities',
+            'add-title'     => 'Add Activity',
+            'edit-title'    => 'Edit Activity',
+            'save-btn'      => 'Save Activity',
+            'update-btn'    => 'Update Activity',
+            'delete-success' => 'Activity deleted successfully.',
+        ],
+
+        'tags' => [
+            'attached' => 'Tags attached successfully',
+            'detached' => 'Tags detached successfully',
+        ],
+
+        'table' => [
+            'id'         => 'ID',
+            'billid'     => 'Bill ID',
+            'name'       => 'Name',
+            'status'     => 'Status',
+            'session'    => 'Session',
+            'year'       => 'Year',
+            'is_tracked' => 'Is Tracked',
+            'actions'    => 'Actions',
+        ],
+    ],
     'bill-files' => [
         'toggle-tracked-success' => 'Bill file tracking status updated successfully.',
         'notifications' => [
-        'tracked' => 'Bill file is now being tracked.',
-        'untracked' => 'Bill file is no longer being tracked.',
-        'error' => 'An error occurred while updating the tracking status.',
-    ],
+            'tracked' => 'Bill file is now being tracked.',
+            'untracked' => 'Bill file is no longer being tracked.',
+            'error' => 'An error occurred while updating the tracking status.',
+            ],
 
-    'index' => [
-        'title'          => 'Influence360 - Bill Files',
+        'index' => [
+        'title'          => 'Bill Files',
         'create-btn'     => 'Create Bill File',
         'create-success' => 'Bill file created successfully.',
         'update-success' => 'Bill file updated successfully.',
@@ -446,11 +530,27 @@ return [
                 'honeydew'       => 'Honeydew',
             ],
         ],
-
-        'layouts' => [
-            'bill-files' => [
-                'title' => 'Bill Files',
+        'bills' => [
+            'index' => [
+                'title' => 'Bills',
+                'create-btn' => 'Create Bill',
             ],
+            'create' => [
+                'title' => 'Create Bill',
+            ],
+            'edit' => [
+                'title' => 'Edit Bill',
+            ],
+            'view' => [
+                'title' => 'View Bill',
+            ],
+        ],
+        'layouts' => [
+            'dashboard'            => 'Dashboard',
+            'leads'                => 'Leads',
+            'bill-files'           => 'Bill Files',
+            'bills'                => 'Bills',  // Add this line
+            'quotes'               => 'Quotes',
             'header' => [
                 'mega-search' => [
                     'title'   => 'Search',
@@ -2000,14 +2100,14 @@ return [
         ],
     ],
 
-    'layouts' => [
-        'app-version'          => 'Version : :version',
-        'dashboard'            => 'Dashboard',
-        'leads'                => 'Leads',
-        'bill-files'           => 'Bill Files',
-        'quotes'               => 'Quotes',
-        'quote'                => 'Quote',
-        'mail'                 => [
+   'layouts' => [
+    'app-version'          => 'Version : :version',
+    'dashboard'            => 'Dashboard',
+    'leads'                => 'Leads',
+    'bill-files'           => 'Bill Files',
+    'quotes'               => 'Quotes',
+    'quote'                => 'Quote',
+    'mail'                 => [
             'title'   => 'Mail',
             'compose' => 'Compose',
             'inbox'   => 'Inbox',

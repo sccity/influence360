@@ -13,7 +13,7 @@ return [
     ],
 
     /**
-     * Leads.
+     * Initiatives (formerly Leads).
      */
     [
         'key'        => 'leads',
@@ -23,6 +23,27 @@ return [
         'icon-class' => 'icon-leads',
     ],
 
+    /**
+     * Bills.
+     */
+    [
+        'key'        => 'bills',
+        'name'       => 'Bills', 
+        'route'      => 'admin.bills.index',
+        'sort'       => 3,
+        'icon-class' => 'icon-activity',
+    ],
+
+    /**
+     * Bill Files.
+     */
+    [
+        'key'        => 'bill_files',
+        'name'       => 'admin::app.layouts.bill-files',
+        'route'      => 'admin.bill-files.index',
+        'sort'       => 4,
+        'icon-class' => 'icon-activity',
+    ],
 
     /**
      * Emails.
@@ -32,37 +53,42 @@ return [
         'name'       => 'admin::app.layouts.mail.title',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'compose'],
-        'sort'       => 4,
+        'sort'       => 5,
         'icon-class' => 'icon-mail',
-    ], [
+    ],
+    [
         'key'        => 'mail.inbox',
         'name'       => 'admin::app.layouts.mail.inbox',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'inbox'],
-        'sort'       => 2,
+        'sort'       => 1,
         'icon-class' => '',
-    ], [
+    ],
+    [
         'key'        => 'mail.draft',
         'name'       => 'admin::app.layouts.mail.draft',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'draft'],
-        'sort'       => 3,
+        'sort'       => 2,
         'icon-class' => '',
-    ], [
+    ],
+    [
         'key'        => 'mail.outbox',
         'name'       => 'admin::app.layouts.mail.outbox',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'outbox'],
-        'sort'       => 4,
+        'sort'       => 3,
         'icon-class' => '',
-    ], [
+    ],
+    [
         'key'        => 'mail.sent',
         'name'       => 'admin::app.layouts.mail.sent',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'sent'],
         'sort'       => 4,
         'icon-class' => '',
-    ], [
+    ],
+    [
         'key'        => 'mail.trash',
         'name'       => 'admin::app.layouts.mail.trash',
         'route'      => 'admin.mail.index',
@@ -70,13 +96,6 @@ return [
         'sort'       => 5,
         'icon-class' => '',
     ],
-    // , [
-    //     'key'        => 'mail.setting',
-    //     'name'       => 'admin::app.layouts.mail.setting',
-    //     'route'      => 'admin.mail.index',
-    //     'params'     => ['route' => 'setting'],
-    //     'sort'       => 5,
-    // ]
 
     /**
      * Activities.
@@ -251,7 +270,19 @@ return [
         'key'        => 'bill_files',
         'name'       => 'admin::app.layouts.bill-files',
         'route'      => 'admin.bill-files.index',
+        'sort'       => 4,
+        'icon-class' => 'icon-activity',
+    ],
+
+    /**
+     * Bills.
+     */
+    [
+        'key'        => 'bills',
+        'name'       => 'Bills', 
+        'route'      => 'admin.bills.index',
         'sort'       => 3,
         'icon-class' => 'icon-activity',
     ],
 ];
+
