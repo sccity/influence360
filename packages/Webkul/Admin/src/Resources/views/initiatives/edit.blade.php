@@ -7,7 +7,7 @@
     {!! view_render_event('admin.initiatives.edit.form_controls.before', ['initiative' => $initiative]) !!}
 
     <!-- Edit Initiative Form -->
-    <x-admin::form         
+    <x-admin::form
         :action="route('admin.initiatives.update', $initiative->id)"
         method="PUT"
     >
@@ -16,8 +16,8 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        <x-admin::breadcrumbs 
-                            name="initiatives.edit" 
+                        <x-admin::breadcrumbs
+                            name="initiatives.edit"
                             :entity="$initiative"
                         />
                     </div>
@@ -58,7 +58,7 @@
     {!! view_render_event('admin.initiatives.edit.form_controls.after', ['initiative' => $initiative]) !!}
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-initiative-edit-template"
         >
@@ -88,8 +88,8 @@
                     {!! view_render_event('admin.initiatives.edit.initiative_details.before', ['initiative' => $initiative]) !!}
 
                     <!-- Details section -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="initiative-details"
                     >
                         <div class="flex flex-col gap-1">
@@ -139,7 +139,7 @@
                                         :entity="$initiative"
                                     />
                                 </div>
-                                    
+
                                 <div class="w-full">
                                     <x-admin::attributes
                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -167,8 +167,8 @@
                     {!! view_render_event('admin.initiatives.edit.contact_person.before', ['initiative' => $initiative]) !!}
 
                     <!-- Contact Person -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="contact-person"
                     >
                         <div class="flex flex-col gap-1">
@@ -192,8 +192,8 @@
                     {!! view_render_event('admin.initiatives.edit.contact_person.products.before', ['initiative' => $initiative]) !!}
 
                     <!-- Product Section -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="products"
                     >
                         <div class="flex flex-col gap-1">
@@ -214,7 +214,7 @@
 
                     {!! view_render_event('admin.initiatives.edit.contact_person.products.after', ['initiative' => $initiative]) !!}
                 </div>
-                
+
                 {!! view_render_event('admin.initiatives.form_controls.after') !!}
             </div>
         </script>
@@ -226,10 +226,10 @@
                 data() {
                     return {
                         activeTab: 'initiative-details',
-                        
-                        initiative:  @json($initiative),  
 
-                        person:  @json($initiative->person),  
+                        initiative:  @json($initiative),
+
+                        person:  @json($initiative->person),
 
                         products: @json($initiative->products),
 
@@ -244,9 +244,9 @@
                 methods: {
                     /**
                      * Scroll to the section.
-                     * 
+                     *
                      * @param {String} tabId
-                     * 
+                     *
                      * @returns {void}
                      */
                     scrollToSection(tabId) {
@@ -267,5 +267,5 @@
                 scroll-behavior: smooth;
             }
         </style>
-    @endPushOnce    
+    @endPushOnce
 </x-admin::layouts>

@@ -86,7 +86,7 @@
                     {!! view_render_event('admin.initiatives.view.actions.after', ['initiative' => $initiative]) !!}
                 </div>
             </div>
-            
+
             <!-- Initiative Attributes -->
             @include ('admin::initiatives.view.attributes')
 
@@ -97,7 +97,7 @@
         {!! view_render_event('admin.initiatives.view.left.after', ['initiative' => $initiative]) !!}
 
         {!! view_render_event('admin.initiatives.view.right.before', ['initiative' => $initiative]) !!}
-        
+
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
             <!-- Stages Navigation -->
@@ -111,20 +111,8 @@
                 :email-detach-endpoint="route('admin.initiatives.emails.detach', $initiative->id)"
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.initiatives.view.tabs.description')],
-                    ['name' => 'products', 'label' => trans('admin::app.initiatives.view.tabs.products')],
-                    ['name' => 'quotes', 'label' => trans('admin::app.initiatives.view.tabs.quotes')],
                 ]"
             >
-                <!-- Products -->
-                <x-slot:products>
-                    @include ('admin::initiatives.view.products')
-                </x-slot>
-
-                <!-- Quotes -->
-                <x-slot:quotes>
-                    @include ('admin::initiatives.view.quotes')
-                </x-slot>
-
                 <!-- Description -->
                 <x-slot:description>
                     <div class="p-4 dark:text-white">
@@ -137,5 +125,5 @@
         </div>
 
         {!! view_render_event('admin.initiatives.view.right.after', ['initiative' => $initiative]) !!}
-    </div>    
+    </div>
 </x-admin::layouts>
