@@ -326,6 +326,10 @@
 
                         window.history.pushState({}, '', currentUrl);
                     },
+
+                    safeArrayAccess(arr, index) {
+                        return Array.isArray(arr) && arr.length > index ? arr[index] : undefined;
+                    },
                 },
             });
         </script>

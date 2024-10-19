@@ -75,7 +75,11 @@
             {!! view_render_event('admin.bills.view.right.before', ['bill' => $bill]) !!}
 
             <!-- Activities -->
-            <x-admin::activities :endpoint="route('admin.bills.activities.index', $bill->id)" />
+            <x-admin::activities 
+                :entity-id="$bill->id" 
+                entity-type="Webkul\Bills\Models\Bill"
+                :endpoint="route('admin.bills.activities.index', $bill->id)"
+            />
 
             {!! view_render_event('admin.bills.view.right.after', ['bill' => $bill]) !!}
         </div>
