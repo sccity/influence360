@@ -80,7 +80,7 @@
                                                         <span>:</span>
 
                                                         <span>
-                                                            @{{ (activity.additional.old && activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
+                                                            @{{ (activity.additional.old && activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', '') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
