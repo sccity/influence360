@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KrayinDatabaseSeeder::class);
         $this->call(BillFileSeeder::class);
         $this->call(BillSeeder::class);
+        $this->call(ContactSeeder::class);
     }
 }
