@@ -7,19 +7,15 @@
     <div class="flex h-[100vh] items-center justify-center">
         <div class="flex flex-col items-center gap-5">
             <!-- Logo -->
-            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
-                <img
-                    class="h-10 w-[110px]"
-                    src="{{ Storage::url($logo) }}"
-                    alt="{{ config('app.name') }}"
-                />
-            @else
-                <img
-                    class="w-max"
-                    src="{{ vite()->asset('images/logo.svg') }}"
-                    alt="{{ config('app.name') }}"
-                />
-            @endif
+            <div class="flex items-center gap-1.5">
+                <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
+                <a href="{{ route('admin.dashboard.index') }}">
+                    <span id="logo-text" class="h-10 text-2xl" style="color: rgb(14, 144, 217);">
+                        <span class="font-semibold">Influence</span>
+                        <span class="font-bold">360</span>
+                    </span>
+                </a>
+            </div>
 
             <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
                 {!! view_render_event('admin.sessions.login.form_controls.before') !!}

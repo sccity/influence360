@@ -17,35 +17,39 @@
             type="text/template"
             id="v-web-form-template"
         >
-            <div 
+            <div
                 class="flex h-[100vh] items-center justify-center"
                 style="background-color: {{ $webForm->background_color }}"
             >
                 <div class="flex flex-col items-center gap-5">
                     <!-- Logo -->
-                    <img
-                        class="w-max"
-                        src="{{ vite()->asset('images/logo.svg') }}"
-                        alt="{{ config('app.name') }}"
-                    />
+                    <div class="flex items-center gap-1.5">
+                        <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
+                        <a href="{{ route('admin.dashboard.index') }}">
+                            <span id="logo-text" class="h-10 text-2xl" style="color: rgb(14, 144, 217);">
+                                <span class="font-semibold">Influence</span>
+                                <span class="font-bold">360</span>
+                            </span>
+                        </a>
+                    </div>
 
                     <h1 style="color: {{ $webForm->form_title_color }} !important;">{{ $webForm->title }}</h1>
 
                     <p>{{ $webForm->description }}</p>
 
-                    <div 
+                    <div
                         class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900"
                         style="background-color: {{ $webForm->form_background_color }}"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}
-            
+
                         <!-- Webform Form -->
                         <x-web_form::form
                             v-slot="{ meta, values, errors, handleSubmit }"
                             as="div"
                             ref="modalForm"
                         >
-                            <form 
+                            <form
                                 @submit="handleSubmit($event, create)"
                                 ref="webForm"
                             >
@@ -84,7 +88,7 @@
                         this.isStoring = true;
 
                         const formData = new FormData(this.$refs.webForm);
-                        
+
                         this.$axios.post('{{ route('admin.settings.web_forms.form_store', $webForm->id) }}', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
@@ -103,7 +107,7 @@
 
                                     return;
                                 }
-                                
+
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             })
                             .finally(() => {
