@@ -191,27 +191,6 @@
 
                     {!! view_render_event('admin.initiatives.edit.contact_person.products.before', ['initiative' => $initiative]) !!}
 
-                    <!-- Product Section -->
-                    <div
-                        class="flex flex-col gap-4"
-                        id="products"
-                    >
-                        <div class="flex flex-col gap-1">
-                            <p class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.initiatives.edit.products')
-                            </p>
-
-                            <p class="text-gray-600 dark:text-white">
-                                @lang('admin::app.initiatives.edit.products-info')
-                            </p>
-                        </div>
-
-                        <div>
-                            <!-- Product Component -->
-                            @include('admin::initiatives.common.products')
-                        </div>
-                    </div>
-
                     {!! view_render_event('admin.initiatives.edit.contact_person.products.after', ['initiative' => $initiative]) !!}
                 </div>
 
@@ -235,8 +214,7 @@
 
                         tabs: [
                             { id: 'initiative-details', label: '@lang('admin::app.initiatives.edit.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.initiatives.edit.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.initiatives.edit.products')' }
+                            { id: 'contact-person', label: '@lang('admin::app.initiatives.edit.contact-person')' }
                         ],
                     };
                 },

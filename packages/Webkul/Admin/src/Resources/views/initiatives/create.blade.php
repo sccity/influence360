@@ -41,11 +41,11 @@
             </div>
 
             @if (request('stage_id'))
-                <input 
-                    type="hidden" 
-                    id="initiative_pipeline_stage_id" 
-                    name="initiative_pipeline_stage_id" 
-                    value="{{ request('stage_id') }}" 
+                <input
+                    type="hidden"
+                    id="initiative_pipeline_stage_id"
+                    name="initiative_pipeline_stage_id"
+                    value="{{ request('stage_id') }}"
                 />
             @endif
 
@@ -57,13 +57,13 @@
     {!! view_render_event('admin.initiatives.create.form.after') !!}
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-initiative-create-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 {!! view_render_event('admin.initiatives.edit.form_controls.before') !!}
-                
+
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
@@ -89,8 +89,8 @@
                     {!! view_render_event('admin.initiatives.create.details.before') !!}
 
                     <!-- Details section -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="initiative-details"
                     >
                         <div class="flex flex-col gap-1">
@@ -138,7 +138,7 @@
                                         ]"
                                     />
                                 </div>
-                                    
+
                                 <div class="w-full">
                                     <x-admin::attributes
                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -165,8 +165,8 @@
                     {!! view_render_event('admin.initiatives.create.contact_person.before') !!}
 
                     <!-- Contact Person -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="contact-person"
                     >
                         <div class="flex flex-col gap-1">
@@ -186,29 +186,8 @@
                     </div>
 
                     {!! view_render_event('admin.initiatives.create.contact_person.after') !!}
-
-                    <!-- Product Section -->
-                    <div 
-                        class="flex flex-col gap-4" 
-                        id="products"
-                    >
-                        <div class="flex flex-col gap-1">
-                            <p class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.initiatives.create.products')
-                            </p>
-
-                            <p class="text-gray-600 dark:text-white">
-                                @lang('admin::app.initiatives.create.products-info')
-                            </p>
-                        </div>
-
-                        <div>
-                            <!-- Product Component -->
-                            @include('admin::initiatives.common.products')
-                        </div>
-                    </div>
                 </div>
-                
+
                 {!! view_render_event('admin.initiatives.form_controls.after') !!}
             </div>
         </script>
@@ -223,8 +202,7 @@
 
                         tabs: [
                             { id: 'initiative-details', label: '@lang('admin::app.initiatives.create.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.initiatives.create.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.initiatives.create.products')' }
+                            { id: 'contact-person', label: '@lang('admin::app.initiatives.create.contact-person')' }
                         ],
                     };
                 },
@@ -232,9 +210,9 @@
                 methods: {
                     /**
                      * Scroll to the section.
-                     * 
+                     *
                      * @param {String} tabId
-                     * 
+                     *
                      * @returns {void}
                      */
                     scrollToSection(tabId) {
@@ -255,5 +233,5 @@
                 scroll-behavior: smooth;
             }
         </style>
-    @endPushOnce    
+    @endPushOnce
 </x-admin::layouts>
