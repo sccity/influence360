@@ -3,9 +3,30 @@
     <div class="flex items-center gap-1.5">
         <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
         <a href="{{ route('admin.dashboard.index') }}">
-            <span id="logo-text" class="h-10 text-2xl" style="color: rgb(14, 144, 217);">
-                <span class="font-semibold">Influence</span>
-                <span class="font-bold">360</span>
+            <script>
+                function applyLogoColor() {
+                    const isDarkMode = document.documentElement.classList.contains('dark');
+                    const influenceText = document.querySelector('#logo-text .influence');
+
+                    if (isDarkMode) {
+                        influenceText.style.color = 'white';
+                    } else {
+                        influenceText.style.color = 'black';
+                    }
+                }
+                document.addEventListener('DOMContentLoaded', applyLogoColor);
+                const observer = new MutationObserver(() => {
+                    applyLogoColor();
+                });
+                observer.observe(document.documentElement, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            </script>
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+            <span id="logo-text" class="h-10 text-2xl" style="font-family: 'Montserrat', sans-serif;">
+                <span class="font-semibold influence">INFLUENCE</span>
+                <span class="font-bold logo-360" style="color: rgb(14, 144, 217);">360</span>
             </span>
         </a>
     </div>
