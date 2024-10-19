@@ -1,4 +1,5 @@
-FROM php:8.2-fpm
+#docker build --platform linux/x86_64 -t sccity/influence360:0.0.1-alpha --push .
+FROM --platform=linux/x86_64 php:8.3-fpm
 RUN apt-get update && apt-get install -y \
     nginx \
     build-essential \
@@ -12,8 +13,9 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     nano \
+    libicu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mbstring zip pdo pdo_mysql \
+    && docker-php-ext-install gd mbstring zip pdo pdo_mysql intl \
     && apt-get clean
 WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
