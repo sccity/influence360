@@ -1,4 +1,3 @@
-#docker build --platform linux/x86_64 -t sccity/influence360:0.0.1-alpha --push .
 FROM --platform=linux/x86_64 php:8.3-fpm
 RUN apt-get update && apt-get install -y \
     nginx \
