@@ -38,12 +38,7 @@
 
     <div class="mt-3.5 flex gap-4 max-xl:flex-wrap">
         <!-- Left Section -->
-        {!! view_render_event('admin.dashboard.index.content.left.before') !!}
-
         <div class="flex flex-1 flex-col gap-4 max-xl:flex-auto">
-            <!-- Revenue Stats -->
-            @include('admin::dashboard.index.revenue')
-
             <!-- Over All Stats -->
             @include('admin::dashboard.index.over-all')
 
@@ -59,23 +54,17 @@
             </div>
         </div>
 
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
-
         <!-- Right Section -->
-        {!! view_render_event('admin.dashboard.index.content.right.before') !!}
-
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.open-initiatives-by-states')
 
-            <!-- Revenue by Sources -->
-            @include('admin::dashboard.index.revenue-by-sources')
+            <!-- Tracked Bills (replacing Revenue by Sources) -->
+            @include('admin::dashboard.index.tracked-bills')
 
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.revenue-by-types')
         </div>
-
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
     </div>
 
     {!! view_render_event('admin.dashboard.index.content.after') !!}

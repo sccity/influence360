@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers;
 
 use Webkul\Admin\Helpers\Dashboard;
+use Webkul\Admin\Http\Controllers\Bills\BillController;
 
 class DashboardController extends Controller
 {
@@ -14,12 +15,13 @@ class DashboardController extends Controller
     protected $typeFunctions = [
         'over-all'             => 'getOverAllStats',
         'revenue-stats'        => 'getRevenueStats',
-        'total-initiatives'          => 'getTotalInitiativesStats',
+        'total-initiatives'    => 'getTotalInitiativesStats',
         'revenue-by-sources'   => 'getInitiativesStatsBySources',
         'revenue-by-types'     => 'getInitiativesStatsByTypes',
         'top-selling-products' => 'getTopSellingProducts',
         'top-persons'          => 'getTopPersons',
         'open-initiatives-by-states' => 'getOpenInitiativesByStates',
+        'tracked-bills'        => 'getTrackedBills',
     ];
 
     /**
@@ -27,7 +29,10 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct(protected Dashboard $dashboardHelper) {}
+    public function __construct(
+        protected Dashboard $dashboardHelper,
+        protected BillController $billController
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -36,9 +41,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin::dashboard.index')->with([
+        $trackedBills = $this->billController->getTrackedBills();
+
+        return view('admin::dashboard.index', [
             'startDate' => $this->dashboardHelper->getStartDate(),
             'endDate'   => $this->dashboardHelper->getEndDate(),
+            'trackedBills' => $trackedBills,
         ]);
     }
 
@@ -49,7 +57,13 @@ class DashboardController extends Controller
      */
     public function stats()
     {
-        $stats = $this->dashboardHelper->{$this->typeFunctions[request()->query('type')]}();
+        $type = request()->query('type');
+
+        if ($type === 'tracked-bills') {
+            $stats = $this->billController->getTrackedBills();
+        } else {
+            $stats = $this->dashboardHelper->{$this->typeFunctions[$type]}();
+        }
 
         return response()->json([
             'statistics' => $stats,

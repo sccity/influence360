@@ -2076,6 +2076,9 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'Dashboard',
+            'tracked-bills' => 'Tracked Bills',
+            'view-all' => 'View All',
+            'no-tracked-bills' => 'No tracked bills found.',
 
             'revenue' => [
                 'lost-revenue' => 'Lost Revenue',

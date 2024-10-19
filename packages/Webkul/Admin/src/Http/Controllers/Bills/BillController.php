@@ -20,7 +20,8 @@ class BillController extends Controller
             return app(BillDataGrid::class)->toJson();
         }
 
-        return view('admin::bills.index');
+        $isTracked = request()->get('is_tracked');
+        return view('admin::bills.index', compact('isTracked'));
     }
 
     public function create()
@@ -87,5 +88,19 @@ class BillController extends Controller
                 : trans('admin::app.bills.notifications.untracked'),
             'is_tracked' => $bill->is_tracked
         ]);
+    }
+
+    public function trackedBills()
+    {
+        return view('admin::bills.tracked');
+    }
+
+    public function getTrackedBills()
+    {
+        return $this->billRepository->getModel()
+            ->where('is_tracked', true)
+            ->orderBy('ai_impact_rating', 'desc')
+            ->take(5)
+            ->get();
     }
 }

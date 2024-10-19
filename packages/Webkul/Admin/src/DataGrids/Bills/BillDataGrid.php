@@ -30,6 +30,11 @@ class BillDataGrid extends DataGrid
                 'bills.last_action_date'
             );
 
+        // Add this condition
+        if (request()->has('is_tracked')) {
+            $queryBuilder->where('bills.is_tracked', request()->get('is_tracked'));
+        }
+
         $this->addFilter('id', 'bills.id');
         $this->addFilter('tracking_id', 'bills.tracking_id');
         $this->addFilter('bill_year', 'bills.bill_year');

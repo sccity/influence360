@@ -34,7 +34,9 @@
 
     <!-- Content -->
     <div class="mt-3.5">
-        <x-admin::datagrid src="{{ route('admin.bills.index') }}" />
+        <x-admin::datagrid 
+            src="{{ route('admin.bills.index', ['is_tracked' => $isTracked ?? null]) }}" 
+        />
     </div>
 
     {!! view_render_event('admin.bills.index.content.after') !!}
