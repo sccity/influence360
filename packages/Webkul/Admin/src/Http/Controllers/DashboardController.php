@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers;
 
 use Webkul\Admin\Helpers\Dashboard;
 use Webkul\Admin\Http\Controllers\Bills\BillController;
+use Webkul\BillFiles\Repositories\BillFileRepository;
 
 class DashboardController extends Controller
 {
@@ -31,7 +32,8 @@ class DashboardController extends Controller
      */
     public function __construct(
         protected Dashboard $dashboardHelper,
-        protected BillController $billController
+        protected BillController $billController,
+        protected BillFileRepository $billFileRepository
     ) {}
 
     /**
@@ -42,11 +44,16 @@ class DashboardController extends Controller
     public function index()
     {
         $trackedBills = $this->billController->getTrackedBills();
+        $latestBillFiles = $this->billFileRepository->getModel()
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
 
         return view('admin::dashboard.index', [
             'startDate' => $this->dashboardHelper->getStartDate(),
             'endDate'   => $this->dashboardHelper->getEndDate(),
             'trackedBills' => $trackedBills,
+            'latestBillFiles' => $latestBillFiles,
         ]);
     }
 

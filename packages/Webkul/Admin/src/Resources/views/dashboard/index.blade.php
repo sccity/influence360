@@ -59,11 +59,11 @@
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.open-initiatives-by-states')
 
-            <!-- Tracked Bills (replacing Revenue by Sources) -->
+            <!-- Tracked Bills -->
             @include('admin::dashboard.index.tracked-bills')
 
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.revenue-by-types')
+            <!-- Latest Bill Files (replacing Revenue by Types) -->
+            @include('admin::dashboard.index.latest-bill-files')
         </div>
     </div>
 
