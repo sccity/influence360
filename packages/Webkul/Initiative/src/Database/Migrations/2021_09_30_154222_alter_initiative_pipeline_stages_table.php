@@ -18,6 +18,9 @@ return new class extends Migration
 
         Schema::table('initiative_pipeline_stages', function (Blueprint $table) {
             $table->string('code')->after('id')->nullable();
+        });
+
+        Schema::table('initiative_pipeline_stages', function (Blueprint $table) {
             $table->string('name')->after('code')->nullable();
         });
 
