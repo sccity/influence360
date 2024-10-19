@@ -2081,6 +2081,8 @@ return [
             'no-tracked-bills' => 'No tracked bills found.',
             'latest-bill-files' => 'Latest Bill Files',
             'no-bill-files' => 'No bill files found.',
+            'recent-initiatives' => 'Recent Initiatives',
+            'no-recent-initiatives' => 'No recent initiatives found.',
 
             'revenue' => [
                 'lost-revenue' => 'Lost Revenue',

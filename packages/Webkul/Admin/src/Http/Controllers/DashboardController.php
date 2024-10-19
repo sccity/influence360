@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers;
 use Webkul\Admin\Helpers\Dashboard;
 use Webkul\Admin\Http\Controllers\Bills\BillController;
 use Webkul\BillFiles\Repositories\BillFileRepository;
+use Webkul\Initiative\Repositories\InitiativeRepository;
 
 class DashboardController extends Controller
 {
@@ -33,7 +34,8 @@ class DashboardController extends Controller
     public function __construct(
         protected Dashboard $dashboardHelper,
         protected BillController $billController,
-        protected BillFileRepository $billFileRepository
+        protected BillFileRepository $billFileRepository,
+        protected InitiativeRepository $initiativeRepository
     ) {}
 
     /**
@@ -48,12 +50,18 @@ class DashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
+        $recentInitiatives = $this->initiativeRepository->getModel()
+            ->with('stage')
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
 
         return view('admin::dashboard.index', [
             'startDate' => $this->dashboardHelper->getStartDate(),
             'endDate'   => $this->dashboardHelper->getEndDate(),
             'trackedBills' => $trackedBills,
             'latestBillFiles' => $latestBillFiles,
+            'recentInitiatives' => $recentInitiatives,
         ]);
     }
 

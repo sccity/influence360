@@ -56,13 +56,13 @@
 
         <!-- Right Section -->
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.open-initiatives-by-states')
+            <!-- Recent Initiatives (replacing Open Initiatives By States) -->
+            @include('admin::dashboard.index.recent-initiatives')
 
             <!-- Tracked Bills -->
             @include('admin::dashboard.index.tracked-bills')
 
-            <!-- Latest Bill Files (replacing Revenue by Types) -->
+            <!-- Latest Bill Files -->
             @include('admin::dashboard.index.latest-bill-files')
         </div>
     </div>
