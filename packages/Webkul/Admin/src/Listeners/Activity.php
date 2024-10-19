@@ -60,13 +60,13 @@ class Activity
             }
         } elseif (request()->input('bill_file_id')) {
             $billFile = $this->billFileRepository->find(request()->input('bill_file_id'));
-        
+
             if (! $billFile->activities->contains($activity->id)) {
                 $billFile->activities()->attach($activity->id);
             }
         } elseif (request()->input('bill_id')) {
             $bill = $this->billRepository->find(request()->input('bill_id'));
-        
+
             if ($bill && ! $bill->activities->contains($activity->id)) {
                 $bill->activities()->attach($activity->id);
                 Log::info('Attached activity to bill in listener:', ['bill_id' => $bill->id, 'activity_id' => $activity->id]);
