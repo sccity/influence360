@@ -9,7 +9,7 @@
     </div>
 
     <div class="border-t dark:border-gray-800">
-        @forelse ($recentActivities as $activity)
+        @forelse ($recentActivities ?? [] as $activity)
             <div class="p-2 flex items-center justify-between border-b last:border-b-0 dark:border-gray-800 text-xs">
                 <div class="flex flex-col w-2/3">
                     <span class="font-medium text-gray-800 dark:text-white truncate">{{ $activity->title }}</span>
