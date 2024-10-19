@@ -2089,6 +2089,7 @@ return [
             'open-initiatives' => 'Open Initiatives',
             'top-stage' => 'Top Stage',
             'avg-time-to-close' => 'Avg. Time to Close',
+            'no-activities' => 'No activities found.',
 
             'revenue' => [
                 'lost-revenue' => 'Lost Revenue',

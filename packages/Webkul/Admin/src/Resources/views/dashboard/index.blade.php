@@ -42,8 +42,8 @@
             <!-- Recent Initiatives -->
             @include('admin::dashboard.index.recent-initiatives')
 
-            <!-- Activities -->
-            @include('admin::dashboard.index.activities')
+            <!-- All Activities -->
+            @include('admin::dashboard.index.all-activities')
 
             <!-- Tracked Bills -->
             @include('admin::dashboard.index.tracked-bills')
