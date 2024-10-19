@@ -9,7 +9,7 @@
     </div>
 
     <div class="border-t dark:border-gray-800">
-        @forelse ($recentInitiatives as $initiative)
+        @forelse($recentInitiatives as $initiative)
             <div class="p-2 flex items-center justify-between border-b last:border-b-0 dark:border-gray-800 text-xs">
                 <div class="flex flex-col w-2/3">
                     <a href="{{ route('admin.initiatives.view', $initiative->id) }}" class="text-blue-600 hover:underline font-medium truncate">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="flex items-center justify-end w-1/3">
                     <span class="text-gray-500 dark:text-gray-400">
-                        {{ $initiative->updated_at->diffForHumans() }}
+                        {{ $initiative->created_at->diffForHumans() }}
                     </span>
                 </div>
             </div>
