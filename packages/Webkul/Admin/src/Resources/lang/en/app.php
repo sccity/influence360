@@ -2083,6 +2083,12 @@ return [
             'no-bill-files' => 'No bill files found.',
             'recent-initiatives' => 'Recent Initiatives',
             'no-recent-initiatives' => 'No recent initiatives found.',
+            'initiative-overview' => 'Initiative Overview',
+            'all-activities' => 'All Activities',
+            'total-initiatives' => 'Total Initiatives',
+            'open-initiatives' => 'Open Initiatives',
+            'top-stage' => 'Top Stage',
+            'avg-time-to-close' => 'Avg. Time to Close',
 
             'revenue' => [
                 'lost-revenue' => 'Lost Revenue',

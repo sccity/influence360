@@ -4,7 +4,6 @@ namespace Webkul\Admin\DataGrids\Bills;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 
 class TrackedBillsDataGrid extends BillDataGrid
 {
@@ -38,36 +37,36 @@ class TrackedBillsDataGrid extends BillDataGrid
             'index'      => 'tracking_id',
             'label'      => trans('admin::app.bills.datagrid.bill_id'),
             'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
         ]);
 
         $this->addColumn([
             'index'      => 'short_title',
             'label'      => trans('admin::app.bills.datagrid.bill_title'),
             'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
         ]);
 
         $this->addColumn([
             'index'      => 'sponsor',
             'label'      => trans('admin::app.bills.datagrid.sponsor'),
             'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
         ]);
 
         $this->addColumn([
             'index'      => 'ai_impact_rating',
             'label'      => trans('admin::app.bills.datagrid.ai_impact_rating'),
             'type'       => 'integer',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
             'closure'    => function ($row) {
                 $color = $this->getColorForRating($row->ai_impact_rating);
                 return '<span style="background-color: ' . $color . '; color: white; padding: 2px 6px; border-radius: 3px;">' . $row->ai_impact_rating . '</span>';
@@ -78,9 +77,9 @@ class TrackedBillsDataGrid extends BillDataGrid
             'index'      => 'last_action_date',
             'label'      => trans('admin::app.bills.datagrid.last_action_date'),
             'type'       => 'datetime',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
         ]);
     }
 
@@ -98,5 +97,25 @@ class TrackedBillsDataGrid extends BillDataGrid
                 return route('admin.bills.view', $row->id);
             },
         ]);
+    }
+
+    /**
+     * Prepare mass actions.
+     */
+    public function prepareMassActions(): void
+    {
+        // No mass actions for this grid
+    }
+
+    /**
+     * Override the getCollection method to return all items without pagination
+     */
+    public function getCollection()
+    {
+        $this->prepareQueryBuilder();
+
+        $queryBuilder = $this->getQueryBuilder();
+
+        return $queryBuilder->get();
     }
 }

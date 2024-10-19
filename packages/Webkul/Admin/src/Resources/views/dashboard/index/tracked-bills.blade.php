@@ -9,6 +9,12 @@
     </div>
 
     <div class="border-t dark:border-gray-800">
-        <x-admin::datagrid src="{{ route('admin.dashboard.tracked-bills') }}" />
+        <x-admin::datagrid
+            :src="route('admin.dashboard.tracked-bills')"
+            :isMultiRow="false"
+            :paginate="false"
+            :isSearchable="false"
+            :isFilterable="false"
+        />
     </div>
 </div>

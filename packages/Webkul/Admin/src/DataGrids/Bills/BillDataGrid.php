@@ -142,7 +142,7 @@ class BillDataGrid extends DataGrid
         ]);
     }
 
-    private function getColorForRating($rating)
+    protected function getColorForRating($rating)
     {
         if ($rating == 0) return '#000000'; // Black for 0
         if ($rating <= 3) return '#006400'; // Dark Green for 1-3

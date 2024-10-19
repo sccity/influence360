@@ -38,12 +38,7 @@
 
     <div class="mt-3.5 flex gap-4 max-xl:flex-wrap">
         <!-- Left Section -->
-        {!! view_render_event('admin.dashboard.index.content.left.before') !!}
-
         <div class="flex flex-1 flex-col gap-4 max-xl:flex-auto">
-            <!-- Initiative Overview -->
-            @include('admin::dashboard.index.initiative-stats')
-
             <!-- Recent Initiatives -->
             @include('admin::dashboard.index.recent-initiatives')
 
@@ -54,17 +49,14 @@
             @include('admin::dashboard.index.tracked-bills')
         </div>
 
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
-
         <!-- Right Section -->
-        {!! view_render_event('admin.dashboard.index.content.right.before') !!}
-
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
+            <!-- Initiative Overview -->
+            @include('admin::dashboard.index.initiative-stats')
+
             <!-- Latest Bill Files -->
             @include('admin::dashboard.index.latest-bill-files')
         </div>
-
-        {!! view_render_event('admin.dashboard.index.content.right.after') !!}
     </div>
 
     {!! view_render_event('admin.dashboard.index.content.after') !!}
