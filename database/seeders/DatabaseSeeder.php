@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(KrayinDatabaseSeeder::class);
-
         $this->call(BillFileSeeder::class);
         $this->call(BillSeeder::class);
     }

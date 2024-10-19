@@ -120,10 +120,10 @@ return [
         'index' => [
             'create-administrator' => [
                 'admin'            => 'Admin',
-                'krayin'           => 'Krayin',
+                'krayin'           => 'Influence360',
                 'confirm-password' => 'Confirm Password',
                 'email'            => 'Email',
-                'email-address'    => 'admin@example.com',
+                'email-address'    => 'admin@santaclarautah.gov',
                 'password'         => 'Password',
                 'title'            => 'Create Administrator',
             ],

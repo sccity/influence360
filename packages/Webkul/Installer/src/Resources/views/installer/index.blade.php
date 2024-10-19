@@ -928,7 +928,7 @@
                                         type="text"
                                         name="email"
                                         rules="required"
-                                        value="admin@example.com"
+                                        value="admin@santaclarautah.gov"
                                         :label="trans('installer::app.installer.index.create-administrator.email')"
                                         :placeholder="trans('installer::app.installer.index.create-administrator.email-address')"
                                     />
