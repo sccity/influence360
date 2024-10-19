@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Bills\Repositories\BillRepository;
 use Webkul\Admin\DataGrids\Bills\BillDataGrid;
+use Webkul\Admin\DataGrids\Bills\TrackedBillsDataGrid;
 
 class BillController extends Controller
 {
@@ -95,12 +96,8 @@ class BillController extends Controller
         return view('admin::bills.tracked');
     }
 
-    public function getTrackedBills()
+    public function getTrackedBills(): JsonResponse
     {
-        return $this->billRepository->getModel()
-            ->where('is_tracked', true)
-            ->orderBy('ai_impact_rating', 'desc')
-            ->take(5)
-            ->get();
+        return app(TrackedBillsDataGrid::class)->toJson();
     }
 }
