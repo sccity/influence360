@@ -38,44 +38,25 @@
 
     <div class="mt-3.5 flex gap-4 max-xl:flex-wrap">
         <!-- Left Section -->
-        {!! view_render_event('admin.dashboard.index.content.left.before') !!}
-
         <div class="flex flex-1 flex-col gap-4 max-xl:flex-auto">
-            <!-- Revenue Stats -->
-            @include('admin::dashboard.index.revenue')
+            <!-- Recent Initiatives -->
+            @include('admin::dashboard.index.recent-initiatives')
 
-            <!-- Over All Stats -->
-            @include('admin::dashboard.index.over-all')
+            <!-- All Activities -->
+            @include('admin::dashboard.index.all-activities')
 
-            <!-- Total Initiatives Stats -->
-            @include('admin::dashboard.index.total-initiatives')
-
-            <div class="flex gap-4 [&>*]:flex-1">
-                <!-- Total Products -->
-                @include('admin::dashboard.index.top-selling-products')
-
-                <!-- Total Persons -->
-                @include('admin::dashboard.index.top-persons')
-            </div>
+            <!-- Tracked Bills -->
+            @include('admin::dashboard.index.tracked-bills')
         </div>
-
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
 
         <!-- Right Section -->
-        {!! view_render_event('admin.dashboard.index.content.right.before') !!}
-
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.open-initiatives-by-states')
+            <!-- Initiative Overview -->
+            @include('admin::dashboard.index.initiative-stats')
 
-            <!-- Revenue by Sources -->
-            @include('admin::dashboard.index.revenue-by-sources')
-
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.revenue-by-types')
+            <!-- Latest Bill Files -->
+            @include('admin::dashboard.index.latest-bill-files')
         </div>
-
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
     </div>
 
     {!! view_render_event('admin.dashboard.index.content.after') !!}
@@ -84,12 +65,6 @@
         <script
             type="module"
             src="{{ vite()->asset('js/chart.js') }}"
-        >
-        </script>
-
-        <script
-            type="module"
-            src="https://cdn.jsdelivr.net/npm/chartjs-chart-funnel@4.2.1/build/index.umd.min.js"
         >
         </script>
 
@@ -128,9 +103,7 @@
                     return {
                         filters: {
                             channel: '',
-
                             start: "{{ $startDate->format('Y-m-d') }}",
-
                             end: "{{ $endDate->format('Y-m-d') }}",
                         }
                     }
@@ -141,7 +114,6 @@
                         handler() {
                             this.$emitter.emit('reporting-filter-updated', this.filters);
                         },
-
                         deep: true
                     }
                 },

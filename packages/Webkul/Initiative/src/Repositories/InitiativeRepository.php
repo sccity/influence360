@@ -238,4 +238,60 @@ class InitiativeRepository extends Repository
 
         return $initiative;
     }
+
+    /**
+     * Get the average time to close initiatives.
+     *
+     * @param Carbon|null $startDate
+     * @param Carbon|null $endDate
+     * @return float
+     */
+    public function getAverageTimeToClose($startDate = null, $endDate = null)
+    {
+        $query = $this->model->whereNotNull('closed_at');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('closed_at', [$startDate, $endDate]);
+        }
+
+        return $query->avg(DB::raw('DATEDIFF(closed_at, created_at)')) ?? 0;
+    }
+
+    /**
+     * Get initiatives count by stage.
+     *
+     * @return array
+     */
+    public function getInitiativeCountByStage()
+    {
+        return $this->model
+            ->select('initiative_pipeline_stage_id', DB::raw('count(*) as count'))
+            ->groupBy('initiative_pipeline_stage_id')
+            ->pluck('count', 'initiative_pipeline_stage_id')
+            ->toArray();
+    }
+
+    /**
+     * Get open initiatives count.
+     *
+     * @return int
+     */
+    public function getOpenInitiativesCount()
+    {
+        return $this->model->whereNull('closed_at')->count();
+    }
+
+    /**
+     * Get recent initiatives.
+     *
+     * @param int $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRecentInitiatives($limit = 5)
+    {
+        return $this->model->with(['stage', 'person'])
+            ->orderBy('created_at', 'desc')
+            ->take($limit)
+            ->get();
+    }
 }

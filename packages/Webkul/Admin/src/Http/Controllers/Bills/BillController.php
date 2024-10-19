@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Bills\Repositories\BillRepository;
 use Webkul\Admin\DataGrids\Bills\BillDataGrid;
+use Webkul\Admin\DataGrids\Bills\TrackedBillsDataGrid;
 
 class BillController extends Controller
 {
@@ -20,7 +21,8 @@ class BillController extends Controller
             return app(BillDataGrid::class)->toJson();
         }
 
-        return view('admin::bills.index');
+        $isTracked = request()->get('is_tracked');
+        return view('admin::bills.index', compact('isTracked'));
     }
 
     public function create()
@@ -87,5 +89,15 @@ class BillController extends Controller
                 : trans('admin::app.bills.notifications.untracked'),
             'is_tracked' => $bill->is_tracked
         ]);
+    }
+
+    public function trackedBills()
+    {
+        return view('admin::bills.tracked');
+    }
+
+    public function getTrackedBills(): JsonResponse
+    {
+        return app(TrackedBillsDataGrid::class)->toJson();
     }
 }

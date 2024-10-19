@@ -2076,6 +2076,20 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'Dashboard',
+            'tracked-bills' => 'Tracked Bills',
+            'view-all' => 'View All',
+            'no-tracked-bills' => 'No tracked bills found.',
+            'latest-bill-files' => 'Latest Bill Files',
+            'no-bill-files' => 'No bill files found.',
+            'recent-initiatives' => 'Recent Initiatives',
+            'no-recent-initiatives' => 'No recent initiatives found.',
+            'initiative-overview' => 'Initiative Overview',
+            'all-activities' => 'All Activities',
+            'total-initiatives' => 'Total Initiatives',
+            'open-initiatives' => 'Open Initiatives',
+            'top-stage' => 'Top Stage',
+            'avg-time-to-close' => 'Avg. Time to Close',
+            'no-activities' => 'No activities found.',
 
             'revenue' => [
                 'lost-revenue' => 'Lost Revenue',

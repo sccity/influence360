@@ -30,6 +30,11 @@ class BillDataGrid extends DataGrid
                 'bills.last_action_date'
             );
 
+        // Add this condition
+        if (request()->has('is_tracked')) {
+            $queryBuilder->where('bills.is_tracked', request()->get('is_tracked'));
+        }
+
         $this->addFilter('id', 'bills.id');
         $this->addFilter('tracking_id', 'bills.tracking_id');
         $this->addFilter('bill_year', 'bills.bill_year');
@@ -137,7 +142,7 @@ class BillDataGrid extends DataGrid
         ]);
     }
 
-    private function getColorForRating($rating)
+    protected function getColorForRating($rating)
     {
         if ($rating == 0) return '#000000'; // Black for 0
         if ($rating <= 3) return '#006400'; // Dark Green for 1-3

@@ -33,13 +33,19 @@ return [
         'key'        => 'legislation.bills',
         'name'       => 'Bills',
         'route'      => 'admin.bills.index',
-        'sort'       => 1,
+        'sort'       => 2,
         'icon-class' => 'icon-activity',
+    ], [
+        'key'        => 'legislation.tracked_bills',
+        'name'       => 'My Tracked Bills',
+        'route'      => 'admin.bills.tracked',
+        'sort'       => 1,
+        'icon-class' => 'icon-star',
     ], [
         'key'        => 'legislation.bill_files',
         'name'       => 'Bill Files',
         'route'      => 'admin.bill-files.index',
-        'sort'       => 2,
+        'sort'       => 3,
         'icon-class' => 'icon-activity',
     ],
 

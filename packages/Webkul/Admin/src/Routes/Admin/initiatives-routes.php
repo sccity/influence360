@@ -59,4 +59,6 @@ Route::controller(InitiativeController::class)->prefix('initiatives')->group(fun
     Route::controller(QuoteController::class)->prefix('{id}/quotes')->group(function () {
         Route::delete('{quote_id?}', 'delete')->name('admin.initiatives.quotes.delete');
     });
+
+    Route::post('initiatives/mail-activity', [ActivityController::class, 'storeInitiativeMailActivity'])->name('admin.initiatives.mail-activity.store');
 });

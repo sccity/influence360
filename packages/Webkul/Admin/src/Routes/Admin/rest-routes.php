@@ -6,14 +6,16 @@ use Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController;
 use Webkul\Admin\Http\Controllers\DataGridController;
 use Webkul\Admin\Http\Controllers\TinyMCEController;
 use Webkul\Admin\Http\Controllers\User\AccountController;
+use Webkul\Admin\Http\Controllers\Bills\BillController;
 
 /**
  * Dashboard routes.
  */
 Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
     Route::get('', 'index')->name('admin.dashboard.index');
-
     Route::get('stats', 'stats')->name('admin.dashboard.stats');
+    Route::get('activities', 'activities')->name('admin.dashboard.activities');
+    Route::get('tracked-bills', [BillController::class, 'getTrackedBills'])->name('admin.dashboard.tracked-bills');
 });
 
 /**

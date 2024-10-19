@@ -92,35 +92,8 @@
                                                 </template>
                                             </p>
 
-                                            <template v-if="activity.type == 'email'">
+                                            <template v-if="activity.type == 'email' && activity.additional">
                                                 <p class="dark:text-white">
-                                                    @lang('admin::app.components.activities.index.from'):
-
-                                                    @{{ activity.additional.from }}
-                                                </p>
-
-                                                <p class="dark:text-white">
-                                                    @lang('admin::app.components.activities.index.to'):
-
-                                                    @{{ activity.additional.to.join(', ') }}
-                                                </p>
-
-                                                <p
-                                                    v-if="activity.additional.cc"
-                                                    class="dark:text-white"
-                                                >
-                                                    @lang('admin::app.components.activities.index.cc'):
-
-                                                    @{{ activity.additional.cc.join(', ') }}
-                                                </p>
-
-                                                <p
-                                                    v-if="activity.additional.bcc"
-                                                    class="dark:text-white"
-                                                >
-                                                    @lang('admin::app.components.activities.index.bcc'):
-
-                                                    @{{ activity.additional.bcc.join(', ') }}
                                                 </p>
                                             </template>
 
