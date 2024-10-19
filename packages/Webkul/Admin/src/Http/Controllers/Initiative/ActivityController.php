@@ -8,6 +8,8 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Event;
 
 class ActivityController extends Controller
 {
@@ -83,5 +85,45 @@ class ActivityController extends Controller
                 'updated_at'    => $email->updated_at,
             ];
         }))->sortByDesc('id')->sortByDesc('created_at');
+    }
+
+    public function storeInitiativeMailActivity(): JsonResponse
+    {
+        $this->validate(request(), [
+            'title'         => 'required',
+            'comment'       => 'required',
+            'schedule_from' => 'required|date',
+            'initiative_id' => 'required|exists:initiatives,id',
+            'participants'  => 'sometimes|array',
+        ]);
+
+        Event::dispatch('activity.create.before');
+
+        $data = request()->all();
+        $data['type'] = 'email';
+        $data['schedule_to'] = $data['schedule_from'];
+        $data['is_done'] = 1;
+        $data['user_id'] = auth()->id();
+
+        $activity = $this->activityRepository->create($data);
+
+        if (request()->has('participants')) {
+            foreach (request('participants') as $participantType => $participantIds) {
+                foreach ($participantIds as $participantId) {
+                    $activity->participants()->create([
+                        $participantType === 'users' ? 'user_id' : 'person_id' => $participantId,
+                    ]);
+                }
+            }
+        }
+
+        $activity->initiatives()->attach($data['initiative_id']);
+
+        Event::dispatch('activity.create.after', $activity);
+
+        return new JsonResponse([
+            'message' => trans('admin::app.activities.create-success'),
+            'data'    => new ActivityResource($activity),
+        ]);
     }
 }

@@ -57,10 +57,10 @@
 
                     @if (bouncer()->hasPermission('mail.compose'))
                         <!-- Mail Activity Action -->
-                        <x-admin::activities.actions.mail
-                            :entity="$initiative"
-                            entity-control-name="initiative_id"
-                        />
+                        @include('admin::initiatives.components.mail-activity', [
+                            'entity' => $initiative,
+                            'entityControlName' => 'initiative_id'
+                        ])
                     @endif
 
                     @if (bouncer()->hasPermission('activities.create'))
