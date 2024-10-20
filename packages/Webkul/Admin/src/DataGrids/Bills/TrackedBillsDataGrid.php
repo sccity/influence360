@@ -19,6 +19,9 @@ class TrackedBillsDataGrid extends BillDataGrid
     {
         $queryBuilder = parent::prepareQueryBuilder();
         
+        // Ensure 'id' is included in the select
+        $queryBuilder->addSelect('bills.id');
+        
         // Only show tracked bills
         $queryBuilder->where('bills.is_tracked', true);
         
