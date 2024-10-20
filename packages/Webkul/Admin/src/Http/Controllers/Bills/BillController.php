@@ -37,10 +37,22 @@ class BillController extends Controller
 
     public function view($id)
     {
-        $bill = $this->billRepository->findOrFail($id, ['id', 'bill_number', 'is_tracked']);
+        $bill = $this->billRepository->findOrFail($id, [
+            'id', 
+            'bill_number', 
+            'tracking_id',
+            'short_title', 
+            'session', 
+            'bill_year', 
+            'sponsor', 
+            'floor_sponsor', 
+            'last_action', 
+            'last_action_date', 
+            'ai_impact_rating', 
+            'is_tracked'
+        ]);
 
         if (!$bill->bill_number) {
-            // Handle the case where bill_number is not set
             $bill->bill_number = 'N/A';
         }
 
