@@ -62,6 +62,9 @@ class BillDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->tracking_id . '</a>';
+            },
         ]);
 
         $this->addColumn([
