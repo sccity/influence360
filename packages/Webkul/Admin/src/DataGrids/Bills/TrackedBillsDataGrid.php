@@ -4,6 +4,7 @@ namespace Webkul\Admin\DataGrids\Bills;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TrackedBillsDataGrid extends BillDataGrid
 {
@@ -40,6 +41,9 @@ class TrackedBillsDataGrid extends BillDataGrid
             'searchable' => false,
             'sortable'   => false,
             'filterable' => false,
+            'closure'    => function ($row) {
+                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->tracking_id . '</a>';
+            },
         ]);
 
         $this->addColumn([
@@ -80,6 +84,9 @@ class TrackedBillsDataGrid extends BillDataGrid
             'searchable' => false,
             'sortable'   => false,
             'filterable' => false,
+            'closure'    => function ($row) {
+                return Carbon::parse($row->last_action_date)->format('F jS, Y');
+            },
         ]);
     }
 

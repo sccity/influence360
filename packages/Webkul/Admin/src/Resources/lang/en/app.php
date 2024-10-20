@@ -112,7 +112,7 @@ return [
             'sponsor' => 'Sponsor',
             'ai_impact_rating' => 'Impact Rating',
             'last_action_date' => 'Last Action Date',
-            'bill_id' => 'Bill ID',
+            'bill_id' => 'Bill Number',
             'bill_title' => 'Bill Title',
             'track' => 'Track',
 

@@ -37,14 +37,24 @@ class BillController extends Controller
 
     public function view($id)
     {
-        $bill = $this->billRepository->findOrFail($id);
+        $bill = $this->billRepository->findOrFail($id, ['id', 'bill_number', 'is_tracked']);
+
+        if (!$bill->bill_number) {
+            // Handle the case where bill_number is not set
+            $bill->bill_number = 'N/A';
+        }
 
         return view('admin::bills.view', compact('bill'));
     }
 
     public function edit($id)
     {
-        $bill = $this->billRepository->findOrFail($id);
+        $bill = $this->billRepository->findOrFail($id, ['id', 'bill_number', 'is_tracked']);
+
+        if (!$bill->bill_number) {
+            // Handle the case where bill_number is not set
+            $bill->bill_number = 'N/A';
+        }
 
         return view('admin::bills.edit', compact('bill'));
     }
