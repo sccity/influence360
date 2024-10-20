@@ -108,11 +108,11 @@ return [
             'edit'       => 'Edit',
             'view'       => 'View',
             'tracking_id' => 'Tracking ID',
-            'short_title' => 'Bill Title',
+            'short_title' => 'Title',
             'sponsor' => 'Sponsor',
             'ai_impact_rating' => 'Impact Rating',
             'last_action_date' => 'Last Action Date',
-            'bill_id' => 'Bill Number',
+            'bill_id' => 'Number',
             'bill_title' => 'Bill Title',
             'track' => 'Track',
 

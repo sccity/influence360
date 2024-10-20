@@ -76,7 +76,10 @@ class TrackedBillsDataGrid extends BillDataGrid
             'filterable' => false,
             'closure'    => function ($row) {
                 $color = $this->getColorForRating($row->ai_impact_rating);
-                return '<span style="background-color: ' . $color . '; color: white; padding: 2px 6px; border-radius: 3px;">' . $row->ai_impact_rating . '</span>';
+                return '<div class="flex items-center">
+                            <span class="inline-block w-2 h-2 rounded-full mr-2" style="background-color: ' . $color . ';"></span>
+                            <span>' . $row->ai_impact_rating . '</span>
+                        </div>';
             },
         ]);
 
@@ -127,5 +130,14 @@ class TrackedBillsDataGrid extends BillDataGrid
         $queryBuilder = $this->getQueryBuilder();
 
         return $queryBuilder->get();
+    }
+
+    protected function getColorForRating($rating)
+    {
+        if ($rating == 0) return '#808080'; // Gray for 0
+        if ($rating <= 3) return '#4CAF50'; // Green for 1-3
+        if ($rating <= 6) return '#FFC107'; // Amber for 4-6
+        if ($rating <= 9) return '#FF9800'; // Orange for 7-9
+        return '#F44336'; // Red for 10
     }
 }
