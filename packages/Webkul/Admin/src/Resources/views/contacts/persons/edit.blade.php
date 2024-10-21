@@ -84,11 +84,17 @@
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
                             <x-admin::form.control-group.control
-                                type="text"
+                                type="select"
                                 name="state"
                                 :value="$person->state"
-                                :label="__('admin::app.contacts.persons.edit.state')"
-                            />
+                            >
+                                <option value="">Select a state</option>
+                                @foreach ($states as $abbr => $stateName)
+                                    <option value="{{ $abbr }}" {{ $person->state == $abbr ? 'selected' : '' }}>
+                                        {{ $stateName }}
+                                    </option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
                         </x-admin::form.control-group>
 
                         <x-admin::form.control-group>
@@ -103,20 +109,6 @@
                     </div>
                 </div>
 
-                <x-admin::form.control-group>
-                    <x-admin::form.control-group.label>Emails</x-admin::form.control-group.label>
-                    
-                    <x-admin::attributes.edit.email
-                        :attribute='["code" => "emails", "name" => "Emails"]'
-                        :value='$person->emails'
-                    />
-                </x-admin::form.control-group>
-                
-                <v-inline-address-edit
-                    :attribute='@json(["code" => "address", "name" => "Address"])'
-                    :value='@json($person->address)'
-                ></v-inline-address-edit>
-                
                 {!! view_render_event('admin.contacts.persons.edit.form_controls.after') !!}
             </div>
         </div>

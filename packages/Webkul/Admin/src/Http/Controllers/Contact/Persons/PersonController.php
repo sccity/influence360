@@ -44,7 +44,8 @@ class PersonController extends Controller
      */
     public function create(): View
     {
-        return view('admin::contacts.persons.create');
+        $states = $this->personRepository->getStates();
+        return view('admin::contacts.persons.create', compact('states'));
     }
 
     /**
@@ -86,8 +87,9 @@ class PersonController extends Controller
     public function edit(int $id): View
     {
         $person = $this->personRepository->findOrFail($id);
+        $states = $this->personRepository->getStates();
 
-        return view('admin::contacts.persons.edit', compact('person'));
+        return view('admin::contacts.persons.edit', compact('person', 'states'));
     }
 
     /**
@@ -187,14 +189,17 @@ class PersonController extends Controller
         }
 
         if (isset($data['contact_numbers'])) {
-            $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
+            $data['contact_numbers'] = collect($data['contact_numbers'])
+                ->filter(fn ($number) => !empty($number['value']))
+                ->values()
+                ->toArray();
         }
 
         // Sanitize address fields
         $addressFields = ['street', 'city', 'state', 'zip'];
         foreach ($addressFields as $field) {
             if (isset($data[$field])) {
-                $data[$field] = trim($data[$field]);
+                $data[$field] = trim($data[$field]) ?: null;
             }
         }
 

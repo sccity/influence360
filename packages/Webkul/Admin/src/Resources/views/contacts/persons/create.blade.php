@@ -9,8 +9,11 @@
     <!--Create Page Form -->
     <x-admin::form
         :action="route('admin.contacts.persons.store')"
+        method="POST"
         enctype="multipart/form-data"
     >
+        @csrf
+
         <div class="flex flex-col gap-4">
             <!-- Header -->
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -81,10 +84,15 @@
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
                             <x-admin::form.control-group.control
-                                type="text"
+                                type="select"
                                 name="state"
                                 :label="__('admin::app.contacts.persons.create.state')"
-                            />
+                            >
+                                <option value="">Select a state</option>
+                                @foreach ($states as $abbr => $stateName)
+                                    <option value="{{ $abbr }}">{{ $stateName }}</option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
                         </x-admin::form.control-group>
 
                         <x-admin::form.control-group>

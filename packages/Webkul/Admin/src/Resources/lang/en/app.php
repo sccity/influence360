@@ -771,6 +771,7 @@ return [
             ],
 
             'view' => [
+                'address' => 'Address',
                 'title'              => ':name',
                 'about-person'       => 'About Person',
                 'about-organization' => 'About Organization',
