@@ -43,6 +43,7 @@ Route::prefix('contacts')->group(function () {
          */
         Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
             Route::get('', 'index')->name('admin.contacts.persons.activities.index');
+            Route::post('mail-activity', 'storePersonMailActivity')->name('admin.contacts.persons.mail-activity.store');
         });
     });
 
