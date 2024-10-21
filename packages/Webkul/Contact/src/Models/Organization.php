@@ -26,6 +26,16 @@ class Organization extends Model implements OrganizationContract
         'user_id',
     ];
 
+    public function getNameAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+
+        $nameAttribute = $this->attribute_values->where('attribute_id', 34)->first();
+        return $nameAttribute ? $nameAttribute->text_value : null;
+    }
+
     /**
      * Get persons.
      *

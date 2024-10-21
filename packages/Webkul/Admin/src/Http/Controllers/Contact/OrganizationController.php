@@ -33,7 +33,8 @@ class OrganizationController extends Controller
             return datagrid(OrganizationDataGrid::class)->process();
         }
 
-        return view('admin::contacts.organizations.index');
+        $organizations = $this->organizationRepository->all();
+        return view('admin::contacts.organizations.index', compact('organizations'));
     }
 
     /**

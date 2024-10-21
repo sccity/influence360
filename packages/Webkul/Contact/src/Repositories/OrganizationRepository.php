@@ -8,6 +8,7 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Contracts\Organization;
 use Webkul\Core\Eloquent\Repository;
+use Illuminate\Support\Facades\Log;
 
 class OrganizationRepository extends Repository
 {
@@ -117,5 +118,19 @@ class OrganizationRepository extends Repository
 
             $organization->delete();
         });
+    }
+
+    public function all($columns = '*', $orderBy = 'id', $sortOrder = 'asc')
+    {
+        $result = $this->model->with('attribute_values')
+            ->whereHas('attribute_values', function ($query) {
+                $query->where('attribute_id', 34)
+                    ->whereNotNull('text_value');
+            })
+            ->orderBy($orderBy, $sortOrder)
+            ->get($columns);
+
+        Log::info('Organizations from repository:', $result->toArray());
+        return $result;
     }
 }
