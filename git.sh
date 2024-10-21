@@ -8,7 +8,7 @@ fi
 MSG=$1
 BRANCH=$2
 
-git pull origin "$BRANCH"
+git pull --rebase origin "$BRANCH"
 git add .
 git commit -m "$MSG"
 git push origin "$BRANCH"
