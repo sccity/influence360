@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.sponsor')</span>
+            <span class="text-gray-600 dark:text-gray-300">Sponsor</span>
             <span class="font-medium dark:text-white">{{ $billFile->sponsor }}</span>
         </div>
 
