@@ -161,6 +161,9 @@
                 save(params) {
                     this.isLoading = true;
 
+                    // Update emailContent one last time before submission
+                    this.updateEmailContent();
+
                     let data = Object.assign({}, params, {
                         entity_type: this.getEntityType(),
                         entity_id: this.entity.id,
@@ -171,8 +174,14 @@
                         .then(response => {
                             this.isLoading = false;
                             this.$refs.mailModal.close();
+
+                            // Emit success event
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-                            this.$emitter.emit('on-activity-added', response.data.data);
+
+                            // Emit event with new activity data
+                            this.$emitter.emit('activity-added', response.data.data);
+
+                            // Clear form
                             this.$refs.emailContent.innerHTML = '';
                             this.emailContent = '';
                         })
@@ -181,10 +190,14 @@
                             if (error.response && error.response.status === 422) {
                                 this.$refs.mailActionForm.setErrors(error.response.data.errors);
                             } else {
-                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message || 'An error occurred' });
-                                this.$refs.mailModal.close();
+                                // Emit error event
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message || 'An error occurred while saving the email activity.' });
                             }
                         });
+                },
+
+                updateEmailContent() {
+                    this.emailContent = this.$refs.emailContent.innerHTML;
                 },
 
                 getMailActivityStoreRoute() {
@@ -195,7 +208,8 @@
                     const entityMap = {
                         bill_id: 'bill',
                         bill_file_id: 'bill_file',
-                        person_id: 'person'
+                        person_id: 'person',
+                        initiative_id: 'initiative'
                     };
                     return entityMap[this.entityControlName] || '';
                 },

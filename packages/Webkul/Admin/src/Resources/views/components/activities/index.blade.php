@@ -448,6 +448,7 @@
                 }
 
                 this.$emitter.on('on-activity-added', (activity) => this.activities.unshift(activity));
+                this.$emitter.on('activity-added', this.prependActivity);
             },
 
             methods: {
@@ -546,7 +547,12 @@
                         }
                     });
                 },
+
+                prependActivity(activity) {
+                    this.activities.unshift(activity);
+                },
             }
         });
     </script>
 @endPushOnce
+

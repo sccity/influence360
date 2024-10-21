@@ -245,7 +245,7 @@ class ActivityController extends Controller
             'title'         => 'required',
             'comment'       => 'required',
             'schedule_from' => 'required|date',
-            'entity_type'   => 'required|in:bill,bill_file,person',
+            'entity_type'   => 'required|in:bill,bill_file,person,initiative',
             'entity_id'     => 'required',
             'participants'  => 'sometimes|array',
         ]);
@@ -283,6 +283,9 @@ class ActivityController extends Controller
                 break;
             case 'person':
                 $activity->persons()->attach($entityId);
+                break;
+            case 'initiative':
+                $activity->initiatives()->attach($entityId);
                 break;
         }
 

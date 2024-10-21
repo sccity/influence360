@@ -57,10 +57,10 @@
 
                     @if (bouncer()->hasPermission('mail.compose'))
                         <!-- Mail Activity Action -->
-                        @include('admin::initiatives.components.mail-activity', [
-                            'entity' => $initiative,
-                            'entityControlName' => 'initiative_id'
-                        ])
+                        <x-admin::activities.mail-activity
+                            :entity="$initiative"
+                            entity-control-name="initiative_id"
+                        />
                     @endif
 
                     @if (bouncer()->hasPermission('activities.create'))
@@ -112,6 +112,7 @@
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.initiatives.view.tabs.description')],
                 ]"
+                @refresh-activities="$refs.activities.get()"
             >
                 <!-- Description -->
                 <x-slot:description>
