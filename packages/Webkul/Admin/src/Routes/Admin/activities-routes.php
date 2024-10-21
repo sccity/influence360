@@ -21,4 +21,6 @@ Route::controller(ActivityController::class)->prefix('activities')->group(functi
     Route::post('mass-update', 'massUpdate')->name('admin.activities.mass_update');
 
     Route::post('mass-destroy', 'massDestroy')->name('admin.activities.mass_delete');
+
+    Route::post('mail', 'storeMailActivity')->name('admin.activities.mail.store');
 });

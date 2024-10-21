@@ -20,10 +20,6 @@ Route::group(['prefix' => 'legislation/bill-files'], function () {
     });
 
     Route::controller(BillFileActivityController::class)->group(function () {
-        // Existing route for activities index
         Route::get('{id}/activities', 'index')->name('admin.bill-files.activities.index');
-
-        // New route for storing bill file mail activity
-        Route::post('mail-activity', 'storeBillFileMailActivity')->name('admin.bill-files.mail-activity.store');
     });
 });

@@ -3,7 +3,7 @@
     'entityControlName' => null,
 ])
 
-<v-bill-mail-activity
+<v-mail-activity
     :entity="{{ json_encode($entity) }}"
     entity-control-name="{{ $entityControlName }}"
 >
@@ -15,10 +15,10 @@
 
         @lang('admin::app.components.activities.actions.mail.btn')
     </button>
-</v-bill-mail-activity>
+</v-mail-activity>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-bill-mail-activity-template">
+    <script type="text/x-template" id="v-mail-activity-template">
         <div>
             <button
                 type="button"
@@ -35,7 +35,7 @@
                     ref="mailActionForm"
                 >
                     <form @submit="handleSubmit($event, save)">
-                        <x-admin::modal ref="billMailModal">
+                        <x-admin::modal ref="mailModal">
                             <x-slot:header>
                                 <h3 class="text-lg font-bold">
                                     @lang('admin::app.components.activities.actions.mail.add-email-record')
@@ -134,8 +134,8 @@
     </script>
 
     <script type="module">
-        app.component('v-bill-mail-activity', {
-            template: '#v-bill-mail-activity-template',
+        app.component('v-mail-activity', {
+            template: '#v-mail-activity-template',
 
             props: ['entity', 'entityControlName'],
 
@@ -148,7 +148,7 @@
 
             methods: {
                 openModal() {
-                    this.$refs.billMailModal.open();
+                    this.$refs.mailModal.open();
                 },
 
                 handlePaste(e) {
@@ -162,14 +162,15 @@
                     this.isLoading = true;
 
                     let data = Object.assign({}, params, {
-                        bill_file_id: this.entity.id,
+                        entity_type: this.getEntityType(),
+                        entity_id: this.entity.id,
                         comment: this.emailContent
                     });
 
-                    this.$axios.post("{{ route('admin.bill-files.mail-activity.store') }}", data)
+                    this.$axios.post(this.getMailActivityStoreRoute(), data)
                         .then(response => {
                             this.isLoading = false;
-                            this.$refs.billMailModal.close();
+                            this.$refs.mailModal.close();
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             this.$emitter.emit('on-activity-added', response.data.data);
                             this.$refs.emailContent.innerHTML = '';
@@ -181,9 +182,22 @@
                                 this.$refs.mailActionForm.setErrors(error.response.data.errors);
                             } else {
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message || 'An error occurred' });
-                                this.$refs.billMailModal.close();
+                                this.$refs.mailModal.close();
                             }
                         });
+                },
+
+                getMailActivityStoreRoute() {
+                    return "{{ route('admin.activities.mail.store') }}";
+                },
+
+                getEntityType() {
+                    const entityMap = {
+                        bill_id: 'bill',
+                        bill_file_id: 'bill_file',
+                        person_id: 'person'
+                    };
+                    return entityMap[this.entityControlName] || '';
                 },
             },
         });

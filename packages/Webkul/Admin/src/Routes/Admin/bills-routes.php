@@ -23,7 +23,6 @@ Route::group(['prefix' => 'legislation'], function () {
 
         Route::controller(BillActivityController::class)->group(function () {
             Route::get('{id}/activities', 'index')->name('admin.bills.activities.index');
-            Route::post('mail-activity', 'storeBillMailActivity')->name('admin.bills.mail-activity.store');
         });
     });
 });

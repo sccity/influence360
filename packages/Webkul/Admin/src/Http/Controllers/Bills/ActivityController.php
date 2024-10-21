@@ -10,6 +10,8 @@ use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Bills\Repositories\BillRepository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Purifier;
 
 class ActivityController extends Controller
 {

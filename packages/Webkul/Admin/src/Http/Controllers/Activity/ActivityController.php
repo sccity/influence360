@@ -238,4 +238,59 @@ class ActivityController extends Controller
             ], 400);
         }
     }
+
+    public function storeMailActivity(): JsonResponse
+    {
+        $this->validate(request(), [
+            'title'         => 'required',
+            'comment'       => 'required',
+            'schedule_from' => 'required|date',
+            'entity_type'   => 'required|in:bill,bill_file,person',
+            'entity_id'     => 'required',
+            'participants'  => 'sometimes|array',
+        ]);
+
+        Event::dispatch('activity.create.before');
+
+        $data = request()->all();
+        $data['type'] = 'email';
+        $data['schedule_to'] = $data['schedule_from'];
+        $data['is_done'] = 1;
+        $data['user_id'] = auth()->id();
+
+        $activity = $this->activityRepository->create($data);
+
+        if (request()->has('participants')) {
+            foreach (request('participants') as $participantType => $participantIds) {
+                foreach ($participantIds as $participantId) {
+                    $activity->participants()->create([
+                        $participantType === 'users' ? 'user_id' : 'person_id' => $participantId,
+                    ]);
+                }
+            }
+        }
+
+        // Create the entity-activity relationship
+        $entityType = $data['entity_type'];
+        $entityId = $data['entity_id'];
+        
+        switch ($entityType) {
+            case 'bill':
+                $activity->bills()->attach($entityId);
+                break;
+            case 'bill_file':
+                $activity->billFiles()->attach($entityId);
+                break;
+            case 'person':
+                $activity->persons()->attach($entityId);
+                break;
+        }
+
+        Event::dispatch('activity.create.after', $activity);
+
+        return new JsonResponse([
+            'message' => trans('admin::app.activities.create-success'),
+            'data'    => new ActivityResource($activity),
+        ]);
+    }
 }

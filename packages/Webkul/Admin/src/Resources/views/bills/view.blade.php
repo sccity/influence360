@@ -35,10 +35,10 @@
                     {!! view_render_event('admin.bills.view.actions.before', ['bill' => $bill]) !!}
 
                     <!-- Mail Activity Action -->
-                    @include('admin::bills.components.mail-activity', [
-                        'entity' => $bill,
-                        'entityControlName' => 'bill_id'
-                    ])
+                    <x-admin::activities.mail-activity
+                        :entity="$bill"
+                        entity-control-name="bill_id"
+                    />
 
                     <!-- File Activity Action -->
                     <x-admin::activities.actions.file
