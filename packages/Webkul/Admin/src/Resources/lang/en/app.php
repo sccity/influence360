@@ -98,15 +98,6 @@ return [
         ],
 
         'datagrid' => [
-            'bill_id' => 'Number',
-            'bill_title' => 'Bill Title',
-            'sponsor' => 'Sponsor',
-            'track' => 'Track',
-        ],
-
-        'activities' => [
-            'title'         => 'Activities',
-            'add-title'     => 'Add Activity',
             'id'         => 'ID',
             'billid'     => 'Bill ID',
             'name'       => 'Name',
