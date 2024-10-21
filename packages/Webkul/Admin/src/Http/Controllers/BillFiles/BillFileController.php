@@ -140,6 +140,8 @@ class BillFileController extends Controller
             $billFile->is_tracked = !$billFile->is_tracked;
             $billFile->save();
 
+            Event::dispatch('bill_file.toggle_tracked.after', $billFile);
+
             return response()->json([
                 'success' => true,
                 'message' => $billFile->is_tracked 

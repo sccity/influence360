@@ -33,7 +33,9 @@
 
                     {!! view_render_event('admin.bill-files.view.title.after', ['billFile' => $billFile]) !!}
                 </div>
-                
+
+          
+
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
                     {!! view_render_event('admin.bill-files.view.actions.before', ['billFile' => $billFile]) !!}

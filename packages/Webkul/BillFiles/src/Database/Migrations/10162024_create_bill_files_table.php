@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('session');
             $table->year('year');
             $table->boolean('is_tracked');
+            $table->string('sponsor', 100);
             $table->timestamps();
         });
 

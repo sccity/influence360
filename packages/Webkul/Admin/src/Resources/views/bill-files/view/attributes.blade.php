@@ -17,6 +17,11 @@
         </div>
 
         <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.sponsor')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->sponsor }}</span>
+        </div>
+
+        <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.status')</span>
             <span class="font-medium dark:text-white">{{ $billFile->status }}</span>
         </div>
@@ -52,7 +57,7 @@
             <x-admin::attributes.view
                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                     'entity_type' => 'bill_files',
-                    ['code', 'NOTIN', ['billid', 'name', 'status', 'session', 'year', 'is_tracked']]
+                    ['code', 'NOTIN', ['billid', 'name', 'sponsor', 'status', 'session', 'year', 'is_tracked']]
                 ])"
                 :entity="$billFile"
                 :url="route('admin.bill-files.update', $billFile->id)"

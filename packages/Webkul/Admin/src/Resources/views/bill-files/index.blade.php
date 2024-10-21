@@ -21,8 +21,7 @@
         {!! view_render_event('admin.bill-files.index.header.right.before') !!}
 
         <div class="flex items-center gap-x-2.5">
-            <!-- Create button for Bill Files (if needed) -->
-           
+            <!-- No create button needed -->
         </div>
 
         {!! view_render_event('admin.bill-files.index.header.right.after') !!}
@@ -34,7 +33,9 @@
 
     <!-- Content -->
     <div class="mt-3.5">
-        <x-admin::datagrid src="{{ route('admin.bill-files.index') }}" />
+        <x-admin::datagrid src="{{ route('admin.bill-files.index') }}">
+            <!-- You can add custom column renderers here if needed -->
+        </x-admin::datagrid>
     </div>
 
     {!! view_render_event('admin.bill-files.index.content.after') !!}
@@ -53,13 +54,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Emit a custom event for success notification
                         window.addFlash({
                             type: 'success',
                             message: data.message
                         });
                     } else {
-                        // Emit a custom event for error notification
                         window.eventBus.emit('add-flash', {
                             type: 'error',
                             message: data.message || "@lang('admin::app.bill-files.notifications.error')"
@@ -69,7 +68,6 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // Emit a custom event for error notification
                     window.eventBus.emit('add-flash', {
                         type: 'error',
                         message: "@lang('admin::app.bill-files.notifications.error')"

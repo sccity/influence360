@@ -94,9 +94,19 @@ return [
             'last_action'       => 'Last Action',
             'last_action_date'  => 'Last Action Date',
             'ai_impact_rating'  => 'Impact Rating',
+
         ],
 
         'datagrid' => [
+            'bill_id' => 'Number',
+            'bill_title' => 'Bill Title',
+            'sponsor' => 'Sponsor',
+            'track' => 'Track',
+        ],
+
+        'activities' => [
+            'title'         => 'Activities',
+            'add-title'     => 'Add Activity',
             'id'         => 'ID',
             'billid'     => 'Bill ID',
             'name'       => 'Name',
@@ -113,8 +123,9 @@ return [
             'ai_impact_rating' => 'Impact Rating',
             'last_action_date' => 'Last Action Date',
             'bill_id' => 'Number',
-            'bill_title' => 'Bill Title',
+            'bill_title' => 'Title',
             'track' => 'Track',
+       
 
         ],
 
@@ -159,6 +170,12 @@ return [
         'delete-success' => 'Bill file deleted successfully.',
         'delete-failed'  => 'Bill file cannot be deleted.',
         'mass-delete-success' => 'Selected bill files deleted successfully.',
+        'datagrid' => [
+                        'bill_id' => 'Number',
+                        'bill_title' => 'Bill Title',
+                        'sponsor' => 'Sponsor',
+                        'track' => 'Track',
+                    ],
     ],
 
     'create' => [

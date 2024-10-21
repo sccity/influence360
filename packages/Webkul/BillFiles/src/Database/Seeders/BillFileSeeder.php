@@ -13,18 +13,29 @@ class BillFileSeeder extends Seeder
             [
                 'billid' => 'HB1234',
                 'name' => 'Health Care Reform Act',
-                'status' => 'Active',
-                'session' => '2024',
+                'status' => 'In Process',
+                'session' => 'GEN',
                 'year' => 2024,
                 'is_tracked' => true,
+                'sponsor' => 'John Smith',
             ],
             [
                 'billid' => 'SB5678',
                 'name' => 'Education Funding Bill',
-                'status' => 'Pending',
-                'session' => '2024',
+                'status' => 'Abandoned',
+                'session' => 'SUMMER',
                 'year' => 2024,
                 'is_tracked' => false,
+                'sponsor' => 'Jane Doe',
+            ],
+            [
+                'billid' => 'HB9876',
+                'name' => 'Environmental Protection Act',
+                'status' => 'In Process',
+                'session' => '2024',
+                'year' => 2024,
+                'is_tracked' => true,
+                'sponsor' => 'Michael Johnson',
             ],
             // Add more sample bill files as needed
         ];

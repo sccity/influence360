@@ -20,6 +20,7 @@ class BillFile extends Model implements BillFileContract
         'session',
         'year',
         'is_tracked',
+        'sponsor',
     ];
 
     protected $casts = [

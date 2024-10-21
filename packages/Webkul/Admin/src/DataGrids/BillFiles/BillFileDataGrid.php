@@ -8,6 +8,10 @@ use Webkul\DataGrid\DataGrid;
 
 class BillFileDataGrid extends DataGrid
 {
+    protected $index = 'id';
+
+    protected $sortOrder = 'desc';
+
     /**
      * Prepare query builder.
      */
@@ -18,11 +22,23 @@ class BillFileDataGrid extends DataGrid
                 'bill_files.id',
                 'bill_files.billid',
                 'bill_files.name',
+                'bill_files.sponsor',
                 'bill_files.status',
                 'bill_files.session',
                 'bill_files.year',
                 'bill_files.is_tracked'
             );
+
+        $this->addFilter('id', 'bill_files.id');
+        $this->addFilter('billid', 'bill_files.billid');
+        $this->addFilter('name', 'bill_files.name');
+        $this->addFilter('sponsor', 'bill_files.sponsor');
+        $this->addFilter('status', 'bill_files.status');
+        $this->addFilter('session', 'bill_files.session');
+        $this->addFilter('year', 'bill_files.year');
+        $this->addFilter('is_tracked', 'bill_files.is_tracked');
+
+        $this->setQueryBuilder($queryBuilder);
 
         return $queryBuilder;
     }
@@ -34,7 +50,19 @@ class BillFileDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'billid',
-            'label'      => trans('admin::app.bill-files.table.billid'),
+            'label'      => trans('admin::app.bills.datagrid.bill_id'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
+                return '<a href="' . route('admin.bill-files.view', $row->id) . '" style="color: blue; text-decoration: underline;">' . $row->billid . '</a>';
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'name',
+            'label'      => trans('admin::app.bills.datagrid.bill_title'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -42,8 +70,8 @@ class BillFileDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.bill-files.table.name'),
+            'index'      => 'sponsor',
+            'label'      => trans('admin::app.bills.datagrid.sponsor'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -52,7 +80,7 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'status',
-            'label'      => trans('admin::app.bill-files.table.status'),
+            'label'      => trans('admin::app.bills.datagrid.status'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -61,7 +89,7 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'session',
-            'label'      => trans('admin::app.bill-files.table.session'),
+            'label'      => trans('admin::app.bills.datagrid.session'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -70,8 +98,8 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'year',
-            'label'      => trans('admin::app.bill-files.table.year'),
-            'type'       => 'string',
+            'label'      => trans('admin::app.bills.datagrid.year'),
+            'type'       => 'integer',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
@@ -79,19 +107,13 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'is_tracked',
-            'label'      => trans('admin::app.bill-files.table.is_tracked'),
+            'label'      => trans('admin::app.bills.datagrid.track'),
             'type'       => 'boolean',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
             'closure'    => function ($row) {
-                $checked = $row->is_tracked ? 'checked' : '';
-                return <<<HTML
-                    <span class="checkbox">
-                        <input type="checkbox" id="is_tracked_{$row->id}" {$checked} onchange="toggleTracked({$row->id}, this.checked)">
-                        <label for="is_tracked_{$row->id}" class="checkbox-view"></label>
-                    </span>
-                HTML;
+                return view('admin::bill-files.datagrid.is-tracked', ['row' => $row])->render();
             },
         ]);
     }
@@ -101,14 +123,7 @@ class BillFileDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.bill-files.index.datagrid.view'),
-            'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.bill-files.view', $row->id);
-            },
-        ]);
+        // No actions needed as the Bill Number column is now a link
     }
 
     /**
