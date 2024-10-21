@@ -238,97 +238,23 @@
 
             data() {
                 return {
-                    inputValue: this.value,
-
+                    inputValue: this.value || {},
                     isEditing: false,
-
-                    emails: JSON.parse(JSON.stringify(this.value || [{'value': '', 'label': 'work'}])),
-
                     isProcessing: false,
-
                     countryStates: @json(core()->groupedStatesByCountries()),
                 };
             },
 
             watch: {
-                /**
-                 * Watch the value prop.
-                 * 
-                 * @param {String} newValue 
-                 */
-                value(newValue, oldValue) {
-                    if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
-                        this.emails = newValue || [{'value': '', 'label': 'work'}];
-                    }
-                },
-            },
-
-            created() {
-                this.extendValidations();
-
-                if (! this.emails || ! this.emails.length) {
-                    this.emails = [{
-                        'value': '',
-                        'label': 'work'
-                    }];
-                }
-            },
-
-            computed: {
-                /**
-                 * Get the validation rules.
-                 * 
-                 * @return {Object}
-                 */
-                getValidation() {
-                    return {
-                        email: true,
-                        unique_contact_email: this.emails ?? [],
-                        required: true,
-                    };
+                value(newValue) {
+                    this.inputValue = newValue || {};
                 },
             },
 
             methods: {
-                /**
-                 * Toggle the input.
-                 * 
-                 * @return {void}
-                 */
                 toggle() {
                     this.isEditing = true;
-
                     this.$refs.emailModal.toggle();
-                },
-
-                add() {
-                    this.emails.push({
-                        'value': '',
-                        'label': 'work'
-                    });
-                },
-
-                remove(email) {
-                    this.emails = this.emails.filter(email => email !== email);
-                },
-
-                extendValidations() {
-                    defineRule('unique_contact_email', (value, emails) => {
-                        if (
-                            ! value
-                            || ! value.length
-                        ) {
-                            return true;
-                        }
-
-                        const emailOccurrences = emails.filter(email => email.value === value).length;
-
-                        if (emailOccurrences > 1) {
-                            return 'This email email is already used';
-                        }
-
-                        return true;
-                    });
                 },
 
                 updateOrCreate(params) {
@@ -343,7 +269,6 @@
                             })
                             .catch((error) => {
                                 this.inputValue = this.value;
-
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             });                        
                     }
@@ -357,14 +282,10 @@
                 },
 
                 haveStates() {
-                    /*
-                    * The double negation operator is used to convert the value to a boolean.
-                    * It ensures that the final result is a boolean value,
-                    * true if the array has a length greater than 0, and otherwise false.
-                    */
                     return !!this.countryStates[this.inputValue.country]?.length;
                 },
             },
         });
     </script>
 @endPushOnce
+

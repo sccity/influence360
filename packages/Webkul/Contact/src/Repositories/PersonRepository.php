@@ -58,6 +58,14 @@ class PersonRepository extends Repository
             $data['user_id'] = $data['user_id'] ?: null;
         }
 
+        // Ensure address fields are included
+        $addressFields = ['street', 'city', 'state', 'zip'];
+        foreach ($addressFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = $data[$field] ?: null;
+            }
+        }
+
         $person = parent::create($data);
 
         $this->attributeValueRepository->save(array_merge($data, [
@@ -76,6 +84,14 @@ class PersonRepository extends Repository
     {
         if (isset($data['user_id'])) {
             $data['user_id'] = $data['user_id'] ?: null;
+        }
+
+        // Ensure address fields are included
+        $addressFields = ['street', 'city', 'state', 'zip'];
+        foreach ($addressFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = $data[$field] ?: null;
+            }
         }
 
         $person = parent::update($data, $id);

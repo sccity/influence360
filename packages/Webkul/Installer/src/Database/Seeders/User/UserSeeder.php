@@ -23,7 +23,6 @@ class UserSeeder extends Seeder
             'name'            => 'Santa Clara City',
             'email'           => 'admin@santaclarautah.gov',
             'password'        => bcrypt('admin123'),
-            // 'api_token'       => Str::random(80),
             'created_at'      => date('Y-m-d H:i:s'),
             'updated_at'      => date('Y-m-d H:i:s'),
             'status'          => 1,
