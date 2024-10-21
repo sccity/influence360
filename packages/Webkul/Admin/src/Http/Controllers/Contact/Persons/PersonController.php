@@ -14,16 +14,24 @@ use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\PersonResource;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Contact\Repositories\OrganizationRepository;
 
 class PersonController extends Controller
 {
+    protected $organizationRepository;
+    protected $personRepository;
+
     /**
      * Create a new class instance.
      *
      * @return void
      */
-    public function __construct(protected PersonRepository $personRepository)
-    {
+    public function __construct(
+        PersonRepository $personRepository,
+        OrganizationRepository $organizationRepository
+    ) {
+        $this->personRepository = $personRepository;
+        $this->organizationRepository = $organizationRepository;
         request()->request->add(['entity_type' => 'persons']);
     }
 
@@ -44,8 +52,10 @@ class PersonController extends Controller
      */
     public function create(): View
     {
+        $organizations = $this->organizationRepository->all();
         $states = $this->personRepository->getStates();
-        return view('admin::contacts.persons.create', compact('states'));
+        
+        return view('admin::contacts.persons.create', compact('organizations', 'states'));
     }
 
     /**
@@ -87,9 +97,10 @@ class PersonController extends Controller
     public function edit(int $id): View
     {
         $person = $this->personRepository->findOrFail($id);
+        $organizations = $this->organizationRepository->all();
         $states = $this->personRepository->getStates();
-
-        return view('admin::contacts.persons.edit', compact('person', 'states'));
+        
+        return view('admin::contacts.persons.edit', compact('person', 'organizations', 'states'));
     }
 
     /**

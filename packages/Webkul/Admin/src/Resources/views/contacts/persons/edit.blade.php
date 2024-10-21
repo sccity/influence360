@@ -11,6 +11,8 @@
         method="PUT"
         enctype="multipart/form-data"
     >
+        @csrf
+
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
@@ -82,19 +84,27 @@
                         </x-admin::form.control-group>
 
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.contacts.persons.edit.state')
+                            </x-admin::form.control-group.label>
+
                             <x-admin::form.control-group.control
                                 type="select"
                                 name="state"
                                 :value="$person->state"
                             >
-                                <option value="">Select a state</option>
+                                <option value="">@lang('admin::app.contacts.persons.edit.select-state')</option>
+                                
                                 @foreach ($states as $abbr => $stateName)
                                     <option value="{{ $abbr }}" {{ $person->state == $abbr ? 'selected' : '' }}>
                                         {{ $stateName }}
                                     </option>
                                 @endforeach
                             </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error
+                                control-name="state"
+                            />
                         </x-admin::form.control-group>
 
                         <x-admin::form.control-group>

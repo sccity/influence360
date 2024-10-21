@@ -81,18 +81,29 @@
                             />
                         </x-admin::form.control-group>
 
+                        <!-- State field -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.contacts.persons.create.state')
+                            </x-admin::form.control-group.label>
+
                             <x-admin::form.control-group.control
                                 type="select"
                                 name="state"
-                                :label="__('admin::app.contacts.persons.create.state')"
+                                :placeholder="trans('admin::app.contacts.persons.create.select-state')"
                             >
-                                <option value="">Select a state</option>
+                                <option value="">@lang('admin::app.contacts.persons.create.select-state')</option>
+                                
                                 @foreach ($states as $abbr => $stateName)
-                                    <option value="{{ $abbr }}">{{ $stateName }}</option>
+                                    <option value="{{ $abbr }}">
+                                        {{ $stateName }}
+                                    </option>
                                 @endforeach
                             </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error
+                                control-name="state"
+                            />
                         </x-admin::form.control-group>
 
                         <x-admin::form.control-group>
@@ -103,9 +114,34 @@
                                 :label="__('admin::app.contacts.persons.create.zip')"
                             />
                         </x-admin::form.control-group>
+
+                        <!-- Organization field -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.contacts.persons.create.organization')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="select"
+                                name="organization_id"
+                                :placeholder="trans('admin::app.contacts.persons.create.select-organization')"
+                            >
+                                <option value="">@lang('admin::app.contacts.persons.create.select-organization')</option>
+                                
+                                @foreach ($organizations as $organization)
+                                    <option value="{{ $organization->id }}">
+                                        {{ $organization->name }}
+                                    </option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error
+                                control-name="organization_id"
+                            />
+                        </x-admin::form.control-group>
                     </div>
                 </div>
-                
+
                 {!! view_render_event('admin.persons.create.form_controls.after') !!}
             </div>
         </div>
