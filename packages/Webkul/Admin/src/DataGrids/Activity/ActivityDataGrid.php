@@ -8,6 +8,7 @@ use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Initiative\Repositories\InitiativeRepository;
 use Webkul\User\Repositories\UserRepository;
+use Illuminate\Support\Facades\Log;
 
 class ActivityDataGrid extends DataGrid
 {
@@ -26,19 +27,22 @@ class ActivityDataGrid extends DataGrid
                 'initiatives.title as initiative_title',
                 'initiatives.initiative_pipeline_id',
                 'users.id as created_by_id',
-                'users.name as created_by',
+                'users.name as created_by'
             )
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->leftJoin('initiative_activities', 'activities.id', '=', 'initiative_activities.activity_id')
             ->leftJoin('initiatives', 'initiative_activities.initiative_id', '=', 'initiatives.id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
-            ->whereIn('type', ['call', 'meeting', 'lunch'])
-            ->where(function ($query) {
-                if ($userIds = bouncer()->getAuthorizedUserIds()) {
-                    $query->whereIn('activities.user_id', $userIds)
-                        ->orWhereIn('activity_participants.user_id', $userIds);
-                }
-            });
+            // Remove or comment out this line:
+            // ->whereIn('activities.type', ['call', 'meeting', 'lunch'])
+            ->where('activities.created_at', '>=', now()->subDays(30)) // Show activities from the last 30 days
+            ->orderBy('activities.created_at', 'desc'); // Order by most recent first
+
+        \Log::info('Activity query', [
+            'sql' => $queryBuilder->toSql(),
+            'bindings' => $queryBuilder->getBindings(),
+            'count' => $queryBuilder->count(),
+        ]);
 
         $this->addFilter('id', 'activities.id');
         $this->addFilter('title', 'activities.title');

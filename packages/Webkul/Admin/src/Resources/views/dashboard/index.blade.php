@@ -36,26 +36,28 @@
     <!-- Body Component -->
     {!! view_render_event('admin.dashboard.index.content.before') !!}
 
-    <div class="mt-3.5 flex gap-4 max-xl:flex-wrap">
-        <!-- Left Section -->
-        <div class="flex flex-1 flex-col gap-4 max-xl:flex-auto">
-            <!-- Recent Initiatives -->
-            @include('admin::dashboard.index.recent-initiatives')
-
+    <div class="mt-3.5 flex gap-8">
+        <div class="flex-grow space-y-8">
             <!-- All Activities -->
-            @include('admin::dashboard.index.all-activities')
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                @include('admin::dashboard.index.activities')
+            </div>
 
             <!-- Tracked Bills -->
-            @include('admin::dashboard.index.tracked-bills')
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                @include('admin::dashboard.index.tracked-bills')
+            </div>
         </div>
-
-        <!-- Right Section -->
-        <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
+        <div class="w-[480px] max-w-full space-y-8"> <!-- Increased width from 420px to 480px (about 15% increase) -->
             <!-- Initiative Overview -->
-            @include('admin::dashboard.index.initiative-stats')
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                @include('admin::dashboard.index.initiative-stats')
+            </div>
 
             <!-- Latest Bill Files -->
-            @include('admin::dashboard.index.latest-bill-files')
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                @include('admin::dashboard.index.latest-bill-files')
+            </div>
         </div>
     </div>
 

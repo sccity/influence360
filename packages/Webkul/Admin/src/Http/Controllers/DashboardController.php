@@ -11,6 +11,8 @@ use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Carbon\Carbon;
+use Webkul\Admin\DataGrids\Activity\RecentActivityDataGrid;
+use Webkul\Activity\Repositories\ActivityRepository;
 
 class DashboardController extends Controller
 {
@@ -43,7 +45,8 @@ class DashboardController extends Controller
         protected InitiativeRepository $initiativeRepository,
         protected StageRepository $stageRepository,
         protected OrganizationRepository $organizationRepository,
-        protected PersonRepository $personRepository
+        protected PersonRepository $personRepository,
+        protected ActivityRepository $activityRepository
     ) {}
 
     /**
@@ -78,6 +81,8 @@ class DashboardController extends Controller
             ? round(($topStage->initiatives_count / $totalInitiatives) * 100, 2)
             : 0;
 
+        $recentActivities = $this->activityRepository->getRecentActivities(10);
+
         return view('admin::dashboard.index', compact(
             'startDate',
             'endDate',
@@ -91,7 +96,8 @@ class DashboardController extends Controller
             'trackedBills',
             'latestBillFiles',
             'initiativeGrowth',
-            'timeToCloseImprovement'
+            'timeToCloseImprovement',
+            'recentActivities'
         ));
     }
 
@@ -148,6 +154,6 @@ class DashboardController extends Controller
 
     public function activities()
     {
-        return app(ActivityDataGrid::class)->toJson();
+        return app(RecentActivityDataGrid::class)->toJson();
     }
 }

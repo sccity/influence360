@@ -2094,6 +2094,7 @@ return [
             'no-recent-initiatives' => 'No recent initiatives found.',
             'initiative-overview' => 'Initiative Overview',
             'all-activities' => 'All Activities',
+            'recent-activities' => 'Recent Activity',
             'total-initiatives' => 'Total Initiatives',
             'open-initiatives' => 'Open Initiatives',
             'top-stage' => 'Top Stage',

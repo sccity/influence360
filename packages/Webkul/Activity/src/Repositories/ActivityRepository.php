@@ -4,6 +4,7 @@ namespace Webkul\Activity\Repositories;
 
 use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
+use Carbon\Carbon;
 
 class ActivityRepository extends Repository
 {
@@ -164,4 +165,22 @@ class ActivityRepository extends Repository
 
         return $queryBuilder->count() ? true : false;
     }
+
+    public function getAllActivities()
+    {
+        return $this->model->with(['user', 'participants'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    }
+
+    public function getRecentActivities($limit = 5)
+    {
+        return $this->model
+        ->with('user')
+        ->select('id', 'title', 'type', 'comment', 'user_id', 'created_at')
+        ->orderBy('created_at', 'desc')
+        ->take($limit)
+        ->get();
+    }
 }
+

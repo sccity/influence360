@@ -44,7 +44,9 @@ class ActivityController extends Controller
     public function get(): JsonResponse
     {
         if (! request()->has('view_type')) {
-            return datagrid(ActivityDataGrid::class)->process();
+            $result = datagrid(ActivityDataGrid::class)->process();
+            \Log::info('Activity datagrid result', ['result' => $result]);
+            return $result;
         }
 
         $startDate = request()->get('startDate')
