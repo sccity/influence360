@@ -27,7 +27,7 @@ class PersonSeeder extends Seeder
 
         $persons = [
             [
-                'name' => 'John Doe',
+                'name' => 'Generic Guy',
                 'emails' => json_encode([['label' => 'work', 'value' => 'john.doe@example.com']]),
                 'contact_numbers' => json_encode([['label' => 'work', 'value' => '123-456-7890']]),
                 'job_title' => 'Senator',
