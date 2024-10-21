@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Webkul\Contact\Models\Organization;
 
 class ContactSeeder extends Seeder
 {
@@ -12,17 +12,15 @@ class ContactSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('organizations')->insert([
+        $organizations = [
             ['name' => 'US Senate'],
             ['name' => 'US House of Representatives'],
             ['name' => 'UT Senate'],
             ['name' => 'UT House of Representatives'],
-        ]);
-        DB::table('persons')->insert([
-            [
-                'name' => 'Generic Contact',
-                'emails' => '[{"label": "work", "value": "no-reply@santaclarautah.gov"}]',
-            ],
-        ]);
+        ];
+
+        foreach ($organizations as $org) {
+            Organization::firstOrCreate(['name' => $org['name']]);
+        }
     }
 }

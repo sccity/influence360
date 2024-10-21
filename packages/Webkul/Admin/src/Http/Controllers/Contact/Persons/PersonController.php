@@ -190,6 +190,14 @@ class PersonController extends Controller
             $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
         }
 
+        // Sanitize address fields
+        $addressFields = ['street', 'city', 'state', 'zip'];
+        foreach ($addressFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = trim($data[$field]);
+            }
+        }
+
         return $data;
     }
 }

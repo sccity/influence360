@@ -55,6 +55,48 @@
                         'entity_type' => 'persons',
                     ])"
                 />
+
+                <!-- Address Fields -->
+                <div class="mt-4">
+                    <h5 class="font-semibold dark:text-white mb-2">Address</h5>
+                    <div class="grid grid-cols-2 gap-4">
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>Street</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="street"
+                                :label="__('admin::app.contacts.persons.create.street')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>City</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="city"
+                                :label="__('admin::app.contacts.persons.create.city')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="state"
+                                :label="__('admin::app.contacts.persons.create.state')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>ZIP</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="zip"
+                                :label="__('admin::app.contacts.persons.create.zip')"
+                            />
+                        </x-admin::form.control-group>
+                    </div>
+                </div>
                 
                 {!! view_render_event('admin.persons.create.form_controls.after') !!}
             </div>

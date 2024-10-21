@@ -1,4 +1,3 @@
-
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
@@ -57,6 +56,52 @@
                     ])"
                     :entity="$person"
                 />
+
+                <!-- Address Fields -->
+                <div class="mt-4">
+                    <h5 class="font-semibold dark:text-white mb-2">Address</h5>
+                    <div class="grid grid-cols-2 gap-4">
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>Street</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="street"
+                                :value="$person->street"
+                                :label="__('admin::app.contacts.persons.edit.street')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>City</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="city"
+                                :value="$person->city"
+                                :label="__('admin::app.contacts.persons.edit.city')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>State</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="state"
+                                :value="$person->state"
+                                :label="__('admin::app.contacts.persons.edit.state')"
+                            />
+                        </x-admin::form.control-group>
+
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>ZIP</x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="zip"
+                                :value="$person->zip"
+                                :label="__('admin::app.contacts.persons.edit.zip')"
+                            />
+                        </x-admin::form.control-group>
+                    </div>
+                </div>
                 
                 {!! view_render_event('admin.contacts.persons.edit.form_controls.after') !!}
             </div>

@@ -11,6 +11,8 @@ use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
+use Illuminate\Support\Facades\Auth;
+
 
 class Person extends Model implements PersonContract
 {
@@ -52,6 +54,10 @@ class Person extends Model implements PersonContract
         'job_title',
         'user_id',
         'organization_id',
+        'street',
+        'city',
+        'state',
+        'zip',
     ];
 
     /**
@@ -96,5 +102,19 @@ class Person extends Model implements PersonContract
     protected static function newFactory()
     {
         return PersonFactory::new();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($person) {
+            $person->activities()->create([
+                'type' => 'system',
+                'title' => 'Created',
+                'is_done' => 1,
+                'user_id' => Auth::id() ?? 1, // Use authenticated user ID or default to 1
+            ]);
+        });
     }
 }

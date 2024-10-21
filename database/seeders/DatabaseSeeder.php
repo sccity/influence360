@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\BillFiles\Database\Seeders\BillFileSeeder;
 use Webkul\Bills\Database\Seeders\BillSeeder;
+use Webkul\Contact\Database\Seeders\PersonSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +17,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(KrayinDatabaseSeeder::class);
+        $this->call(KrayinDatabaseSeeder::class);  
+        $this->call(ContactSeeder::class);         
+        $this->call(PersonSeeder::class);          
         $this->call(BillFileSeeder::class);
         $this->call(BillSeeder::class);
-        $this->call(ContactSeeder::class);
     }
 }

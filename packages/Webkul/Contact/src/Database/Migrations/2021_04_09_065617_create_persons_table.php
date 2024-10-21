@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->json('emails');
             $table->json('contact_numbers')->nullable();
-
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
             $table->integer('organization_id')->unsigned()->nullable();
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->timestamps();
