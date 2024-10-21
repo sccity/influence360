@@ -35,7 +35,8 @@ class ActivityController extends Controller
      */
     public function index(): View
     {
-        return view('admin::activities.index');
+        $viewType = request()->get('view_type', 'calendar'); // Default to 'calendar' if not specified
+        return view('admin::activities.index', compact('viewType'));
     }
 
     /**
@@ -43,12 +44,15 @@ class ActivityController extends Controller
      */
     public function get(): JsonResponse
     {
-        if (! request()->has('view_type')) {
+        $viewType = request()->get('view_type', 'calendar'); // Default to 'calendar' if not specified
+
+        if ($viewType === 'table') {
             $result = datagrid(ActivityDataGrid::class)->process();
             \Log::info('Activity datagrid result', ['result' => $result]);
             return $result;
         }
 
+        // Calendar view logic (default)
         $startDate = request()->get('startDate')
             ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
             : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');

@@ -66,8 +66,8 @@
             
                         <i
                             class="icon-calendar cursor-pointer rounded-md p-2 text-2xl"
-                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
-                            @click="toggleView('calendor')"
+                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendar'}"
+                            @click="toggleView('calendar')"
                         ></i>
                     </div>
 
@@ -306,7 +306,7 @@
 
                 data() {
                     return {
-                        viewType: (new URLSearchParams(window.location.search))?.get('view-type') || 'table',
+                        viewType: '{{ $viewType }}', // Use the viewType passed from the controller
                     };
                 },
 
@@ -321,9 +321,7 @@
                         this.viewType = type;
 
                         let currentUrl = new URL(window.location);
-
-                        currentUrl.searchParams.set('view-type', type);
-
+                        currentUrl.searchParams.set('view_type', type);
                         window.history.pushState({}, '', currentUrl);
                     },
 
