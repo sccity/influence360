@@ -74,12 +74,14 @@
                                     @lang('admin::app.components.activities.actions.mail.content')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="textarea"
-                                    name="comment"
-                                    rules="required"
-                                    :label="trans('admin::app.components.activities.actions.mail.content')"
-                                />
+                                <div
+                                    ref="emailContent"
+                                    contenteditable="true"
+                                    class="w-full min-h-[150px] p-2 border rounded-md overflow-auto"
+                                    @paste.prevent="handlePaste"
+                                ></div>
+
+                                <input type="hidden" name="comment" :value="emailContent">
 
                                 <x-admin::form.control-group.error control-name="comment" />
                             </x-admin::form.control-group>
@@ -133,6 +135,7 @@
             data() {
                 return {
                     isLoading: false,
+                    emailContent: '',
                 };
             },
 
@@ -141,11 +144,19 @@
                     this.$refs.billMailModal.open();
                 },
 
+                handlePaste(e) {
+                    e.preventDefault();
+                    const text = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
+                    document.execCommand('insertHTML', false, text);
+                    this.emailContent = this.$refs.emailContent.innerHTML;
+                },
+
                 save(params) {
                     this.isLoading = true;
 
                     let data = Object.assign({}, params, {
-                        bill_id: this.entity.id
+                        bill_id: this.entity.id,
+                        comment: this.emailContent
                     });
 
                     this.$axios.post("{{ route('admin.bills.mail-activity.store') }}", data)
@@ -154,6 +165,8 @@
                             this.$refs.billMailModal.close();
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             this.$emitter.emit('on-activity-added', response.data.data);
+                            this.$refs.emailContent.innerHTML = '';
+                            this.emailContent = '';
                         })
                         .catch(error => {
                             this.isLoading = false;

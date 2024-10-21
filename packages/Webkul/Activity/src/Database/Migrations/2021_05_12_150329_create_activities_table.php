@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('type');
-            $table->text('comment')->nullable();
+            $table->longText('comment')->nullable();
             $table->json('additional')->nullable();
             $table->datetime('schedule_from')->nullable();
             $table->datetime('schedule_to')->nullable();

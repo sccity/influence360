@@ -36,6 +36,7 @@ class Activity extends Model implements ActivityContract
     protected $casts = [
         'schedule_from' => 'datetime',
         'schedule_to'   => 'datetime',
+        
     ];
 
     /**

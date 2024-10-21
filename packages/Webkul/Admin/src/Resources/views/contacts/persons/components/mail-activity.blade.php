@@ -74,12 +74,14 @@
                                     @lang('admin::app.components.activities.actions.mail.content')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="textarea"
-                                    name="comment"
-                                    rules="required"
-                                    :label="trans('admin::app.components.activities.actions.mail.content')"
-                                />
+                                <div
+                                    ref="emailContent"
+                                    contenteditable="true"
+                                    class="w-full min-h-[150px] p-2 border rounded-md overflow-auto"
+                                    @paste.prevent="handlePaste"
+                                ></div>
+
+                                <input type="hidden" name="comment" :value="emailContent">
 
                                 <x-admin::form.control-group.error control-name="comment" />
                             </x-admin::form.control-group>
@@ -133,6 +135,7 @@
             data() {
                 return {
                     isLoading: false,
+                    emailContent: '',
                 };
             },
 
@@ -145,7 +148,8 @@
                     this.isLoading = true;
 
                     let data = Object.assign({}, params, {
-                        person_id: this.entity.id
+                        person_id: this.entity.id,
+                        comment: this.emailContent
                     });
 
                     this.$axios.post(this.getMailActivityStoreRoute(), data)
@@ -168,7 +172,14 @@
 
                 getMailActivityStoreRoute() {
                     return `{{ route('admin.contacts.persons.mail-activity.store', ':id') }}`.replace(':id', this.entity.id);
-                }
+                },
+
+                handlePaste(e) {
+                    e.preventDefault();
+                    const text = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
+                    document.execCommand('insertHTML', false, text);
+                    this.emailContent = this.$refs.emailContent.innerHTML;
+                },
             },
         });
     </script>
