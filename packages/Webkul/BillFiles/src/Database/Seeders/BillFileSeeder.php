@@ -4,6 +4,7 @@ namespace Webkul\BillFiles\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Webkul\BillFiles\Models\BillFile;
+use Illuminate\Support\Str;
 
 class BillFileSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class BillFileSeeder extends Seeder
     {
         $billFiles = [
             [
+                'guid' => Str::uuid()->toString(),
                 'billid' => 'HB1234',
                 'name' => 'Health Care Reform Act',
                 'status' => 'In Process',
@@ -20,6 +22,7 @@ class BillFileSeeder extends Seeder
                 'sponsor' => 'John Smith',
             ],
             [
+                'guid' => Str::uuid()->toString(),
                 'billid' => 'SB5678',
                 'name' => 'Education Funding Bill',
                 'status' => 'Abandoned',
@@ -29,6 +32,7 @@ class BillFileSeeder extends Seeder
                 'sponsor' => 'Jane Doe',
             ],
             [
+                'guid' => Str::uuid()->toString(),
                 'billid' => 'HB9876',
                 'name' => 'Environmental Protection Act',
                 'status' => 'In Process',

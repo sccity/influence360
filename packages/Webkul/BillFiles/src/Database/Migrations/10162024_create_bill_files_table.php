@@ -11,6 +11,7 @@ return new class extends Migration
     {
         Schema::create('bill_files', function (Blueprint $table) {
             $table->id();
+            $table->string('guid', 36)->unique();
             $table->string('billid');
             $table->string('name');
             $table->string('status');
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->year('year');
             $table->boolean('is_tracked');
             $table->string('sponsor', 100);
+            $table->unique(['billid', 'year', 'session']);
             $table->timestamps();
         });
 
