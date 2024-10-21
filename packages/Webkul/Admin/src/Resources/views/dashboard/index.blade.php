@@ -36,8 +36,8 @@
     <!-- Body Component -->
     {!! view_render_event('admin.dashboard.index.content.before') !!}
 
-    <div class="mt-3.5 flex gap-8">
-        <div class="flex-grow space-y-8">
+    <div class="mt-3.5 flex gap-8 pr-4">
+        <div class="w-[62.5%] space-y-8" style="flex: 0 0 62.5%;">
             <!-- All Activities -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 @include('admin::dashboard.index.activities')
@@ -48,7 +48,7 @@
                 @include('admin::dashboard.index.tracked-bills')
             </div>
         </div>
-        <div class="w-[480px] max-w-full space-y-8"> <!-- Increased width from 420px to 480px (about 15% increase) -->
+        <div class="w-[37.5%] space-y-8 pr-4" style="flex: 0 0 37.5%;">
             <!-- Initiative Overview -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 @include('admin::dashboard.index.initiative-stats')
