@@ -35,22 +35,35 @@ class LegislativeCalendarSeeder extends Seeder
             'Conference Room A, State Office Complex',
         ];
 
-        for ($i = 0; $i < 10; $i++) {
-            $meetingDate = Carbon::now()->addDays(rand(1, 30));
-            $startTime = Carbon::createFromTime(rand(8, 17), [0, 30][rand(0, 1)], 0);
-            $endTime = (clone $startTime)->addHours(rand(1, 3));
+        $october = Carbon::create(2024, 10, 1);
+        $eventDates = [];
+
+        // Generate 20 random dates in October, allowing duplicates for multiple events on same day
+        for ($i = 0; $i < 20; $i++) {
+            $eventDates[] = $october->copy()->addDays(rand(0, 30));
+        }
+
+        // Sort the dates
+        usort($eventDates, function($a, $b) {
+            return $a->timestamp - $b->timestamp;
+        });
+
+        foreach ($eventDates as $index => $meetingDate) {
+            $startTime = Carbon::createFromTime(rand(8, 17), [0, 15, 30, 45][rand(0, 3)], 0);
+            $endTime = (clone $startTime)->addMinutes(rand(30, 180));
+            $guid = Str::uuid()->toString();
 
             LegislativeCalendar::create([
-                'guid' => Str::uuid()->toString(),
+                'guid' => $guid,
                 'description' => "Meeting of the " . $committees[array_rand($committees)],
-                'meeting_id' => 'MTG' . str_pad($i + 1, 3, '0', STR_PAD_LEFT),
+                'meeting_id' => 'MTG' . str_pad($index + 1, 3, '0', STR_PAD_LEFT),
                 'event_type' => $eventTypes[array_rand($eventTypes)],
-                'link' => 'https://example.com/meeting-' . ($i + 1),
-                'agenda_url' => 'https://example.com/agenda-' . ($i + 1),
-                'minutes_url' => 'https://example.com/minutes-' . ($i + 1),
-                'media_url' => 'https://example.com/media-' . ($i + 1),
-                'emtg_url' => 'https://example.com/emtg-' . ($i + 1),
-                'ics_url' => 'https://example.com/ics-' . ($i + 1),
+                'link' => route('admin.legislative-calendar.event.view', ['id' => $guid]),
+                'agenda_url' => 'https://example.com/agenda-' . ($index + 1),
+                'minutes_url' => 'https://example.com/minutes-' . ($index + 1),
+                'media_url' => 'https://example.com/media-' . ($index + 1),
+                'emtg_url' => 'https://example.com/emtg-' . ($index + 1),
+                'ics_url' => 'https://example.com/ics-' . ($index + 1),
                 'mtg_date' => $meetingDate->toDateString(),
                 'start_time' => $startTime->toTimeString(),
                 'end_time' => $endTime->toTimeString(),

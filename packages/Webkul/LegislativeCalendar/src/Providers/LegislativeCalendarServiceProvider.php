@@ -22,6 +22,8 @@ class LegislativeCalendarServiceProvider extends ServiceProvider
         $this->app->bind(
             \Webkul\LegislativeCalendar\Repositories\LegislativeCalendarRepository::class
         );
+        
+        $this->app->bind(\Webkul\Admin\Widgets\LegislativeCalendarWidget::class);
     }
 
 }

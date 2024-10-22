@@ -74,6 +74,8 @@
         {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 
+    {{ $header ?? '' }}
+
     {!! view_render_event('admin.layout.head.after') !!}
 </head>
 
@@ -130,6 +132,36 @@
     </script>
 
     {!! view_render_event('admin.layout.vue-app-mount.after') !!}
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: @json($events),
+                eventClick: function(info) {
+                    if (info.event.url) {
+                        window.location.href = info.event.url;
+                        return false;
+                    }
+                },
+                eventDidMount: function(info) {
+                    if (typeof tippy === 'function') {
+                        tippy(info.el, {
+                            content: info.event.extendedProps.description + '<br>Location: ' + info.event.extendedProps.location,
+                            placement: 'top',
+                            trigger: 'mouseenter',
+                            interactive: true,
+                            allowHTML: true
+                        });
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
+    @endpush
 </body>
 
 </html>
