@@ -37,3 +37,4 @@ php artisan view:cache
 #composer dump-autoload -o
 
 echo "Laravel cleanup completed successfully!"
+ 
