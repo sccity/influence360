@@ -33,7 +33,7 @@ echo "Rebuilding view cache..."
 php artisan view:cache
 
 # Optionally optimize autoload files (composer dump-autoload)
-echo "Optimizing Composer autoload..."
-composer dump-autoload -o
+#echo "Optimizing Composer autoload..."
+#composer dump-autoload -o
 
 echo "Laravel cleanup completed successfully!"
