@@ -12,6 +12,13 @@ return [
         'icon-class' => 'icon-dashboard',
     ],
 
+    [
+        'key'        => 'legislation.legislativecalendar',
+        'name'       => 'admin::app.legislative-calendar.menu_name',
+        'route'      => 'admin.legislative-calendar.index',
+        'sort'       => 4,
+        'icon-class' => 'temp-icon',
+    ],
     /**
      * Initiatives (formerly Leads).
      */
@@ -26,7 +33,7 @@ return [
     [
         'key'        => 'legislation',
         'name'       => 'Legislation',
-        'route'      => 'admin.bills.index',
+        'route'      => 'admin.bills.index', // Make sure this is present
         'sort'       => 3,
         'icon-class' => 'icon-activity',
     ], [

@@ -23,4 +23,5 @@ class LegislativeCalendarServiceProvider extends ServiceProvider
             \Webkul\LegislativeCalendar\Repositories\LegislativeCalendarRepository::class
         );
     }
+
 }

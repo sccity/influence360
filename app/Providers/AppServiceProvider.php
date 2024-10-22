@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(\Webkul\BillFiles\Providers\BillFileServiceProvider::class);
         $this->app->register(\Webkul\Bills\Providers\BillServiceProvider::class);
         $this->app->register(\Webkul\Initiative\Providers\InitiativeServiceProvider::class);
-
+        $this->app->register(\Webkul\LegislativeCalendar\Providers\LegislativeCalendarServiceProvider::class);
     }
 
     /**

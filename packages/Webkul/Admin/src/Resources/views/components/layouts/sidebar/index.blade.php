@@ -11,7 +11,7 @@
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                     <a
                         class="flex gap-2 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
-                        href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
+                        href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : ($menuItem->getUrl() ?? '#') }}"
                         @mouseleave="!isMenuActive ? hoveringMenu = '' : {}"
                         @mouseover="hoveringMenu='{{$menuItem->getKey()}}'"
                         @click="isMenuActive = !isMenuActive"

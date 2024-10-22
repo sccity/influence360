@@ -470,3 +470,16 @@ Breadcrumbs::for('bills.view', function (BreadcrumbTrail $trail, $bill) {
     $trail->push($bill['tracking_id'] ?? $bill->tracking_id ?? '#' . $bill->id, route('admin.bills.view', $bill->id));
 });
 
+// Add these new breadcrumb definitions
+
+// Dashboard > Legislative Calendar
+Breadcrumbs::for('legislative-calendar', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('admin::app.legislative-calendar.title'), route('admin.legislative-calendar.index'));
+});
+
+// Dashboard > Legislative Calendar > View
+Breadcrumbs::for('legislative-calendar.view', function (BreadcrumbTrail $trail, $event) {
+    $trail->parent('legislative-calendar');
+    $trail->push(trans('admin::app.legislative-calendar.view.title'), route('admin.legislative-calendar.view', $event->id));
+});

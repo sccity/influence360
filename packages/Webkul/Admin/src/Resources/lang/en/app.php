@@ -40,6 +40,40 @@ return [
         'export'                => 'Export',
         'mass-delete'           => 'Mass Delete',
     ],
+
+/* What a fuckin' mess! Let's start segmenting with comments */
+
+//
+// Legislative Calendar Entries
+//
+ 
+'legislative-calendar' => [
+    'title'     => 'Legislative Calendar',
+    'menu_name' => 'Legislative Calendar',
+    'index'     => [
+        'title'        => 'Legislative Calendar',
+        'header'       => 'Legislative Calendar',
+        'description'  => 'List of Legislative Calendar Events',
+    ],
+
+    'view'      => [
+        'title' => 'View Legislative Calendar Event',
+    ],
+    'datagrid'  => [
+        'id'           => 'ID',
+        'committee'    => 'Committee',
+        'mtg_time'     => 'Meeting Time',
+        'mtg_place'    => 'Meeting Place',
+        'link'         => 'Link',
+        'date_entered' => 'Date Entered',
+    ],
+    'form'      => [
+        'committee'    => 'Committee',
+        'mtg_time'     => 'Meeting Time',
+        'mtg_place'    => 'Meeting Place',
+        'link'         => 'Link',
+    ],
+],
     'bills' => [
         'toggle-tracked-success' => 'Bill tracking status updated successfully.',
         'notifications' => [

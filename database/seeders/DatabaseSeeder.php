@@ -7,6 +7,7 @@ use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\BillFiles\Database\Seeders\BillFileSeeder;
 use Webkul\Bills\Database\Seeders\BillSeeder;
 use Webkul\Contact\Database\Seeders\PersonSeeder;
+use Webkul\LegislativeCalendar\Database\Seeders\LegislativeCalendarSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonSeeder::class);          
         $this->call(BillFileSeeder::class);
         $this->call(BillSeeder::class);
+        $this->call(LegislativeCalendarSeeder::class);
     }
 }
