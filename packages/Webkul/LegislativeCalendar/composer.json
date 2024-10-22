@@ -1,0 +1,29 @@
+{
+    "name": "krayin/laravel-legislative-calendar",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ryan Levsey",
+            "email": "rlevsey@santaclarautah.gov"
+        }
+    ],
+    "require": {
+        "krayin/laravel-attribute": "^1.0",
+        "krayin/laravel-core": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\LegislativeCalendar\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\LegislativeCalendar\\Providers\\LegislativeCalendarServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}
+
