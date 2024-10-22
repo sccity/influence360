@@ -20,6 +20,7 @@ return [
         \Webkul\WebForm\Providers\ModuleServiceProvider::class,
         \Webkul\BillFiles\Providers\ModuleServiceProvider::class,
         \Webkul\Bills\Providers\ModuleServiceProvider::class,
+        \Webkul\LegislativeCalendar\Providers\ModuleServiceProvider::class,
     ],
 
     'register_route_models' => true,

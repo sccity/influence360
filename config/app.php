@@ -213,6 +213,7 @@ return [
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
         Webkul\BillFiles\Providers\BillFileServiceProvider::class,
         Webkul\Bills\Providers\BillServiceProvider::class,
+        Webkul\LegislativeCalendar\Providers\LegislativeCalendarServiceProvider::class,
     ])->toArray(),
 
     /*

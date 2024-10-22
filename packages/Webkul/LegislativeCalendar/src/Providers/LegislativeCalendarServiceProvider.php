@@ -18,5 +18,9 @@ class LegislativeCalendarServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(ModuleServiceProvider::class);
+        
+        $this->app->bind(
+            \Webkul\LegislativeCalendar\Repositories\LegislativeCalendarRepository::class
+        );
     }
 }
