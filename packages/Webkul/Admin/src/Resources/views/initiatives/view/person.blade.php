@@ -55,39 +55,61 @@
             
                 {!! view_render_event('admin.initiatives.view.person.email.before', ['initiative' => $initiative]) !!}
 
-                @foreach ($initiative->person->emails as $email)
+                @if (is_array($initiative->person->emails) || is_object($initiative->person->emails))
+                    @foreach ($initiative->person->emails as $email)
+                        <div class="flex gap-1">
+                            <a 
+                                class="text-brandColor"
+                                href="mailto:{{ $email['value'] }}"
+                            >
+                                {{ $email['value'] }}
+                            </a>
+
+                            <span class="text-gray-500 dark:text-gray-300">
+                                ({{ $email['label'] }})
+                            </span>
+                        </div>
+                    @endforeach
+                @elseif (is_string($initiative->person->emails) && !empty($initiative->person->emails))
                     <div class="flex gap-1">
                         <a 
                             class="text-brandColor"
-                            href="mailto:{{ $email['value'] }}"
+                            href="mailto:{{ $initiative->person->emails }}"
                         >
-                            {{ $email['value'] }}
+                            {{ $initiative->person->emails }}
                         </a>
-
-                        <span class="text-gray-500 dark:text-gray-300">
-                            ({{ $email['label'] }})
-                        </span>
                     </div>
-                @endforeach
+                @endif
 
                 {!! view_render_event('admin.initiatives.view.person.email.after', ['initiative' => $initiative]) !!}
 
                 {!! view_render_event('admin.initiatives.view.person.contact_numbers.before', ['initiative' => $initiative]) !!}
             
-                @foreach ($initiative->person->contact_numbers as $contactNumber)
+                @if (is_array($initiative->person->contact_numbers) || is_object($initiative->person->contact_numbers))
+                    @foreach ($initiative->person->contact_numbers as $contactNumber)
+                        <div class="flex gap-1">
+                            <a  
+                                class="text-brandColor"
+                                href="callto:{{ $contactNumber['value'] }}"
+                            >
+                                {{ $contactNumber['value'] }}
+                            </a>
+
+                            <span class="text-gray-500 dark:text-gray-300">
+                                ({{ $contactNumber['label'] }})
+                            </span>
+                        </div>
+                    @endforeach
+                @elseif (is_string($initiative->person->contact_numbers) && !empty($initiative->person->contact_numbers))
                     <div class="flex gap-1">
                         <a  
                             class="text-brandColor"
-                            href="callto:{{ $contactNumber['value'] }}"
+                            href="callto:{{ $initiative->person->contact_numbers }}"
                         >
-                            {{ $contactNumber['value'] }}
+                            {{ $initiative->person->contact_numbers }}
                         </a>
-
-                        <span class="text-gray-500 dark:text-gray-300">
-                            ({{ $contactNumber['label'] }})
-                        </span>
                     </div>
-                @endforeach
+                @endif
 
                 {!! view_render_event('admin.initiatives.view.person.contact_numbers.after', ['initiative' => $initiative]) !!}
             </div>
