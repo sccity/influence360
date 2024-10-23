@@ -13,6 +13,7 @@ use Webkul\Initiative\Contracts\Initiative as InitiativeContract;
 use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
+use Illuminate\Support\Facades\DB;
 
 class Initiative extends Model implements InitiativeContract
 {
@@ -51,6 +52,10 @@ class Initiative extends Model implements InitiativeContract
         'initiative_type_id',
         'initiative_pipeline_id',
         'initiative_pipeline_stage_id',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => \Webkul\Initiative\Events\InitiativeCreated::class,
     ];
 
     /**
@@ -106,7 +111,9 @@ class Initiative extends Model implements InitiativeContract
      */
     public function activities()
     {
-        return $this->belongsToMany(ActivityProxy::modelClass(), 'initiative_activities');
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'initiative_activities')
+            ->with(['user', 'participants', 'files'])
+            ->orderBy('created_at', 'desc');
     }
 
     /**
@@ -120,10 +127,6 @@ class Initiative extends Model implements InitiativeContract
     /**
      * Get the emails.
      */
-    public function emails()
-    {
-        return $this->hasMany(EmailProxy::modelClass());
-    }
 
     /**
      * The quotes that belong to the initiative.

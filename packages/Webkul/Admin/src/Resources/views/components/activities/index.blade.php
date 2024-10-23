@@ -227,7 +227,7 @@
                                                     @if (bouncer()->hasPermission('mail.view'))
                                                         <x-admin::dropdown.menu.item>
                                                             <a
-                                                                :href="'{{ route('admin.mail.view', ['route' => 'replaceFolder', 'id' => 'replaceMailId']) }}'.replace('replaceFolder', activity.additional.folders[0]).replace('replaceMailId', activity.id)"
+                                                                :href="'{{ route('admin.mail.view', ['route' => 'replaceFolder', 'id' => 'replaceMailId']) }}'.replace('replaceFolder', activity.additional && activity.additional.folders && activity.additional.folders.length ? activity.additional.folders[0] : '').replace('replaceMailId', activity.id)"
                                                                 class="flex items-center gap-2"
                                                                 target="_blank"
                                                             >
@@ -428,13 +428,16 @@
 
             computed: {
                 filteredActivities() {
-                    if (this.selectedType == 'all') {
-                        return this.activities;
-                    } else if (this.selectedType == 'planned') {
-                        return this.activities.filter(activity => ! activity.is_done);
+                    if (!Array.isArray(this.activities)) {
+                        console.error('Activities is not an array:', this.activities);
+                        return [];
                     }
-
-                    return this.activities.filter(activity => activity.type == this.selectedType);
+                    if (this.selectedType === 'all') {
+                        return this.activities;
+                    } else if (this.selectedType === 'planned') {
+                        return this.activities.filter(activity => activity && !activity.is_done);
+                    }
+                    return this.activities.filter(activity => activity && activity.type === this.selectedType);
                 }
             },
 
@@ -457,12 +460,19 @@
 
                     this.$axios.get(this.endpoint)
                         .then(response => {
-                            this.activities = response.data.data;
-
+                            console.log('Raw response:', response);
+                            if (response.data && Array.isArray(response.data.data)) {
+                                this.activities = response.data.data;
+                            } else {
+                                console.warn('Unexpected response structure or empty data:', response.data);
+                                this.activities = [];
+                            }
                             this.isLoading = false;
                         })
                         .catch(error => {
-                            console.error(error);
+                            console.error('Error fetching activities:', error);
+                            this.activities = [];
+                            this.isLoading = false;
                         });
                 },
 
@@ -555,4 +565,12 @@
         });
     </script>
 @endPushOnce
+
+
+
+
+
+
+
+
 

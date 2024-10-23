@@ -11,6 +11,8 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Initiative\Contracts\Initiative;
+use Webkul\Initiative\Events\InitiativeCreated;
+use Illuminate\Support\Facades\Log;
 
 class InitiativeRepository extends Repository
 {
@@ -83,7 +85,7 @@ class InitiativeRepository extends Repository
                 'initiative_value',
                 'persons.name as person_name',
                 'initiatives.person_id as person_id',
-                'initiative_pipelines.id as initiative_pipeline_id',
+                'initiatives.initiative_pipeline_id as initiative_pipeline_id',
                 'initiative_pipeline_stages.name as status',
                 'initiative_pipeline_stages.id as initiative_pipeline_stage_id'
             )
@@ -106,8 +108,9 @@ class InitiativeRepository extends Repository
     }
 
     /**
-     * Create.
+     * Create a new initiative.
      *
+     * @param  array  $data
      * @return \Webkul\Initiative\Contracts\Initiative
      */
     public function create(array $data)
@@ -127,6 +130,15 @@ class InitiativeRepository extends Repository
             'initiative_pipeline_id'       => 1,
             'initiative_pipeline_stage_id' => 1,
         ], $data));
+
+        Log::info('Attempting to dispatch InitiativeCreated event');
+        try {
+            event(new InitiativeCreated($initiative));
+            Log::info('InitiativeCreated event dispatched successfully');
+        } catch (\Throwable $e) {
+            Log::error('Error dispatching InitiativeCreated event: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+        }
 
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $initiative->id,
@@ -293,5 +305,11 @@ class InitiativeRepository extends Repository
             ->orderBy('created_at', 'desc')
             ->take($limit)
             ->get();
+    }
+
+    public function attachActivity($initiativeId, $activityId)
+    {
+        $initiative = $this->find($initiativeId);
+        $initiative->activities()->attach($activityId);
     }
 }

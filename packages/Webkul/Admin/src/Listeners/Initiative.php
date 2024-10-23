@@ -2,29 +2,76 @@
 
 namespace Webkul\Admin\Listeners;
 
-use Webkul\Email\Repositories\EmailRepository;
+use Webkul\Activity\Repositories\ActivityRepository;
+use Webkul\Initiative\Events\InitiativeCreated;
+use Webkul\Initiative\Contracts\Initiative as InitiativeContract;
+use Illuminate\Support\Facades\Log;
 
 class Initiative
 {
     /**
-     * Create a new controller instance.
+     * Create a new listener instance.
      *
+     * @param  ActivityRepository  $activityRepository
      * @return void
      */
-    public function __construct(protected EmailRepository $emailRepository) {}
+    public function __construct(protected ActivityRepository $activityRepository) {}
 
     /**
-     * @param  \Webkul\Initiative\Models\Initiative  $initiative
+     * Handle the event.
+     *
+     * @param  InitiativeCreated|InitiativeContract  $event
      * @return void
      */
-    public function linkToEmail($initiative)
+    public function handle($event)
     {
-        if (! request('email_id')) {
+        $initiative = $event instanceof InitiativeCreated ? $event->initiative : $event;
+        $this->processInitiative($initiative);
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  InitiativeCreated|InitiativeContract  $event
+     * @return void
+     */
+    public function __invoke($event)
+    {
+        $initiative = $event instanceof InitiativeCreated ? $event->initiative : $event;
+        $this->processInitiative($initiative);
+    }
+
+    /**
+     * Process the created initiative.
+     *
+     * @param  InitiativeContract  $initiative
+     * @return void
+     */
+    protected function processInitiative(InitiativeContract $initiative)
+    {
+        // Your logic here
+        Log::info('Initiative processed: ' . $initiative->id);
+    }
+
+    /**
+     * @param  \Webkul\Initiative\Contracts\Initiative  $initiative
+     * @return void
+     */
+    public function linkToMailActivity($initiative)
+    {
+        if (! request('activity_id')) {
             return;
         }
 
-        $this->emailRepository->update([
-            'initiative_id' => $initiative->id,
-        ], request('email_id'));
+        try {
+            $activity = $this->activityRepository->find(request('activity_id'));
+            
+            if ($activity && $activity->type === 'mail') {
+                $activity->initiatives()->attach($initiative->id);
+                Log::info('Linked mail activity to initiative:', ['initiative_id' => $initiative->id, 'activity_id' => $activity->id]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error linking mail activity to initiative:', ['initiative_id' => $initiative->id, 'activity_id' => request('activity_id'), 'error' => $e->getMessage()]);
+        }
     }
 }

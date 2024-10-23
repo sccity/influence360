@@ -195,7 +195,7 @@
                                                 </p>
 
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    @{{ record.title }}
+                                                    @{{ record.formatted_title || record.title }}
                                                 </p>
                     
                                                 <p
@@ -221,7 +221,7 @@
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    @{{ record.comment }}
+                                                    @{{ record.additional && record.additional.content ? record.additional.content : (record.comment || 'N/A') }}
                                                 </p>
 
                                                 <p v-html="record.initiative_title"></p>
@@ -461,3 +461,4 @@
         </style>
     @endPushOnce
 </x-admin::layouts>
+

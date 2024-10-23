@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Event;
+use Webkul\Initiative\Events\InitiativeCreated;
+use Webkul\Admin\Listeners\Initiative as InitiativeListener;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') === 'prod') {
             URL::forceScheme('https');
         }
+
+        Event::listen(InitiativeCreated::class, [InitiativeListener::class, 'handle']);
     }
 }
