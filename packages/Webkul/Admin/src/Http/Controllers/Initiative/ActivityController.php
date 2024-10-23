@@ -114,6 +114,11 @@ class ActivityController extends Controller
         $data['schedule_to'] = $data['schedule_from'];
         $data['is_done'] = 1;
         $data['user_id'] = auth()->id();
+        $data['title'] = 'Sent Email: ' . $data['title'];
+        $data['additional'] = json_encode([
+            'subject' => $data['title'],
+            'body' => $data['comment'],
+        ]);
 
         $activity = $this->activityRepository->create($data);
 

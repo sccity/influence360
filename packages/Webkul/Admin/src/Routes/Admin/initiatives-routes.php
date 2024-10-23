@@ -46,13 +46,11 @@ Route::controller(InitiativeController::class)->prefix('initiatives')->group(fun
 
     Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
         Route::post('', 'attach')->name('admin.initiatives.tags.attach');
-
         Route::delete('', 'detach')->name('admin.initiatives.tags.detach');
     });
 
     Route::controller(EmailController::class)->prefix('{id}/emails')->group(function () {
         Route::post('', 'store')->name('admin.initiatives.emails.store');
-
         Route::delete('', 'detach')->name('admin.initiatives.emails.detach');
     });
 

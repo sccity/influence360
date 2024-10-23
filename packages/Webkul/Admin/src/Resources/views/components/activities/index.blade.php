@@ -94,6 +94,10 @@
 
                                             <template v-if="activity.type == 'email' && activity.additional">
                                                 <p class="dark:text-white">
+                                                    <strong>Subject:</strong> @{{ activity.email_subject }}
+                                                </p>
+                                                <p class="dark:text-white">
+                                                    <strong>Body:</strong> @{{ activity.email_body }}
                                                 </p>
                                             </template>
 
@@ -565,6 +569,7 @@
         });
     </script>
 @endPushOnce
+
 
 
 

@@ -37,8 +37,11 @@ class ActivityResource extends JsonResource
             $additional = json_decode($this->additional, true);
             $data['additional'] = $additional;
 
-            // Format the title for display
-            if ($this->type === 'system') {
+            if ($this->type === 'email') {
+                $data['formatted_title'] = $this->title;
+                $data['email_subject'] = $additional['subject'] ?? '';
+                $data['email_body'] = $additional['body'] ?? '';
+            } elseif ($this->type === 'system') {
                 $oldValue = $additional['old']['value'] ?? 'Empty';
                 $newValue = $additional['new']['value'] ?? 'Empty';
                 $data['formatted_title'] = "{$this->title} : {$oldValue} → {$newValue}";

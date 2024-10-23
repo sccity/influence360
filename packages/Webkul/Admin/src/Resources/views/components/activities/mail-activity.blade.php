@@ -164,24 +164,30 @@
                     // Update emailContent one last time before submission
                     this.updateEmailContent();
 
-                    let data = Object.assign({}, params, {
+                    let data = {
+                        type: 'email',
+                        title: params.title,
+                        comment: this.emailContent,
+                        schedule_from: params.schedule_from,
+                        schedule_to: params.schedule_from,
+                        is_done: 1,
                         entity_type: this.getEntityType(),
                         entity_id: this.entity.id,
-                        comment: this.emailContent
-                    });
+                        additional: JSON.stringify({
+                            subject: params.title,
+                            body: this.emailContent,
+                        }),
+                        participants: params.participants,
+                    };
 
-                    this.$axios.post(this.getMailActivityStoreRoute(), data)
+                    this.$axios.post("{{ route('admin.activities.mail.store') }}", data)
                         .then(response => {
                             this.isLoading = false;
                             this.$refs.mailModal.close();
 
-                            // Emit success event
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-
-                            // Emit event with new activity data
                             this.$emitter.emit('activity-added', response.data.data);
 
-                            // Clear form
                             this.$refs.emailContent.innerHTML = '';
                             this.emailContent = '';
                         })
@@ -190,7 +196,6 @@
                             if (error.response && error.response.status === 422) {
                                 this.$refs.mailActionForm.setErrors(error.response.data.errors);
                             } else {
-                                // Emit error event
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message || 'An error occurred while saving the email activity.' });
                             }
                         });
@@ -198,10 +203,6 @@
 
                 updateEmailContent() {
                     this.emailContent = this.$refs.emailContent.innerHTML;
-                },
-
-                getMailActivityStoreRoute() {
-                    return "{{ route('admin.activities.mail.store') }}";
                 },
 
                 getEntityType() {

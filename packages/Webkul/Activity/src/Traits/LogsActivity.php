@@ -179,3 +179,4 @@ trait LogsActivity
         }
     }
 }
+
