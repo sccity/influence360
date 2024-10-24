@@ -17,6 +17,9 @@ class ActivityResource extends JsonResource
      */
     public function toArray($request)
     {
+        $rawAttributes = $this->getAttributes();
+        \Log::info('ActivityResource - raw attributes:', $rawAttributes);
+
         $data = [
             'id'            => $this->id,
             'title'         => $this->title,
@@ -31,11 +34,13 @@ class ActivityResource extends JsonResource
             'location'      => $this->location,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'additional'    => [],
+            'additional'    => isset($rawAttributes['additional']) ? json_decode($rawAttributes['additional'], true) : [],
         ];
 
         if ($this->additional) {
-            $additional = json_decode($this->additional, true);
+            // Since 'additional' is already cast to array, we can use it directly
+            $additional = $this->additional;
+
             $data['additional'] = $additional;
 
             if ($this->type === 'email') {
@@ -47,7 +52,7 @@ class ActivityResource extends JsonResource
                 $oldValue  = $additional['old']['label'] ?? 'N/A';
                 $newValue  = $additional['new']['label'] ?? 'N/A';
                 $data['formatted_title'] = "{$this->title}: {$oldValue} → {$newValue}";
-                $data['attribute'] = $attribute;
+                $data['attribute']       = $attribute;
             } else {
                 $data['formatted_title'] = $this->title;
             }

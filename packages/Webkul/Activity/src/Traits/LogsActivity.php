@@ -5,6 +5,7 @@ namespace Webkul\Activity\Traits;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Attribute\Contracts\AttributeValue;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Illuminate\Database\Eloquent\Model;
 
 trait LogsActivity
 {
@@ -14,169 +15,107 @@ trait LogsActivity
     protected static function booted(): void
     {
         static::created(function ($model) {
-            if (! method_exists($model->entity ?? $model, 'activities')) {
-                return;
-            }
-
-            if (! $model instanceof AttributeValue) {
-                $activity = app(ActivityRepository::class)->create([
-                    'type'    => 'system',
-                    'title'   => trans('admin::app.activities.created'),
-                    'is_done' => 1,
-                    'user_id' => auth()->id(),
-                ]);
-
-                $model->activities()->attach($activity->id);
-
-                return;
-            }
-
-            static::logActivity($model);
+            static::logModelActivity($model, 'created');
         });
 
         static::updated(function ($model) {
-            if (! method_exists($model->entity ?? $model, 'activities')) {
-                return;
-            }
-
-            static::logActivity($model);
+            static::logModelActivity($model, 'updated');
         });
 
-        static::deleting(function ($model) {
-            if (! method_exists($model->entity ?? $model, 'activities')) {
-                return;
-            }
-
-            $model->activities()->delete();
+        static::deleted(function ($model) {
+            static::logModelActivity($model, 'deleted');
         });
     }
 
     /**
      * Create activity.
      */
-    protected static function logActivity($model)
+    protected static function logModelActivity(Model $model, string $action): void
     {
-        $customAttributes = [];
-
-        if (method_exists($model, 'getCustomAttributes')) {
-            $customAttributes = $model->getCustomAttributes()->pluck('code')->toArray();
+        if (! method_exists($model, 'activities')) {
+            return;
         }
 
-        $updatedAttributes = static::getUpdatedAttributes($model);
+        $activityData = [
+            'type'    => 'system',
+            'title'   => static::generateActivityTitle($model, $action),
+            'is_done' => 1,
+            'user_id' => auth()->id(),
+        ];
 
-        foreach ($updatedAttributes as $attributeCode => $attributeData) {
-            if (in_array($attributeCode, $customAttributes)) {
-                continue;
-            }
-
-            $attributeCode = $model->attribute?->name ?: $attributeCode;
-
-            $activity = app(ActivityRepository::class)->create([
-                'type'       => 'system',
-                'title'      => trans('admin::app.activities.updated', ['attribute' => $attributeCode]),
-                'is_done'    => 1,
-                'additional' => json_encode([
-                    'attribute' => $attributeCode,
-                    'new'       => [
-                        'value' => $attributeData['new'],
-                        'label' => static::getAttributeLabel($attributeData['new'], $model->attribute),
-                    ],
-                    'old'       => [
-                        'value' => $attributeData['old'],
-                        'label' => static::getAttributeLabel($attributeData['old'], $model->attribute),
-                    ],
-                ]),
-                'user_id'    => auth()->id(),
-            ]);
-
-            if ($model instanceof AttributeValue) {
-                $model->entity->activities()->attach($activity->id);
-            } else {
-                $model->activities()->attach($activity->id);
-            }
+        if ($action !== 'created') {
+            $activityData['additional'] = static::getUpdatedAttributes($model);
         }
+
+        $activity = app(ActivityRepository::class)->create($activityData);
+
+        $model->activities()->attach($activity->id);
+    }
+
+    /**
+     * Generate activity title.
+     */
+    protected static function generateActivityTitle(Model $model, string $action): string
+    {
+        $modelName = class_basename($model);
+        $modelIdentifier = $model->name ?? $model->title ?? $model->id;
+
+        return trans("admin::app.activities.{$action}", [
+            'name' => "{$modelName} '{$modelIdentifier}'",
+        ]);
     }
 
     /**
      * Get attribute label.
      */
-    protected static function getAttributeLabel($value, $attribute)
+    protected static function getAttributeLabel($value, $attribute = null)
     {
-        return app(AttributeValueRepository::class)->getAttributeLabel($value, $attribute);
+        if (! $attribute) {
+            return $value;
+        }
+
+        $attributeType = $attribute->type ?? null;
+
+        switch ($attributeType) {
+            case 'boolean':
+                return $value ? trans('admin::app.common.yes') : trans('admin::app.common.no');
+            case 'select':
+            case 'multiselect':
+                return $attribute->options()->where('id', $value)->first()?->admin_name ?? $value;
+            default:
+                return $value;
+        }
     }
 
     /**
-     * Create activity.
+     * Get updated attributes.
      */
-    protected static function getUpdatedAttributes($model)
+    protected static function getUpdatedAttributes($model): array
     {
         $updatedAttributes = [];
+        $changedAttributes = $model->getDirty();
 
-        foreach ($model->getDirty() as $key => $value) {
-            if (in_array($key, [
-                'id',
-                'attribute_id',
-                'entity_id',
-                'entity_type',
-                'updated_at',
-            ])) {
+        foreach ($changedAttributes as $key => $value) {
+            if (in_array($key, ['id', 'created_at', 'updated_at'])) {
                 continue;
             }
 
-            $newValue = static::decodeValueIfJson($value);
+            $oldValue = $model->getOriginal($key);
+            $newValue = $value;
 
-            $oldValue = static::decodeValueIfJson($model->getOriginal($key));
-
-            if ($newValue != $oldValue) {
-                $updatedAttributes[$key] = [
-                    'new' => $newValue,
-                    'old' => $oldValue,
-                ];
-            }
+            $updatedAttributes[$key] = [
+                'attribute' => $key,
+                'old' => [
+                    'value' => $oldValue,
+                    'label' => static::getAttributeLabel($oldValue, $model->$key),
+                ],
+                'new' => [
+                    'value' => $newValue,
+                    'label' => static::getAttributeLabel($newValue, $model->$key),
+                ],
+            ];
         }
 
         return $updatedAttributes;
     }
-
-    /**
-     * Convert value if json.
-     */
-    protected static function decodeValueIfJson($value)
-    {
-        if (
-            ! is_array($value)
-            && json_decode($value, true)
-        ) {
-            $value = json_decode($value, true);
-        }
-
-        if (! is_array($value)) {
-            return $value;
-        }
-
-        static::ksortRecursive($value);
-
-        return $value;
-    }
-
-    /**
-     * Sort array recursively.
-     */
-    protected static function ksortRecursive(&$array)
-    {
-        if (! is_array($array)) {
-            return;
-        }
-
-        ksort($array);
-
-        foreach ($array as &$value) {
-            if (! is_array($value)) {
-                continue;
-            }
-
-            static::ksortRecursive($value);
-        }
-    }
 }
-

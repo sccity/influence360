@@ -40,28 +40,32 @@ class ActivityRepository extends Repository
     {
         DB::beginTransaction();
 
-        try {
-            $data = $this->prepareData($data);
+        // Clean up unnecessary fields
+        unset($data['attachments']);
 
-            $activity = parent::create($data);
+        // Add logging before preparation
+        \Log::info('Before prepareData - data:', $data);
 
-            $this->handleFileUpload($activity, $data);
-            $this->handleParticipants($activity, $data);
+        $data = $this->prepareData($data);
 
-            if (isset($data['initiative_id'])) {
-                $activity->initiatives()->attach($data['initiative_id']);
-            }
-            if (isset($data['bill_id'])) {
-                $activity->bills()->attach($data['bill_id']);
-            }
+        // Add logging after preparation
+        \Log::info('After prepareData - data:', $data);
 
-            DB::commit();
+        $activity = parent::create($data);
 
-            return $activity->load(['user', 'participants', 'files']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
+        $this->handleFileUpload($activity, $data);
+        $this->handleParticipants($activity, $data);
+
+        if (isset($data['initiative_id'])) {
+            $activity->initiatives()->attach($data['initiative_id']);
         }
+        if (isset($data['bill_id'])) {
+            $activity->bills()->attach($data['bill_id']);
+        }
+
+        DB::commit();
+
+        return $activity->load(['user', 'participants', 'files']);
     }
 
     /**
@@ -280,6 +284,8 @@ class ActivityRepository extends Repository
 
     protected function prepareData(array $data)
     {
+        \Log::info('prepareData - Incoming data:', $data);
+
         $additional = [];
 
         switch ($data['type']) {
@@ -324,12 +330,27 @@ class ActivityRepository extends Repository
                 break;
 
             case 'system':
-                // Keep the original title for system activities
-                $additional = $data['additional'] ?? [];
+                // Check if 'additional' is set
+                if (isset($data['additional'])) {
+                    // If 'additional' is an array, convert it to JSON
+                    if (is_array($data['additional'])) {
+                        $data['additional'] = json_encode($data['additional']);
+                    }
+                    // If 'additional' is already a JSON string, leave it as is
+                } else {
+                    // If 'additional' is not set, set it to an empty JSON array
+                    $data['additional'] = '[]';
+                }
+                break;
+
+            default:
+                // ... any other default cases ...
                 break;
         }
 
         $data['additional'] = json_encode($additional);
+
+        \Log::info('prepareData - Prepared data:', $data);
 
         return $data;
     }
