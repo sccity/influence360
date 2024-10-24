@@ -27,3 +27,9 @@ package-lock.json
 yarn.lock
 yarn-error.log
 docker-compose.yml
+/bootstrap/cache/*
+/storage/cache/*
+/storage/framework/views/*
+/storage/framework/sessions/*
+/storage/app/public/*
+/storage/logs/*
