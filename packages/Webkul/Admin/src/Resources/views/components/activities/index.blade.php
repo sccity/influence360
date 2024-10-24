@@ -146,22 +146,29 @@
                                             class="flex flex-wrap gap-2"
                                             v-if="activity.files.length"
                                         >
-                                            <a
-                                                :href="
-                                                    activity.type == 'email'
-                                                    ? `{{ route('admin.mail.attachment_download', 'replaceID') }}`.replace('replaceID', file.id)
-                                                    : `{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)
-                                                "
-                                                class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
-                                                target="_blank"
-                                                v-for="(file, index) in activity.files"
-                                            >
-                                                <span class="icon-attached-file text-xl"></span>
+                                            <template v-for="(file, index) in activity.files">
+                                                <a
+                                                    :href="`{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)"
+                                                    class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                                                    target="_blank"
+                                                >
+                                                    <span class="icon-attached-file text-xl"></span>
 
-                                                <span class="font-medium text-brandColor">
-                                                    @{{ file.name }}
-                                                </span>
-                                            </a>
+                                                    <span class="font-medium text-brandColor">
+                                                        @{{ file.name }}
+                                                    </span>
+                                                </a>
+
+                                                <!-- Use the same URL for preview -->
+                                                <a
+                                                    v-if="file && file.id"
+                                                    href="#"
+                                                    class="text-blue-500 hover:underline"
+                                                    @click.prevent="previewFile(`{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id))"
+                                                >
+                                                    Preview
+                                                </a>
+                                            </template>
                                         </div>
 
                                         <!-- Activity Time and User -->
@@ -563,10 +570,31 @@
                 prependActivity(activity) {
                     this.activities.unshift(activity);
                 },
+
+                previewFile(url) {
+                    console.log('Preview URL:', url);
+                    window.open(url, '_blank', 'width=800,height=600');
+                },
             }
         });
     </script>
+
+    <script>
+        function previewFile(url) {
+            console.log('Preview URL:', url);
+            window.open(url, '_blank', 'width=800,height=600');
+        }
+    </script>
 @endPushOnce
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ActivityRepository extends Repository
 {
@@ -44,12 +45,12 @@ class ActivityRepository extends Repository
         unset($data['attachments']);
 
         // Add logging before preparation
-        \Log::info('Before prepareData - data:', $data);
+        Log::info('Before prepareData - data:', $data);
 
         $data = $this->prepareData($data);
 
         // Add logging after preparation
-        \Log::info('After prepareData - data:', $data);
+        Log::info('After prepareData - data:', $data);
 
         $activity = parent::create($data);
 
@@ -103,10 +104,21 @@ class ActivityRepository extends Repository
      */
     protected function handleFileUpload($activity, $data)
     {
-        if (isset($data['files']) && is_array($data['files'])) {
-            foreach ($data['files'] as $file) {
-                $this->fileRepository->upload($file, $activity);
-            }
+        // Check if the file is present and is an instance of UploadedFile
+        if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
+            \Log::info('Uploading file:', ['file' => $data['file']->getClientOriginalName()]);
+
+            // Store the file and get the path
+            $path = $data['file']->store('activity_files');
+
+            // Create a new file record in the database
+            $this->fileRepository->create([
+                'name' => $data['file']->getClientOriginalName(),
+                'path' => $path,
+                'activity_id' => $activity->id,
+            ]);
+        } else {
+            \Log::warning('No valid file found in request data.');
         }
     }
 
@@ -294,7 +306,7 @@ class ActivityRepository extends Repository
             }
         }
 
-        \Log::info('prepareData - Incoming data:', $data);
+        Log::info('prepareData - Incoming data:', $data);
 
         $additional = [];
 
@@ -346,7 +358,7 @@ class ActivityRepository extends Repository
 
         $data['additional'] = json_encode($additional);
 
-        \Log::info('prepareData - Prepared data:', $data);
+        Log::info('prepareData - Prepared data:', $data);
 
         return $data;
     }
