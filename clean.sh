@@ -5,6 +5,12 @@ set -e
 
 echo "Starting Laravel cleanup..."
 
+rm -fR bootstrap/cache/*
+rm -fR storage/cache/*
+rm -fR storage/framework/views/*
+rm -fR storage/framework/sessions/*
+rm -fR storage/app/public/*
+rm -fR storage/logs/*
 
 # Clear various caches and configurations
 echo "Clearing cache..."
