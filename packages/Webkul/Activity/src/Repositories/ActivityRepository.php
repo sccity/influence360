@@ -285,9 +285,13 @@ class ActivityRepository extends Repository
     protected function prepareData(array $data)
     {
         if ($data['type'] === 'system') {
-            // For system activities, don't modify the additional data
-            // as it should already be in the correct format
-            return $data;
+            // For system activities, preserve the additional data if it exists
+            if (isset($data['additional']) && !empty($data['additional'])) {
+                if (is_array($data['additional'])) {
+                    $data['additional'] = json_encode($data['additional']);
+                }
+                return $data;
+            }
         }
 
         \Log::info('prepareData - Incoming data:', $data);
@@ -309,7 +313,7 @@ class ActivityRepository extends Repository
                 break;
 
             case 'note':
-                $data['title'] = 'Added note';
+                $data['title'] = 'Note Created';
                 $additional = [
                     'content' => $data['comment'],
                 ];

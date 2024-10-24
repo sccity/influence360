@@ -76,17 +76,15 @@
                                                 @{{ activity.title }}
 
                                                 <template v-if="activity.type == 'system' && activity.additional">
-                                                    <div class="flex items-center gap-1">
-                                                        <span>:</span>
-
-                                                        <span>
-                                                            @{{ (activity.additional.old && activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', '') : "@lang('admin::app.components.activities.index.empty')") }}
+                                                    <div class="flex items-center gap-1" v-if="activity.additional.old && activity.additional.new">
+                                                        <span v-if="activity.additional.old.label">
+                                                            @{{ activity.additional.old.label }}
                                                         </span>
 
-                                                        <span class="icon-stats-up rotate-90 text-xl"></span>
+                                                        <span class="icon-arrow-right text-xl"></span>
 
-                                                        <span>
-                                                            @{{ (activity.additional.new && activity.additional.new.label ? String(activity.additional.new.label).replaceAll('<br>', '') : "@lang('admin::app.components.activities.index.empty')") }}
+                                                        <span v-if="activity.additional.new.label">
+                                                            @{{ activity.additional.new.label }}
                                                         </span>
                                                     </div>
                                                 </template>
@@ -569,6 +567,7 @@
         });
     </script>
 @endPushOnce
+
 
 
 

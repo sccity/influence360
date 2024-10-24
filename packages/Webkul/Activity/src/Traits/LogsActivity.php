@@ -3,8 +3,6 @@
 namespace Webkul\Activity\Traits;
 
 use Webkul\Activity\Repositories\ActivityRepository;
-use Webkul\Attribute\Contracts\AttributeValue;
-use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Illuminate\Database\Eloquent\Model;
 
 trait LogsActivity
@@ -19,7 +17,16 @@ trait LogsActivity
         });
 
         static::updated(function ($model) {
-            static::logModelActivity($model, 'updated');
+            // Debug log the update event
+            \Log::info('LogsActivity trait - updated event triggered:', [
+                'model' => get_class($model),
+                'dirty' => $model->getDirty(),
+                'should_log' => method_exists($model, 'shouldLogActivity') ? $model->shouldLogActivity($model, 'updated') : true
+            ]);
+
+            if (!method_exists($model, 'shouldLogActivity') || $model->shouldLogActivity($model, 'updated')) {
+                static::logModelActivity($model, 'updated');
+            }
         });
 
         static::deleted(function ($model) {
@@ -37,35 +44,53 @@ trait LogsActivity
         }
 
         $activityData = [
-            'type'    => 'system',
-            'title'   => static::generateActivityTitle($model, $action),
+            'type'    => method_exists($model, 'getActivityType') 
+                ? $model->getActivityType() 
+                : 'system',
+            'title'   => method_exists($model, 'generateActivityTitle') 
+                ? $model->generateActivityTitle($model, $action)
+                : static::defaultGenerateActivityTitle($model, $action),
             'is_done' => 1,
             'user_id' => auth()->id(),
         ];
 
         if ($action !== 'created') {
-            $updatedAttributes = static::getUpdatedAttributes($model);
-            
-            // For system activities, we want the additional data to be a direct JSON object
-            // not a JSON string of a JSON string
-            $activityData['additional'] = $updatedAttributes;  // Remove json_encode here
-            
-            \Log::info('System Activity Data:', [
-                'model' => get_class($model),
-                'action' => $action,
-                'updated_attributes' => $updatedAttributes,
-                'activity_data' => $activityData
-            ]);
+            $updatedAttributes = method_exists($model, 'getUpdatedAttributes')
+                ? $model->getUpdatedAttributes($model)
+                : static::defaultGetUpdatedAttributes($model);
+
+            if (!empty($updatedAttributes)) {
+                $activityData['additional'] = $updatedAttributes;
+            }
         }
 
-        $activity = app(ActivityRepository::class)->create($activityData);
-        $model->activities()->attach($activity->id);
+        \Log::info('Creating activity with data:', $activityData);
+
+        try {
+            $activity = app(ActivityRepository::class)->create($activityData);
+            $model->activities()->attach($activity->id);
+            \Log::info('Activity created successfully:', ['activity_id' => $activity->id]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to create activity:', ['error' => $e->getMessage()]);
+        }
     }
 
     /**
-     * Generate activity title.
+     * Generate activity title for non-creation events
      */
     protected static function generateActivityTitle(Model $model, string $action): string
+    {
+        $changes = array_keys($model->getDirty());
+        $attribute = reset($changes);
+        $attributeLabel = str_replace('_', ' ', ucfirst($attribute));
+        
+        return "Updated Initiative '{$model->title}' {$attributeLabel}";
+    }
+
+    /**
+     * Default generate activity title.
+     */
+    protected static function defaultGenerateActivityTitle(Model $model, string $action): string
     {
         $modelName = class_basename($model);
         $modelIdentifier = $model->name ?? $model->title ?? $model->id;
@@ -76,31 +101,9 @@ trait LogsActivity
     }
 
     /**
-     * Get attribute label.
+     * Default get updated attributes.
      */
-    protected static function getAttributeLabel($value, $attribute = null)
-    {
-        if (! $attribute) {
-            return $value;
-        }
-
-        $attributeType = $attribute->type ?? null;
-
-        switch ($attributeType) {
-            case 'boolean':
-                return $value ? trans('admin::app.common.yes') : trans('admin::app.common.no');
-            case 'select':
-            case 'multiselect':
-                return $attribute->options()->where('id', $value)->first()?->admin_name ?? $value;
-            default:
-                return $value;
-        }
-    }
-
-    /**
-     * Get updated attributes.
-     */
-    protected static function getUpdatedAttributes($model): array
+    protected static function defaultGetUpdatedAttributes($model): array
     {
         $updatedAttributes = [];
         $changedAttributes = $model->getDirty();
@@ -113,20 +116,27 @@ trait LogsActivity
             $oldValue = $model->getOriginal($key);
             $newValue = $value;
 
-            // Format for system activities
             $updatedAttributes = [
                 'attribute' => $key,
                 'old' => [
                     'value' => $oldValue,
-                    'label' => static::getAttributeLabel($oldValue, $model->$key),
+                    'label' => static::getAttributeLabel($oldValue),
                 ],
                 'new' => [
                     'value' => $newValue,
-                    'label' => static::getAttributeLabel($newValue, $model->$key),
+                    'label' => static::getAttributeLabel($newValue),
                 ],
             ];
         }
 
         return $updatedAttributes;
+    }
+
+    /**
+     * Default get attribute label.
+     */
+    protected static function getAttributeLabel($value)
+    {
+        return $value ?? 'None';
     }
 }

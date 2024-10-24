@@ -15,10 +15,19 @@ use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
 use Illuminate\Support\Facades\DB;
 use Webkul\Activity\Repositories\ActivityRepository;
+use Webkul\Initiative\Models\StageProxy;
 
 class Initiative extends Model implements InitiativeContract
 {
     use CustomAttribute, LogsActivity;
+
+    /**
+     * Get activity type
+     */
+    protected static function getActivityType(): string
+    {
+        return 'initiative';
+    }
 
     protected $casts = [
         'closed_at'           => 'datetime',
@@ -41,7 +50,6 @@ class Initiative extends Model implements InitiativeContract
      */
     protected $fillable = [
         'title',
-        'description',
         'initiative_value',
         'status',
         'lost_reason',
@@ -166,94 +174,60 @@ class Initiative extends Model implements InitiativeContract
     }
 
     /**
-     * The attributes that should trigger activity logging
+     * The attributes that should be logged for changes
      */
-    protected static $logAttributes = [
-        'status',
-        'title',
-        'priority',
-        'stage_id',
-        // Add any other attributes you want to track
-    ];
+    protected static $logAttributes = ['initiative_pipeline_stage_id'];
 
     /**
-     * Custom method to determine if the change should be logged
+     * Generate activity title for initiatives
      */
-    protected static function shouldLogActivity(Model $model, string $action): bool 
+    protected static function generateActivityTitle(Model $model, string $action): string
     {
-        // Always log creation
         if ($action === 'created') {
-            return true;
+            return "Created Initiative: {$model->title}";
         }
 
-        // For updates, only log if specific attributes changed
-        if ($action === 'updated') {
-            $changedAttributes = $model->getDirty();
-            $trackedChanges = array_intersect(array_keys($changedAttributes), static::$logAttributes);
-            return !empty($trackedChanges);
+        if (array_key_exists('initiative_pipeline_stage_id', $model->getDirty())) {
+            $oldValue = $model->getOriginal('initiative_pipeline_stage_id');
+            $newValue = $model->getAttribute('initiative_pipeline_stage_id');
+            
+            $oldStage = StageProxy::modelClass()::find($oldValue);
+            $newStage = StageProxy::modelClass()::find($newValue);
+            
+            $oldStageName = $oldStage ? $oldStage->name : 'Unknown';
+            $newStageName = $newStage ? $newStage->name : 'Unknown';
+            
+            return "Updated Initiative '{$model->title}' stage: {$oldStageName} → {$newStageName}";
         }
 
-        return false;
+        return "Updated Initiative {$model->title}";
     }
 
     /**
-     * Override the logModelActivity method to customize logging
-     */
-    protected static function logModelActivity(Model $model, string $action): void
-    {
-        if (! method_exists($model, 'activities')) {
-            return;
-        }
-
-        $activityData = [
-            'type'    => 'system',
-            'title'   => static::generateActivityTitle($model, $action),
-            'is_done' => 1,
-            'user_id' => auth()->id(),
-        ];
-
-        if ($action !== 'created') {
-            $activityData['additional'] = static::getUpdatedAttributes($model);
-        }
-
-        $activity = app(ActivityRepository::class)->create($activityData);
-
-        $model->activities()->attach($activity->id);
-    }
-
-    /**
-     * Get updated attributes.
+     * Get updated attributes
      */
     protected static function getUpdatedAttributes($model): array
     {
-        $changedAttributes = $model->getDirty();
+        if ($model->wasRecentlyCreated) {
+            return [];
+        }
 
-        \Log::info('Changed attributes:', $changedAttributes);
-
-        foreach ($changedAttributes as $key => $value) {
-            if (in_array($key, ['id', 'created_at', 'updated_at'])) {
-                continue;
-            }
-
-            $oldValue = $model->getOriginal($key);
-            $newValue = $value;
-
-            \Log::info('Attribute change:', [
-                'attribute' => $key,
-                'old' => $oldValue,
-                'new' => $newValue
-            ]);
-
-            // Return a single change at a time in the correct format
+        if (array_key_exists('initiative_pipeline_stage_id', $model->getDirty())) {
+            $oldValue = $model->getOriginal('initiative_pipeline_stage_id');
+            $newValue = $model->getDirty()['initiative_pipeline_stage_id'];
+            
+            $oldStage = StageProxy::modelClass()::find($oldValue);
+            $newStage = StageProxy::modelClass()::find($newValue);
+            
             return [
-                'attribute' => $key,
+                'attribute' => 'stage',
                 'old' => [
                     'value' => $oldValue,
-                    'label' => static::getAttributeLabel($oldValue, $key),
+                    'label' => $oldStage ? $oldStage->name : null,
                 ],
                 'new' => [
                     'value' => $newValue,
-                    'label' => static::getAttributeLabel($newValue, $key),
+                    'label' => $newStage ? $newStage->name : null,
                 ],
             ];
         }
@@ -262,38 +236,10 @@ class Initiative extends Model implements InitiativeContract
     }
 
     /**
-     * Get attribute label.
+     * Determine if we should log this activity
      */
-    protected static function getAttributeLabel($value, $key): string
+    public static function shouldLogActivity(Model $model, string $action): bool 
     {
-        switch ($key) {
-            case 'status':
-                return ucfirst($value); // or map to your status labels
-            case 'priority':
-                $priorities = [
-                    'low' => 'Low Priority',
-                    'medium' => 'Medium Priority',
-                    'high' => 'High Priority',
-                ];
-                return $priorities[$value] ?? ucfirst($value);
-            default:
-                return (string) $value;
-        }
-    }
-
-    /**
-     * Generate activity title for initiatives
-     */
-    protected static function generateActivityTitle(Model $model, string $action): string
-    {
-        if ($action === 'created') {
-            return "Created Initiative '{$model->title}'";
-        }
-
-        $changes = array_keys($model->getDirty());
-        $attribute = reset($changes);
-        
-        // For updates, include the attribute that changed
-        return "Updated Initiative '{$model->title}' {$attribute}";
+        return $action === 'created' || array_key_exists('initiative_pipeline_stage_id', $model->getDirty());
     }
 }
