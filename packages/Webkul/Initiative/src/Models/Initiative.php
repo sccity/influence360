@@ -14,6 +14,7 @@ use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
 use Illuminate\Support\Facades\DB;
+use Webkul\Activity\Repositories\ActivityRepository;
 
 class Initiative extends Model implements InitiativeContract
 {
@@ -107,13 +108,11 @@ class Initiative extends Model implements InitiativeContract
     }
 
     /**
-     * Get the activities.
+     * Get the activities for the initiative.
      */
     public function activities()
     {
-        return $this->belongsToMany(ActivityProxy::modelClass(), 'initiative_activities')
-            ->with(['user', 'participants', 'files'])
-            ->orderBy('created_at', 'desc');
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'initiative_activities');
     }
 
     /**
@@ -164,5 +163,137 @@ class Initiative extends Model implements InitiativeContract
         $rottenDate = $this->created_at->addDays($this->pipeline->rotten_days);
 
         return $rottenDate->diffInDays(Carbon::now(), false);
+    }
+
+    /**
+     * The attributes that should trigger activity logging
+     */
+    protected static $logAttributes = [
+        'status',
+        'title',
+        'priority',
+        'stage_id',
+        // Add any other attributes you want to track
+    ];
+
+    /**
+     * Custom method to determine if the change should be logged
+     */
+    protected static function shouldLogActivity(Model $model, string $action): bool 
+    {
+        // Always log creation
+        if ($action === 'created') {
+            return true;
+        }
+
+        // For updates, only log if specific attributes changed
+        if ($action === 'updated') {
+            $changedAttributes = $model->getDirty();
+            $trackedChanges = array_intersect(array_keys($changedAttributes), static::$logAttributes);
+            return !empty($trackedChanges);
+        }
+
+        return false;
+    }
+
+    /**
+     * Override the logModelActivity method to customize logging
+     */
+    protected static function logModelActivity(Model $model, string $action): void
+    {
+        if (! method_exists($model, 'activities')) {
+            return;
+        }
+
+        $activityData = [
+            'type'    => 'system',
+            'title'   => static::generateActivityTitle($model, $action),
+            'is_done' => 1,
+            'user_id' => auth()->id(),
+        ];
+
+        if ($action !== 'created') {
+            $activityData['additional'] = static::getUpdatedAttributes($model);
+        }
+
+        $activity = app(ActivityRepository::class)->create($activityData);
+
+        $model->activities()->attach($activity->id);
+    }
+
+    /**
+     * Get updated attributes.
+     */
+    protected static function getUpdatedAttributes($model): array
+    {
+        $changedAttributes = $model->getDirty();
+
+        \Log::info('Changed attributes:', $changedAttributes);
+
+        foreach ($changedAttributes as $key => $value) {
+            if (in_array($key, ['id', 'created_at', 'updated_at'])) {
+                continue;
+            }
+
+            $oldValue = $model->getOriginal($key);
+            $newValue = $value;
+
+            \Log::info('Attribute change:', [
+                'attribute' => $key,
+                'old' => $oldValue,
+                'new' => $newValue
+            ]);
+
+            // Return a single change at a time in the correct format
+            return [
+                'attribute' => $key,
+                'old' => [
+                    'value' => $oldValue,
+                    'label' => static::getAttributeLabel($oldValue, $key),
+                ],
+                'new' => [
+                    'value' => $newValue,
+                    'label' => static::getAttributeLabel($newValue, $key),
+                ],
+            ];
+        }
+
+        return [];
+    }
+
+    /**
+     * Get attribute label.
+     */
+    protected static function getAttributeLabel($value, $key): string
+    {
+        switch ($key) {
+            case 'status':
+                return ucfirst($value); // or map to your status labels
+            case 'priority':
+                $priorities = [
+                    'low' => 'Low Priority',
+                    'medium' => 'Medium Priority',
+                    'high' => 'High Priority',
+                ];
+                return $priorities[$value] ?? ucfirst($value);
+            default:
+                return (string) $value;
+        }
+    }
+
+    /**
+     * Generate activity title for initiatives
+     */
+    protected static function generateActivityTitle(Model $model, string $action): string
+    {
+        if ($action === 'created') {
+            return "Created Initiative '{$model->title}'";
+        }
+
+        $changes = array_keys($model->getDirty());
+        $attribute = reset($changes);
+        
+        // For updates, include the attribute that changed
+        return "Updated Initiative '{$model->title}' {$attribute}";
     }
 }

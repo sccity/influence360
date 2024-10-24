@@ -3,13 +3,13 @@
 namespace Webkul\BillFiles\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Activity\Models\Activity;
+use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Activity\Traits\LogsActivity;
 use Webkul\BillFiles\Contracts\BillFile as BillFileContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BillFile extends Model implements BillFileContract
 {
-    use HasFactory;
+    use LogsActivity;
 
     protected $table = 'bill_files';
 
@@ -27,8 +27,27 @@ class BillFile extends Model implements BillFileContract
         'is_tracked' => 'boolean',
     ];
 
+    /**
+     * Get the activities for the bill file.
+     */
     public function activities()
     {
-        return $this->belongsToMany(Activity::class, 'bill_file_activities', 'bill_file_id', 'activity_id');
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'bill_file_activities');
+    }
+
+    /**
+     * Override shouldLogActivity to only log creation
+     */
+    protected static function shouldLogActivity(Model $model, string $action): bool 
+    {
+        return $action === 'created';
+    }
+
+    /**
+     * Generate activity title for bill files
+     */
+    protected static function generateActivityTitle(Model $model, string $action): string
+    {
+        return "Created Bill File '{$model->billid}'";
     }
 }

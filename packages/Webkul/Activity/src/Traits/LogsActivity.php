@@ -44,11 +44,21 @@ trait LogsActivity
         ];
 
         if ($action !== 'created') {
-            $activityData['additional'] = static::getUpdatedAttributes($model);
+            $updatedAttributes = static::getUpdatedAttributes($model);
+            
+            // For system activities, we want the additional data to be a direct JSON object
+            // not a JSON string of a JSON string
+            $activityData['additional'] = $updatedAttributes;  // Remove json_encode here
+            
+            \Log::info('System Activity Data:', [
+                'model' => get_class($model),
+                'action' => $action,
+                'updated_attributes' => $updatedAttributes,
+                'activity_data' => $activityData
+            ]);
         }
 
         $activity = app(ActivityRepository::class)->create($activityData);
-
         $model->activities()->attach($activity->id);
     }
 
@@ -103,7 +113,8 @@ trait LogsActivity
             $oldValue = $model->getOriginal($key);
             $newValue = $value;
 
-            $updatedAttributes[$key] = [
+            // Format for system activities
+            $updatedAttributes = [
                 'attribute' => $key,
                 'old' => [
                     'value' => $oldValue,

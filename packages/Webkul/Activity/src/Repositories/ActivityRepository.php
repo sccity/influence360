@@ -284,6 +284,12 @@ class ActivityRepository extends Repository
 
     protected function prepareData(array $data)
     {
+        if ($data['type'] === 'system') {
+            // For system activities, don't modify the additional data
+            // as it should already be in the correct format
+            return $data;
+        }
+
         \Log::info('prepareData - Incoming data:', $data);
 
         $additional = [];
@@ -327,20 +333,6 @@ class ActivityRepository extends Repository
                     'file_size' => $data['file_size'] ?? null,
                     'file_type' => $data['file_type'] ?? null,
                 ];
-                break;
-
-            case 'system':
-                // Check if 'additional' is set
-                if (isset($data['additional'])) {
-                    // If 'additional' is an array, convert it to JSON
-                    if (is_array($data['additional'])) {
-                        $data['additional'] = json_encode($data['additional']);
-                    }
-                    // If 'additional' is already a JSON string, leave it as is
-                } else {
-                    // If 'additional' is not set, set it to an empty JSON array
-                    $data['additional'] = '[]';
-                }
                 break;
 
             default:
