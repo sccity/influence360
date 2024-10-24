@@ -80,12 +80,14 @@
                                     @lang('admin::app.components.activities.actions.note.comment')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="textarea"
-                                    name="comment"
-                                    rules="required"
-                                    :label="trans('admin::app.components.activities.actions.note.comment')"
-                                />
+                                <div
+                                    ref="noteContent"
+                                    contenteditable="true"
+                                    class="w-full min-h-[150px] p-2 border rounded-md overflow-auto"
+                                    @paste.prevent="handlePaste"
+                                ></div>
+
+                                <input type="hidden" name="comment" :value="noteContent">
 
                                 <x-admin::form.control-group.error control-name="comment" />
                             </x-admin::form.control-group>
@@ -136,6 +138,7 @@
             data: function () {
                 return {
                     isStoring: false,
+                    noteContent: '',
                 }
             },
 
@@ -144,8 +147,24 @@
                     this.$refs.noteActivityModal.open();
                 },
 
+                handlePaste(e) {
+                    e.preventDefault();
+                    const text = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
+                    document.execCommand('insertHTML', false, text);
+                    this.updateNoteContent();
+                },
+
+                updateNoteContent() {
+                    this.noteContent = this.$refs.noteContent.innerHTML;
+                },
+
                 save(params) {
                     this.isStoring = true;
+
+                    // Update noteContent one last time before submission
+                    this.updateNoteContent();
+
+                    params.comment = this.noteContent;
 
                     this.$axios.post("{{ route('admin.activities.store') }}", params)
                         .then (response => {
@@ -156,6 +175,10 @@
                             this.$emitter.emit('on-activity-added', response.data.data);
 
                             this.$refs.noteActivityModal.close();
+
+                            // Clear the content after successful submission
+                            this.$refs.noteContent.innerHTML = '';
+                            this.noteContent = '';
                         })
                         .catch (error => {
                             this.isStoring = false;
