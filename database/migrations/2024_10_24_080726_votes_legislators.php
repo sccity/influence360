@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        //
+        Schema::create('votes_legislators', function (Blueprint $table) {
+            $table->uuid('guid')->primary();
+            $table->uuid('vote_guid');
+            $table->uuid('legislator_guid');
+            $table->string('vote', 10);
+            $table->unique(['vote_guid', 'legislator_guid'], 'unique_vote_legislator');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        //
+        Schema::dropIfExists('votes_legislators');
     }
 };
