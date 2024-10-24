@@ -10,6 +10,7 @@ Route::controller(ActivityController::class)->prefix('activities')->group(functi
     Route::get('edit/{id}', 'edit')->name('admin.activities.edit');
     Route::put('edit/{id}', 'update')->name('admin.activities.update');
     Route::get('download/{id}', 'download')->name('admin.activities.file_download');
+    Route::get('preview/{id}', 'preview')->name('admin.activities.file_preview'); 
     Route::delete('{id}', 'destroy')->name('admin.activities.delete');
     Route::post('mass-update', 'massUpdate')->name('admin.activities.mass_update');
     Route::post('mass-destroy', 'massDestroy')->name('admin.activities.mass_delete');

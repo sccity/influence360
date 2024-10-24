@@ -82,7 +82,7 @@
                                                         </span>
 
                                                         <span class="icon-arrow-right text-xl"></span>
-
+                                                        
                                                         <span v-if="activity.additional.new.label">
                                                             @{{ activity.additional.new.label }}
                                                         </span>
@@ -102,13 +102,12 @@
                                             <template v-else>
                                                 <!-- Activity Schedule -->
                                                 <p
-                                                    v-if="activity.schedule_from && activity.schedule_from"
+                                                    v-if="activity.schedule_from && activity.schedule_to"
                                                     class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
 
-                                                    @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
-                                                </p>
+                                                    @{{ $admin.formatDate(activity.schedule_from, 'yyyy/MM/dd h:mm a') + ' - ' + $admin.formatDate(activity.schedule_to, 'yyyy/MM/dd h:mm a') }}                                                </p>
 
                                                 <!-- Activity Participants -->
                                                 <p
@@ -146,27 +145,38 @@
                                             class="flex flex-wrap gap-2"
                                             v-if="activity.files.length"
                                         >
-                                            <a
-                                                :href="
-                                                    activity.type == 'email'
-                                                    ? `{{ route('admin.mail.attachment_download', 'replaceID') }}`.replace('replaceID', file.id)
-                                                    : `{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)
-                                                "
-                                                class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
-                                                target="_blank"
-                                                v-for="(file, index) in activity.files"
-                                            >
-                                                <span class="icon-attached-file text-xl"></span>
+                                            <template v-for="(file, index) in activity.files">
+                                                <a
+                                                    :href="`{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)"
+                                                    class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                                                    target="_blank"
+                                                >
+                                                    <span class="icon-attached-file text-xl"></span>
 
-                                                <span class="font-medium text-brandColor">
-                                                    @{{ file.name }}
-                                                </span>
-                                            </a>
+                                                    <span class="font-medium text-brandColor">
+                                                        @{{ file.name }}
+                                                    </span>
+                                                </a>
+
+                                                <!-- Use the same URL for preview -->
+                                                <a
+                                                    v-if="file && file.id"
+                                                    href="#"
+                                                    class="text-blue-500 hover:underline"
+                                                    @click.prevent="previewFile(`{{ route('admin.activities.file_preview', 'replaceID') }}`.replace('replaceID', file.id))" 
+                                                >
+                                                    Preview
+                                                </a>
+                                            </template>
                                         </div>
 
                                         <!-- Activity Time and User -->
                                         <div class="text-gray-500 dark:text-gray-300">
-                                            @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
+                                            <!-- Debug info -->
+                                            <span class="hidden">Raw date: @{{ activity.created_at }}</span>
+
+                                            <!-- Formatted date -->
+                                            @{{ formatDate(activity.created_at) }},
 
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                         </div>
@@ -563,18 +573,33 @@
                 prependActivity(activity) {
                     this.activities.unshift(activity);
                 },
+
+                previewFile(url) {
+                    const width = 800;
+                    const height = 600;
+                    const left = (window.screen.width - width) / 2;
+                    const top = (window.screen.height - height) / 2;
+
+                    window.open(url, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+                },
+
+                formatDate(date) {
+                    if (!date) return 'Invalid Date';
+                    
+                    const d = new Date(date);
+                    if (isNaN(d.getTime())) return 'Invalid Date';
+
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const day = String(d.getDate()).padStart(2, '0');
+                    const hours = String(d.getHours() % 12 || 12).padStart(2, '0');
+                    const minutes = String(d.getMinutes()).padStart(2, '0');
+                    const ampm = d.getHours() >= 12 ? 'PM' : 'AM';
+
+                    return `${year}/${month}/${day} ${hours}:${minutes} ${ampm}`;
+                }
             }
         });
     </script>
 @endPushOnce
-
-
-
-
-
-
-
-
-
-
 

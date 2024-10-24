@@ -51,9 +51,7 @@ class File extends Model implements FileContract
     public function toArray()
     {
         $array = parent::toArray();
-
         $array['url'] = $this->url;
-
         return $array;
     }
 }
