@@ -31,6 +31,7 @@ class ActivityResource extends JsonResource
             'location'      => $this->location,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
+            'additional'    => [],
         ];
 
         if ($this->additional) {
@@ -39,12 +40,14 @@ class ActivityResource extends JsonResource
 
             if ($this->type === 'email') {
                 $data['formatted_title'] = $this->title;
-                $data['email_subject'] = $additional['subject'] ?? '';
-                $data['email_body'] = $additional['body'] ?? '';
+                $data['email_subject']   = $additional['subject'] ?? '';
+                $data['email_body']      = $additional['body'] ?? '';
             } elseif ($this->type === 'system') {
-                $oldValue = $additional['old']['value'] ?? 'Empty';
-                $newValue = $additional['new']['value'] ?? 'Empty';
-                $data['formatted_title'] = "{$this->title} : {$oldValue} → {$newValue}";
+                $attribute = $additional['attribute'] ?? '';
+                $oldValue  = $additional['old']['label'] ?? 'N/A';
+                $newValue  = $additional['new']['label'] ?? 'N/A';
+                $data['formatted_title'] = "{$this->title}: {$oldValue} → {$newValue}";
+                $data['attribute'] = $attribute;
             } else {
                 $data['formatted_title'] = $this->title;
             }
