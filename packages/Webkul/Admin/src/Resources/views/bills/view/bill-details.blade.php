@@ -7,7 +7,7 @@
         <div class="flex flex-col gap-1.5">
             <p class="text-gray-600 dark:text-gray-300">
                 <span class="font-semibold">@lang('admin::app.bills.view.bill_number'):</span> 
-                {{ $bill->tracking_id ?? $bill->bill_number }}
+                {{$bill->bill_number }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
