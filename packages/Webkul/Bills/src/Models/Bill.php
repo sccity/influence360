@@ -3,13 +3,13 @@
 namespace Webkul\Bills\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Activity\Models\Activity;
+use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Bills\Contracts\Bill as BillContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Webkul\Activity\Traits\LogsActivity;
 
 class Bill extends Model implements BillContract
 {
-    use HasFactory;
+    use LogsActivity;
 
     protected $table = 'bills';
 
@@ -31,8 +31,27 @@ class Bill extends Model implements BillContract
         'is_tracked' => 'boolean',
     ];
 
+    /**
+     * Get the activities for the bill.
+     */
     public function activities()
     {
-        return $this->belongsToMany(Activity::class, 'bill_activities', 'bill_id', 'activity_id');
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'bill_activities');
+    }
+
+    /**
+     * Override shouldLogActivity to only log creation
+     */
+    protected static function shouldLogActivity(Model $model, string $action): bool 
+    {
+        return $action === 'created';
+    }
+
+    /**
+     * Generate activity title for bills
+     */
+    protected static function generateActivityTitle(Model $model, string $action): string
+    {
+        return "Created Bill '{$model->bill_number}'";
     }
 }

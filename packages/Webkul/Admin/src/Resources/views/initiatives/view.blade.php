@@ -41,13 +41,12 @@
                     {!! view_render_event('admin.initiatives.view.tags.after', ['initiative' => $initiative]) !!}
                 </div>
 
-
                 {!! view_render_event('admin.initiatives.view.title.before', ['initiative' => $initiative]) !!}
 
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
                     {{ $initiative->title }}
-                </h1>
+                </h3>
 
                 {!! view_render_event('admin.initiatives.view.title.after', ['initiative' => $initiative]) !!}
 
@@ -108,7 +107,6 @@
 
             <x-admin::activities
                 :endpoint="route('admin.initiatives.activities.index', $initiative->id)"
-                :email-detach-endpoint="route('admin.initiatives.emails.detach', $initiative->id)"
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.initiatives.view.tabs.description')],
                 ]"
@@ -117,7 +115,7 @@
                 <!-- Description -->
                 <x-slot:description>
                     <div class="p-4 dark:text-white">
-                        {{ $initiative->description }}
+                        {{ $initiative->description ?? 'No description available.' }}
                     </div>
                 </x-slot>
             </x-admin::activities>
@@ -128,3 +126,4 @@
         {!! view_render_event('admin.initiatives.view.right.after', ['initiative' => $initiative]) !!}
     </div>
 </x-admin::layouts>
+

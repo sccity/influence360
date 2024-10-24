@@ -27,6 +27,7 @@ use Webkul\Initiative\Repositories\StageRepository;
 use Webkul\Initiative\Repositories\TypeRepository;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Initiative\Events\InitiativeCreated;
 
 class InitiativeController extends Controller
 {
@@ -175,6 +176,10 @@ class InitiativeController extends Controller
 
         $initiative = $this->initiativeRepository->create($data);
 
+        // Dispatch the event using the event class
+        event(new InitiativeCreated($initiative));
+
+        // If you still need to use the old event system, you can keep this line as well
         Event::dispatch('initiative.create.after', $initiative);
 
         session()->flash('success', trans('admin::app.initiatives.create-success'));
@@ -195,17 +200,11 @@ class InitiativeController extends Controller
     /**
      * Display a resource.
      */
-    public function view(int $id): View
+    public function view(int $id)
     {
         $initiative = $this->initiativeRepository->findOrFail($id);
 
-        if (
-            $userIds = bouncer()->getAuthorizedUserIds()
-            && ! in_array($initiative->user_id, $userIds)
-        ) {
-            return redirect()->route('admin.initiatives.index');
-        }
-
+        // We don't need to fetch activities here, as they will be loaded via AJAX
         return view('admin::initiatives.view', compact('initiative'));
     }
 

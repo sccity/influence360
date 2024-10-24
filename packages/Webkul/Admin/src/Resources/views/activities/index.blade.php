@@ -195,14 +195,21 @@
                                                 </p>
 
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    @{{ record.title }}
+                                                    @{{ record.formatted_title || record.title }}
                                                 </p>
-                    
+
                                                 <p
                                                     class="text-gray-600 dark:text-gray-300"
                                                     v-html="record.created_by_id"
                                                 >
                                                 </p>
+
+                                                <!-- Debug Information -->
+                                                <div v-if="record.type == 'system'" class="text-xs text-gray-500">
+                                                    <p>Debug Additional: @{{ record.debug_additional }}</p>
+                                                    <p>Debug Old: @{{ record.debug_old }}</p>
+                                                    <p>Debug New: @{{ record.debug_new }}</p>
+                                                </div>
                                             </div>
                                         </div>
                     
@@ -221,7 +228,7 @@
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    @{{ record.comment }}
+                                                    @{{ record.additional && record.additional.content ? record.additional.content : (record.comment || 'N/A') }}
                                                 </p>
 
                                                 <p v-html="record.initiative_title"></p>

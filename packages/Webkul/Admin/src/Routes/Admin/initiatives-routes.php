@@ -40,19 +40,17 @@ Route::controller(InitiativeController::class)->prefix('initiatives')->group(fun
 
     Route::get('kanban/look-up', [InitiativeController::class, 'kanbanLookup'])->name('admin.initiatives.kanban.look_up');
 
-    Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
-        Route::get('', 'index')->name('admin.initiatives.activities.index');
+    Route::controller(ActivityController::class)->group(function () {
+        Route::get('{id}/activities', 'index')->name('admin.initiatives.activities.index');
     });
 
     Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
         Route::post('', 'attach')->name('admin.initiatives.tags.attach');
-
         Route::delete('', 'detach')->name('admin.initiatives.tags.detach');
     });
 
     Route::controller(EmailController::class)->prefix('{id}/emails')->group(function () {
         Route::post('', 'store')->name('admin.initiatives.emails.store');
-
         Route::delete('', 'detach')->name('admin.initiatives.emails.detach');
     });
 

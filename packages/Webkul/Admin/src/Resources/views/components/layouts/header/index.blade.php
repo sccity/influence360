@@ -487,182 +487,70 @@
             template: '#v-mega-search-template',
 
             data() {
-                return  {
+                return {
                     activeTab: 'initiatives',
-
                     isDropdownOpen: false,
-
-                    tabs: {
-                        initiatives: {
-                            key: 'initiatives',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.initiatives')",
-                            is_active: true,
-                            endpoint: "{{ route('admin.initiatives.search') }}",
-                            query_params: [
-                                {
-                                    search: 'title',
-                                    searchFields: 'title:like',
-                                },
-                                {
-                                    search: 'user.name',
-                                    searchFields: 'user.name:like',
-                                },
-                                {
-                                    search: 'person.name',
-                                    searchFields: 'person.name:like',
-                                },
-                            ],
-                        },
-
-                        quotes: {
-                            key: 'quotes',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
-                            is_active: false,
-                            endpoint: "{{ route('admin.quotes.search') }}",
-                            query_params: [
-                                {
-                                    search: 'subject',
-                                    searchFields: 'subject:like',
-                                },
-                                {
-                                    search: 'description',
-                                    searchFields: 'description:like',
-                                },
-                                {
-                                    search: 'user.name',
-                                    searchFields: 'user.name:like',
-                                },
-                                {
-                                    search: 'person.name',
-                                    searchFields: 'person.name:like',
-                                },
-                            ],
-                        },
-
-                        products: {
-                            key: 'products',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
-                            is_active: false,
-                            endpoint: "{{ route('admin.products.search') }}",
-                            query_params: [
-                                {
-                                    search: 'name',
-                                    searchFields: 'name:like',
-                                },
-                                {
-                                    search: 'sku',
-                                    searchFields: 'sku:like',
-                                },
-                                {
-                                    search: 'description',
-                                    searchFields: 'description:like',
-                                },
-                            ],
-                        },
-
-                        persons: {
-                            key: 'persons',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
-                            is_active: false,
-                            endpoint: "{{ route('admin.contacts.persons.search') }}",
-                            query_params: [
-                                {
-                                    search: 'name',
-                                    searchFields: 'name:like',
-                                },
-                                {
-                                    search: 'job_title',
-                                    searchFields: 'job_title:like',
-                                },
-                                {
-                                    search: 'user.name',
-                                    searchFields: 'user.name:like',
-                                },
-                                {
-                                    search: 'organization.name',
-                                    searchFields: 'organization.name:like',
-                                },
-                            ],
-                        },
-                    },
-
-                    isLoading: false,
-
                     searchTerm: '',
+                    isLoading: false,
 
                     searchedResults: {
                         initiatives: [],
-                        quotes: [],
                         products: [],
-                        persons: []
+                        persons: [],
+                        quotes: [],
                     },
 
-                    params: {
-                        search: '',
-                        searchFields: '',
-                    },
+                    tabs: [
+                        {
+                            key: 'initiatives',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.initiatives')",
+                            route: "{{ route('admin.initiatives.index') }}"
+                        },
+                        {
+                            key: 'products',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.products')",
+                            route: "{{ route('admin.products.index') }}"
+                        },
+                        {
+                            key: 'persons',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.persons')",
+                            route: "{{ route('admin.contacts.persons.index') }}"
+                        },
+                        {
+                            key: 'quotes',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.quotes')",
+                            route: "{{ route('admin.quotes.index') }}"
+                        },
+                    ],
                 };
             },
 
-            watch: {
-                searchTerm: 'updateSearchParams',
-
-                activeTab: 'updateSearchParams',
-            },
-
-            created() {
-                window.addEventListener('click', this.handleFocusOut);
-            },
-
-            beforeDestroy() {
-                window.removeEventListener('click', this.handleFocusOut);
-            },
-
             methods: {
-                search(endpoint) {
+                search() {
+                    this.isLoading = true;
+
                     if (this.searchTerm.length <= 1) {
                         this.searchedResults[this.activeTab] = [];
-
-                        this.isDropdownOpen = false;
-
+                        this.isLoading = false;
                         return;
                     }
 
-                    this.isDropdownOpen = true;
+                    const currentTab = this.tabs.find(tab => tab.key === this.activeTab);
 
-                    this.$axios.get(endpoint, {
-                            params: {
-                                ...this.params,
-                            },
-                        })
-                        .then((response) => {
-                            this.searchedResults[this.activeTab] = response.data.data;
-                        })
-                        .catch((error) => {})
-                        .finally(() => this.isLoading = false);
-                },
-
-                handleFocusOut(e) {
-                    if (! this.$el.contains(e.target)) {
-                        this.isDropdownOpen = false;
-                    }
-                },
-
-                updateSearchParams() {
-                    const newTerm = this.searchTerm;
-
-                    this.params = {
-                        search: '',
-                        searchFields: '',
-                    };
-
-                    const tab = this.tabs[this.activeTab];
-
-                    this.params.search += tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
-
-                    this.params.searchFields += tab.query_params.map((param) => `${param.searchFields};`).join('');
-
-                    this.search(tab.endpoint);
+                    this.$axios.get(currentTab.route, {
+                        params: {
+                            query: this.searchTerm,
+                        }
+                    })
+                    .then(response => {
+                        this.searchedResults[this.activeTab] = response.data.data || [];
+                        this.isLoading = false;
+                    })
+                    .catch(error => {
+                        console.error('Search error:', error);
+                        this.searchedResults[this.activeTab] = [];
+                        this.isLoading = false;
+                    });
                 },
             },
         });
@@ -741,3 +629,4 @@
         src="https://gpt.santaclarautah.gov/embed/anythingllm-chat-widget.min.js">
     </script>
 @endPushOnce
+
