@@ -309,5 +309,20 @@ class ActivityController extends Controller
             'message' => trans('admin::app.activities.create-success'),
             'data'    => new ActivityResource($activity),
         ]);
+
+
+        
+    }
+    public function preview(int $id): StreamedResponse
+    {
+        $file = $this->fileRepository->findOrFail($id);
+    
+        return new StreamedResponse(function () use ($file) {
+            $stream = Storage::readStream($file->path);
+            fpassthru($stream); 
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $file->name . '"',
+        ]);
     }
 }

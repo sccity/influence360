@@ -343,7 +343,7 @@ class ActivityRepository extends Repository
                 break;
 
             case 'file':
-                $data['title'] = 'Added file';
+                $data['title'] = 'Uploaded File';
                 $additional = [
                     'file_name' => $data['file_name'] ?? 'Unnamed File',
                     'file_size' => $data['file_size'] ?? null,
