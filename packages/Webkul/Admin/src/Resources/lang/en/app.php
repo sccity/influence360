@@ -103,7 +103,7 @@ return [
             'name'            => 'Name',
             'status'          => 'Status',
             'session'         => 'Session',
-            'year'            => 'Year',
+            'bill_year'            => 'Year',
             'is_tracked'      => 'Track',
             'delete'          => 'Delete',
             'edit'            => 'Edit',
@@ -116,6 +116,7 @@ return [
             'bill_id'          => 'Number',
             'bill_title'       => 'Title',
             'track'           => 'Track',
+            'bill_number'     => 'Bill Number',
 
 
         ],
@@ -195,6 +196,10 @@ return [
             'change-logs'     => 'Change Logs',
             'details'         => 'Bill File Details',
             'about-bill-file'  => 'About Bill File',
+            'sponsor' => 'Sponsor',
+            'bill_file_id' => 'Bill File ID',
+            'created' => 'Created',
+            'updated' => 'Updated',
         ],
 
         'datagrid' => [

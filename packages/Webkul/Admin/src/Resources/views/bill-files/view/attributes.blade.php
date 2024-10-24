@@ -7,23 +7,13 @@
 
     <div class="flex flex-col gap-2">
         <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.billid')</span>
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.bill_file_id')</span>
             <span class="font-medium dark:text-white">{{ $billFile->billid }}</span>
         </div>
 
         <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.name')</span>
-            <span class="font-medium dark:text-white">{{ $billFile->name }}</span>
-        </div>
-
-        <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">Sponsor</span>
-            <span class="font-medium dark:text-white">{{ $billFile->sponsor }}</span>
-        </div>
-
-        <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.status')</span>
-            <span class="font-medium dark:text-white">{{ $billFile->status }}</span>
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.year')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->year }}</span>
         </div>
 
         <div class="flex justify-between">
@@ -32,8 +22,24 @@
         </div>
 
         <div class="flex justify-between">
-            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.year')</span>
-            <span class="font-medium dark:text-white">{{ $billFile->year }}</span>
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.name')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->name }}</span>
+        </div>
+
+        <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.sponsor')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->sponsor }}</span>
+        </div>
+
+        <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.created')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->created_at->format('m/d/Y') }}
+            </span>
+        </div>
+
+        <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">@lang('admin::app.bill-files.view.updated')</span>
+            <span class="font-medium dark:text-white">{{ $billFile->updated_at->format('m/d/Y') }}</span>
         </div>
 
         <div class="flex justify-between">

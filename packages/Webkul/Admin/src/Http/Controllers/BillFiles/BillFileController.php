@@ -36,7 +36,6 @@ class BillFileController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'billid' => 'required|unique:bill_files,billid',
             'name' => 'required',
             // Add other validation rules as needed
         ]);
@@ -69,7 +68,6 @@ class BillFileController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'billid' => 'required|unique:bill_files,billid,' . $id,
             'name' => 'required',
             // Add other validation rules as needed
         ]);
@@ -127,7 +125,6 @@ class BillFileController extends Controller
         return ActivityResource::collection($activities);
     }
     
-
     protected function concatEmail($activities)
     {
         return $activities->sortByDesc('id')->sortByDesc('created_at');
@@ -155,5 +152,4 @@ class BillFileController extends Controller
             ], 500);
         }
     }
-
 }

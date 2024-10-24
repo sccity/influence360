@@ -20,22 +20,24 @@ class BillFileDataGrid extends DataGrid
         $queryBuilder = DB::table('bill_files')
             ->addSelect(
                 'bill_files.id',
-                'bill_files.billid',
+                'bill_files.year',
+                'bill_files.session',
                 'bill_files.name',
                 'bill_files.sponsor',
                 'bill_files.status',
-                'bill_files.session',
-                'bill_files.year',
+                'bill_files.created_at',
+                'bill_files.updated_at',
                 'bill_files.is_tracked'
             );
 
         $this->addFilter('id', 'bill_files.id');
-        $this->addFilter('billid', 'bill_files.billid');
+        $this->addFilter('year', 'bill_files.year');
+        $this->addFilter('session', 'bill_files.session');
         $this->addFilter('name', 'bill_files.name');
         $this->addFilter('sponsor', 'bill_files.sponsor');
         $this->addFilter('status', 'bill_files.status');
-        $this->addFilter('session', 'bill_files.session');
-        $this->addFilter('year', 'bill_files.year');
+        $this->addFilter('created_at', 'bill_files.created_at');
+        $this->addFilter('updated_at', 'bill_files.updated_at');
         $this->addFilter('is_tracked', 'bill_files.is_tracked');
 
         $this->setQueryBuilder($queryBuilder);
@@ -49,20 +51,38 @@ class BillFileDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'billid',
-            'label'      => trans('admin::app.bills.datagrid.bill_id'),
+            'index'      => 'id',
+            'label'      => 'ID',
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
             'closure'    => function ($row) {
-                return '<a href="' . route('admin.bill-files.view', $row->id) . '" style="color: blue; text-decoration: underline;">' . $row->billid . '</a>';
+                return '<a href="' . route('admin.bill-files.view', $row->id) . '" style="color: blue; text-decoration: underline;">' . $row->id . '</a>';
             },
         ]);
 
         $this->addColumn([
+            'index'      => 'year',
+            'label'      => 'Year',
+            'type'       => 'integer',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'session',
+            'label'      => 'Session',
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.bills.datagrid.bill_title'),
+            'label'      => 'Title',
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -71,7 +91,7 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'sponsor',
-            'label'      => trans('admin::app.bills.datagrid.sponsor'),
+            'label'      => 'Sponsor',
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -80,7 +100,7 @@ class BillFileDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'status',
-            'label'      => trans('admin::app.bills.datagrid.status'),
+            'label'      => 'Status',
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -88,26 +108,32 @@ class BillFileDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'session',
-            'label'      => trans('admin::app.bills.datagrid.session'),
-            'type'       => 'string',
+            'index'      => 'created_at',
+            'label'      => 'Created',
+            'type'       => 'datetime',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return \Carbon\Carbon::parse($row->created_at)->format('Y/m/d');
+            },
         ]);
 
         $this->addColumn([
-            'index'      => 'year',
-            'label'      => trans('admin::app.bills.datagrid.year'),
-            'type'       => 'integer',
+            'index'      => 'updated_at',
+            'label'      => 'Updated',
+            'type'       => 'datetime',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return \Carbon\Carbon::parse($row->updated_at)->format('Y/m/d');
+            },
         ]);
 
         $this->addColumn([
             'index'      => 'is_tracked',
-            'label'      => trans('admin::app.bills.datagrid.track'),
+            'label'      => 'Track',
             'type'       => 'boolean',
             'searchable' => true,
             'sortable'   => true,
@@ -123,7 +149,7 @@ class BillFileDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        // No actions needed as the Bill Number column is now a link
+        // No actions needed as the Bill File ID column is now a link
     }
 
     /**

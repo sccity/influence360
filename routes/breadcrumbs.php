@@ -467,6 +467,6 @@ Breadcrumbs::for('bills.edit', function (BreadcrumbTrail $trail, $bill) {
 // Dashboard > Bills > View
 Breadcrumbs::for('bills.view', function (BreadcrumbTrail $trail, $bill) {
     $trail->parent('bills');
-    $trail->push($bill['tracking_id'] ?? $bill->tracking_id ?? '#' . $bill->id, route('admin.bills.view', $bill->id));
+    $trail->push($bill->bill_number, route('admin.bills.view', $bill->id));
 });
 

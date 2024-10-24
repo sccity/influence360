@@ -20,23 +20,24 @@ class BillDataGrid extends DataGrid
         $queryBuilder = DB::table('bills')
             ->addSelect(
                 'bills.id',
-                'bills.tracking_id',
+                'bills.bill_number',
                 'bills.bill_year',
                 'bills.session',
                 'bills.short_title',
                 'bills.sponsor',
                 'bills.ai_impact_rating',
                 'bills.is_tracked',
-                'bills.last_action_date'
-            );
+                'bills.last_action_date',
+                'bills.created_at'
+            )
+            ->orderBy('bills.created_at', 'desc'); // Default sort by created_at descending
 
-        // Add this condition
         if (request()->has('is_tracked')) {
             $queryBuilder->where('bills.is_tracked', request()->get('is_tracked'));
         }
 
         $this->addFilter('id', 'bills.id');
-        $this->addFilter('tracking_id', 'bills.tracking_id');
+        $this->addFilter('bill_number', 'bills.bill_number');
         $this->addFilter('bill_year', 'bills.bill_year');
         $this->addFilter('session', 'bills.session');
         $this->addFilter('short_title', 'bills.short_title');
@@ -44,6 +45,7 @@ class BillDataGrid extends DataGrid
         $this->addFilter('ai_impact_rating', 'bills.ai_impact_rating');
         $this->addFilter('is_tracked', 'bills.is_tracked');
         $this->addFilter('last_action_date', 'bills.last_action_date');
+        $this->addFilter('created_at', 'bills.created_at');
 
         $this->setQueryBuilder($queryBuilder);
 
@@ -56,15 +58,24 @@ class BillDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'tracking_id',
-            'label'      => trans('admin::app.bills.datagrid.bill_id'),
+            'index'      => 'bill_number',
+            'label'      => trans('admin::app.bills.datagrid.bill_number'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
             'closure'    => function ($row) {
-                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->tracking_id . '</a>';
+                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->bill_number . '</a>';
             },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'bill_year',
+            'label'      => trans('admin::app.bills.datagrid.bill_year'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -86,6 +97,15 @@ class BillDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index'      => 'sponsor',
+            'label'      => trans('admin::app.bills.datagrid.sponsor'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
             'index'      => 'ai_impact_rating',
             'label'      => trans('admin::app.bills.datagrid.ai_impact_rating'),
             'type'       => 'integer',
@@ -99,21 +119,15 @@ class BillDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'sponsor',
-            'label'      => trans('admin::app.bills.datagrid.sponsor'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
             'index'      => 'last_action_date',
             'label'      => trans('admin::app.bills.datagrid.last_action_date'),
             'type'       => 'datetime',
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return \Carbon\Carbon::parse($row->last_action_date)->format('Y/m/d');
+            },
         ]);
 
         $this->addColumn([
@@ -124,7 +138,10 @@ class BillDataGrid extends DataGrid
             'sortable'   => true,
             'filterable' => true,
             'closure'    => function ($row) {
-                return view('admin::bills.datagrid.is-tracked', ['row' => $row])->render();
+                return '<label class="unique-toggle-switch">
+                            <input type="checkbox" id="unique_is_tracked_' . $row->id . '" name="is_tracked" ' . ($row->is_tracked ? 'checked' : '') . ' onchange="toggleTracked(' . $row->id . ')">
+                            <span class="unique-slider"></span>
+                        </label>';
             },
         ]);
     }
