@@ -26,3 +26,4 @@ Route::group(['prefix' => 'legislation'], function () {
         });
     });
 });
+

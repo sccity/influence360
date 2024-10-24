@@ -38,14 +38,14 @@ class TrackedBillsDataGrid extends BillDataGrid
     {
         // We'll only show a subset of columns for the dashboard
         $this->addColumn([
-            'index'      => 'tracking_id',
-            'label'      => trans('admin::app.bills.datagrid.bill_id'),
+            'index'      => 'bill_number',
+            'label'      => trans('admin::app.bills.datagrid.bill_number'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
             'filterable' => false,
             'closure'    => function ($row) {
-                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->tracking_id . '</a>';
+                return '<a href="' . route('admin.bills.view', $row->id) . '" class="text-blue-600 hover:underline">' . $row->bill_number    . '</a>';
             },
         ]);
 
@@ -141,3 +141,4 @@ class TrackedBillsDataGrid extends BillDataGrid
         return '#F44336'; // Red for 10
     }
 }
+

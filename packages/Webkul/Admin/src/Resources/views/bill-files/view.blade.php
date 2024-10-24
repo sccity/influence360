@@ -28,7 +28,6 @@
                     </h3>
 
                     <p class="dark:text-white">
-                        {{ $billFile->billid }}
                     </p>
 
                     {!! view_render_event('admin.bill-files.view.title.after', ['billFile' => $billFile]) !!}

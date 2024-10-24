@@ -17,8 +17,23 @@
 
         <div class="flex flex-col gap-1.5">
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bill-files.view.billid'):</span> 
-                {{ $billFile->billid }}
+                <span class="font-semibold">Bill File ID:</span> 
+                {{ $billFile->id }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">Year:</span> 
+                {{ $billFile->year }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">Session:</span> 
+                {{ $billFile->session }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-300">
+                <span class="font-semibold">Name:</span> 
+                {{ $billFile->name }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
@@ -27,23 +42,18 @@
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bill-files.view.status'):</span> 
-                {{ $billFile->status }}
+                <span class="font-semibold">Created:</span> 
+                {{ $billFile->created_at->format('Y/m/d') }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bill-files.view.session'):</span> 
-                {{ $billFile->session }}
+                <span class="font-semibold">Updated:</span> 
+                {{ $billFile->updated_at->format('Y/m/d') }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bill-files.view.year'):</span> 
-                {{ $billFile->year }}
-            </p>
-
-            <p class="text-gray-600 dark:text-gray-300">
-                <span class="font-semibold">@lang('admin::app.bill-files.view.is_tracked'):</span> 
-                {{ $billFile->is_tracked ? __('admin::app.common.yes') : __('admin::app.common.no') }}
+                <span class="font-semibold">Is Tracked:</span> 
+                {{ $billFile->is_tracked ? 'Yes' : 'No' }}
             </p>
         </div>
     </div>

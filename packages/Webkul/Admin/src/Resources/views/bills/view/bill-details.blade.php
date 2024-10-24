@@ -42,7 +42,7 @@
 
             <p class="text-gray-600 dark:text-gray-300">
                 <span class="font-semibold">@lang('admin::app.bills.view.last_action_date'):</span> 
-                {{ $bill->last_action_date ? $bill->last_action_date->format('Y-m-d H:i:s') : '' }}
+                {{ $bill->last_action_date ? $bill->last_action_date->format('Y/m/d') : '' }}
             </p>
 
             <p class="text-gray-600 dark:text-gray-300">
