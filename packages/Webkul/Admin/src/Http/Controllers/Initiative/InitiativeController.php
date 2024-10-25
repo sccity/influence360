@@ -172,14 +172,24 @@ class InitiativeController extends Controller
             $data['closed_at'] = Carbon::now();
         }
 
+        // Ensure the expected close date is set correctly
+        if (isset($data['expected_close_date']) && !empty($data['expected_close_date'])) {
+            try {
+                $data['expected_close_date'] = Carbon::createFromFormat('Y-m-d', $data['expected_close_date'])->format('Y-m-d');
+            } catch (\Exception $e) {
+                // Handle the exception if the date format is incorrect
+                $data['expected_close_date'] = null; // or set a default value
+            }
+        } else {
+            $data['expected_close_date'] = null; // Ensure it's null if not set
+        }
+
         $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $initiative = $this->initiativeRepository->create($data);
 
-        // Dispatch the event using the event class
         event(new InitiativeCreated($initiative));
 
-        // If you still need to use the old event system, you can keep this line as well
         Event::dispatch('initiative.create.after', $initiative);
 
         session()->flash('success', trans('admin::app.initiatives.create-success'));
